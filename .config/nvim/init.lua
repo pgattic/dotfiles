@@ -71,7 +71,7 @@ require('lazy').setup({
         max_view_entries = 8,
       },
       completion = {
-        keyword_length = 2,
+        keyword_length = 1,
       },
       experimental = {
         ghost_text = true,
@@ -220,8 +220,6 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 
-
-
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 0
 -- vim.opt.expandtab = true
@@ -292,11 +290,9 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
-  -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'c_sharp', 'cpp', 'javascript', 'lua', 'python', 'rust', 'vimdoc', 'vim' }, -- Treesitter languages
 
-  -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-  auto_install = false,
+  auto_install = false, -- use this if you can't figure out the name of a treesitter language
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -411,12 +407,10 @@ end
 --
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
-local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
+local servers = { -- use :Mason to search for language server names
+  tsserver = {},
+
+  csharp_ls = {},
 
   lua_ls = {
     Lua = {
