@@ -241,6 +241,18 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- custom terminal setup (by me!)
+vim.keymap.set("n", "<leader>t", ":term<CR>$a")
+vim.api.nvim_create_autocmd('TermOpen', {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.nu = false
+    vim.opt_local.relativenumber = false
+  end
+})
+
+
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
