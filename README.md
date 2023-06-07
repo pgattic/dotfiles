@@ -8,9 +8,10 @@ Acts as a mini "Home" directory, and automates installing my preset settings for
 
 - gcc-c++
 - a Nerd Font (included in the repo)
-- dotnet 7 (for c# language server)
+- dotnet 7 (for C# language server)
+- rust-analyzer system package (for Rust language server)
 
-`sudo dnf install gcc-c++ dotnet-sdk-7.0 `
+`sudo dnf install gcc-c++ dotnet-sdk-7.0 rust-analyzer`
 
 ## Setup
 
