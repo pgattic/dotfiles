@@ -13,5 +13,11 @@ echo "Creating symlinks..."
 ln -s ~/.dotfiles/.config/nvim/ ~/.config/
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 
+echo "[Nvim] Installing Nerd Font..."
+
+cp ~/.dotfiles/HackNerdFont-Regular.ttf ~/.local/share/fonts/
+fc-cache -f -v
+
 echo "Done!"
+echo '[Nvim] Make sure to set your terminal font to "Hack Nerd Font"!'
 
