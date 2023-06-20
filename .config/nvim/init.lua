@@ -24,8 +24,8 @@ require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
   -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
+--  'tpope/vim-fugitive',
+--  'tpope/vim-rhubarb',
 
   -- bracket completer
   "m4xshen/autoclose.nvim",
@@ -123,7 +123,7 @@ require('lazy').setup({
     end,
   },
 
-  {
+--[[  {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -135,7 +135,7 @@ require('lazy').setup({
         section_separators = '',
       },
     },
-  },
+  },]]
 
   {
     -- Add indentation guides even on blank lines
@@ -149,7 +149,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+--  { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -242,7 +242,7 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- custom terminal setup (by me!)
-vim.keymap.set("n", "<leader>t", ":term<CR>$a")
+vim.keymap.set("n", "<leader>t", ":terminal<CR>$a")
 vim.api.nvim_create_autocmd('TermOpen', {
   pattern = "*",
   callback = function()
