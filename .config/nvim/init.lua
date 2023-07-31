@@ -310,7 +310,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'c', 'c_sharp', 'cpp', 'javascript', 'lua', 'python', 'rust', 'vimdoc', 'vim' }, -- Treesitter languages
+  ensure_installed = { 'c', 'c_sharp', 'cpp', 'go', 'javascript', 'lua', 'python', 'rust', 'vimdoc', 'vim' }, -- Treesitter languages
 
   auto_install = false, -- use this if you can't figure out the name of a treesitter language
 
@@ -431,6 +431,8 @@ local servers = { -- use :Mason to search for language server names
   tsserver = {},
 
   csharp_ls = {},
+
+  gopls = {},
 
   lua_ls = {
     Lua = {
