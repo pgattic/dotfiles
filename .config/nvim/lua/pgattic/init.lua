@@ -1,4 +1,2 @@
-require("pgattic.set")
-require("pgattic.remap")
-require("pgattic.lazy")
-
+require("pgattic.config")
+require("pgattic.remaps")
