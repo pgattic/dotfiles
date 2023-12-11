@@ -21,6 +21,8 @@ local function on_attach(bufnr)
   -- default mappings
   api.config.mappings.default_on_attach(bufnr)
 
+  api.tree.toggle_gitignore_filter()
+
   -- custom mappings
 --  vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
 --  vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
@@ -30,7 +32,6 @@ end
 
 ntree.setup({
   on_attach = on_attach,
-  view = {width = 30},
   renderer = {
     add_trailing = true,
     group_empty = true,
@@ -55,5 +56,6 @@ ntree.setup({
       },
     },
   },
+  view = {width = 30},
 })
 
