@@ -11,11 +11,12 @@ vim.keymap.set("n", "x", "\"_x") -- don't yank on "x"!
 --vim.keymap.set("n", "<leader>pd", vim.cmd.Ex)
 
 -- custom terminal setup (by me!)
-vim.keymap.set("n", "<leader>t", ":terminal<CR>$a")
 vim.api.nvim_create_autocmd('TermOpen', {
   pattern = "*",
   callback = function()
     vim.opt_local.nu = false
   end
 })
+
+vim.keymap.set("n", "<leader>t", ":sp<CR><C-w><C-r>:resize 12<CR>:terminal<CR>$a")
 
