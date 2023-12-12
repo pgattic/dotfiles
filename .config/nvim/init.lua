@@ -26,6 +26,7 @@ local plugins = {
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+  {"nvim-treesitter/nvim-treesitter-context"},
 
   -- LSP Packages
   {"williamboman/mason.nvim"},

@@ -21,10 +21,26 @@ local servers = { -- use :Mason to search for language server names
       telemetry = { enable = false },
     },
   },
-
-  tsserver = {},
-
 }
+
+
+local server_deps = {
+  "cc",
+  "dotnet",
+  "node",
+  "go",
+  "lua",
+}
+
+local servers_filtered = {}
+local filtered_idx = 1
+
+for i, dep in pairs(server_deps) do
+  if vim.fn.executable(dep) == 1 then
+    servers_filtered[filtered_idx] = servers[i]
+    filtered_idx = filtered_idx + 1
+  end
+end
 
 local on_attach = function(_, _)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
@@ -38,7 +54,7 @@ end
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 mason_lspconfig.setup({
-  ensure_installed = vim.tbl_keys(servers),
+  ensure_installed = vim.tbl_keys(servers_filtered),
 })
 
 mason_lspconfig.setup_handlers {

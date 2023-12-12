@@ -3,3 +3,10 @@
 	email = pgattic@gmail.com
 [credential]
 	helper = cache
+[core]
+	autocrlf = input
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
