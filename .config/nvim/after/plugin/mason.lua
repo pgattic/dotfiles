@@ -42,6 +42,10 @@ for i, dep in pairs(server_deps) do
   end
 end
 
+require("lspconfig").dartls.setup{
+  cmd = { "dart", "language-server", "--protocol=lsp" }
+}
+
 local on_attach = function(_, _)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})

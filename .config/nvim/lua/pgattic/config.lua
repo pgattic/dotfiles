@@ -20,10 +20,10 @@ vim.opt.termguicolors = true
 
 vim.opt.smartindent = true
 
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 4
 --vim.opt.sigcolumn = "yes"
 
-vim.opt.colorcolumn = "80"
+--vim.opt.colorcolumn = "80"
 
 vim.opt.mouse = "a"
 
@@ -36,4 +36,7 @@ vim.opt.undofile = true
 vim.opt.cursorline = true
 
 vim.opt.laststatus = 3 -- makes LuaLine fullwidth
+
+vim.opt.title = true
+--vim.opt.titlestring = "yeet"
 
