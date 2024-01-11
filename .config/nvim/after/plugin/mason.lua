@@ -42,13 +42,10 @@ for i, dep in pairs(server_deps) do
   end
 end
 
-require("lspconfig").dartls.setup{
-  cmd = { "dart", "language-server", "--protocol=lsp" }
-}
-
 local on_attach = function(_, _)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+  vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, {})
+  vim.keymap.set("n", "<leader>d", vim.lsp.buf.hover, {})
 
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
   vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
@@ -70,7 +67,5 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
-
-
 
 
