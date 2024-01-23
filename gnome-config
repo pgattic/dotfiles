@@ -1,26 +1,4 @@
 
-[desktop/app-folders]
-folder-children=['Utilities', 'YaST', 'Pardus', '15ecf957-f4a9-40ad-a638-f9e45f7fff39', '6a702448-4bda-438c-a090-9986db2e78e5', '60ed717e-3082-4a0c-8f54-d2e52b5a16d9']
-
-[desktop/app-folders/folders/15ecf957-f4a9-40ad-a638-f9e45f7fff39]
-apps=['simple-scan.desktop', 'libreoffice-calc.desktop', 'libreoffice-impress.desktop', 'libreoffice-writer.desktop']
-name='Office'
-
-[desktop/app-folders/folders/60ed717e-3082-4a0c-8f54-d2e52b5a16d9]
-apps=['org.freeorion.FreeOrion.desktop', 'io.mrarm.mcpelauncher.desktop', 'com.valvesoftware.Steam.desktop', 'app.xemu.xemu.desktop']
-name='Games'
-
-[desktop/app-folders/folders/6a702448-4bda-438c-a090-9986db2e78e5]
-apps=['org.gnome.Calculator.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.clocks.desktop', 'org.gnome.Contacts.desktop', 'org.gnome.Maps.desktop']
-name='Productivity'
-translate=false
-
-[desktop/app-folders/folders/Utilities]
-apps=['org.gnome.Characters.desktop', 'org.gnome.Connections.desktop', 'org.gnome.baobab.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.Evince.desktop', 'org.gnome.font-viewer.desktop', 'gparted.desktop', 'org.gnome.Loupe.desktop', 'org.gnome.Logs.desktop', 'org.freedesktop.GnomeAbrt.desktop', 'org.gnome.tweaks.desktop']
-categories=['X-GNOME-Utilities']
-name='X-GNOME-Utilities.directory'
-translate=true
-
 [desktop/calendar]
 show-weekdate=false
 
