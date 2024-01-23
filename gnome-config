@@ -1,0 +1,134 @@
+
+[desktop/app-folders]
+folder-children=['Utilities', 'YaST', 'Pardus', '15ecf957-f4a9-40ad-a638-f9e45f7fff39', '6a702448-4bda-438c-a090-9986db2e78e5', '60ed717e-3082-4a0c-8f54-d2e52b5a16d9']
+
+[desktop/app-folders/folders/15ecf957-f4a9-40ad-a638-f9e45f7fff39]
+apps=['simple-scan.desktop', 'libreoffice-calc.desktop', 'libreoffice-impress.desktop', 'libreoffice-writer.desktop']
+name='Office'
+
+[desktop/app-folders/folders/60ed717e-3082-4a0c-8f54-d2e52b5a16d9]
+apps=['org.freeorion.FreeOrion.desktop', 'io.mrarm.mcpelauncher.desktop', 'com.valvesoftware.Steam.desktop', 'app.xemu.xemu.desktop']
+name='Games'
+
+[desktop/app-folders/folders/6a702448-4bda-438c-a090-9986db2e78e5]
+apps=['org.gnome.Calculator.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.clocks.desktop', 'org.gnome.Contacts.desktop', 'org.gnome.Maps.desktop']
+name='Productivity'
+translate=false
+
+[desktop/app-folders/folders/Utilities]
+apps=['org.gnome.Characters.desktop', 'org.gnome.Connections.desktop', 'org.gnome.baobab.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.Evince.desktop', 'org.gnome.font-viewer.desktop', 'gparted.desktop', 'org.gnome.Loupe.desktop', 'org.gnome.Logs.desktop', 'org.freedesktop.GnomeAbrt.desktop', 'org.gnome.tweaks.desktop']
+categories=['X-GNOME-Utilities']
+name='X-GNOME-Utilities.directory'
+translate=true
+
+[desktop/calendar]
+show-weekdate=false
+
+[desktop/datetime]
+automatic-timezone=true
+
+[desktop/input-sources]
+current=uint32 0
+sources=[('xkb', 'us')]
+xkb-options=['caps:escape_shifted_capslock']
+
+[desktop/interface]
+clock-format='12h'
+clock-show-date=true
+clock-show-seconds=false
+clock-show-weekday=false
+color-scheme='prefer-dark'
+enable-hot-corners=false
+font-antialiasing='grayscale'
+font-hinting='slight'
+show-battery-percentage=true
+toolkit-accessibility=false
+
+[desktop/peripherals/mouse]
+speed=-0.44360902255639101
+
+[desktop/peripherals/touchpad]
+tap-to-click=true
+two-finger-scrolling-enabled=true
+
+[desktop/privacy]
+old-files-age=uint32 30
+recent-files-max-age=-1
+report-technical-problems=true
+
+[desktop/sound]
+event-sounds=false
+theme-name='__custom'
+
+[mutter]
+center-new-windows=true
+workspaces-only-on-primary=true
+
+[nautilus/list-view]
+use-tree-view=true
+
+[nautilus/preferences]
+default-folder-viewer='list-view'
+migrated-gtk-settings=true
+search-filter-time-type='last_modified'
+
+[nautilus/window-state]
+initial-size=(969, 704)
+
+[settings-daemon/plugins/media-keys]
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
+
+[settings-daemon/plugins/media-keys/custom-keybindings/custom0]
+binding='<Alt>t'
+command='gnome-terminal'
+name='Terminal'
+
+[shell]
+disable-user-extensions=false
+disabled-extensions=['Vitals@CoreCoding.com']
+enabled-extensions=['background-logo@fedorahosted.org', 'appindicatorsupport@rgcjonas.gmail.com', 'pano@elhan.io', 'AlphabeticalAppGrid@stuarthayhurst', 'clipboard-indicator@tudmotu.com', 'caffeine@patapon.info', 'screen-rotate@shyzus.github.io']
+favorite-apps=['firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'md.obsidian.Obsidian.desktop']
+last-selected-power-profile='power-saver'
+welcome-dialog-last-shown-version='45.0'
+
+[shell/extensions/alphabetical-app-grid]
+folder-order-position='start'
+
+[shell/extensions/caffeine]
+countdown-timer=0
+enable-fullscreen=false
+indicator-position-max=2
+screen-blank='always'
+show-indicator='only-active'
+
+[shell/world-clocks]
+locations=@av []
+
+[software]
+check-timestamp=int64 1702963001
+download-updates=false
+download-updates-notify=false
+first-run=false
+flatpak-purge-timestamp=int64 1705940293
+show-only-free-apps=false
+update-notification-timestamp=int64 1705542049
+
+[system/location]
+enabled=true
+
+[terminal/legacy]
+theme-variant='system'
+
+[terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+background-transparency-percent=20
+default-size-columns=180
+default-size-rows=48
+font='JetBrainsMono Nerd Font Regular 10'
+preserve-working-directory='safe'
+scrollbar-policy='always'
+use-system-font=false
+use-theme-colors=true
+use-transparent-background=true
+
+[tweaks]
+show-extensions-notice=false

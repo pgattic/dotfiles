@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+echo "Hooking up dotfiles..."
+
 echo "Removing local copies..."
 
 # Remove current copies of the dotfiles
@@ -15,7 +17,7 @@ ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 
 echo "[Nvim] Installing Nerd Font..."
 
-cp ~/.dotfiles/HackNerdFont-Regular.ttf ~/.local/share/fonts/
+cp JetBrainsMonoNerdFont-Regular.ttf ~/.local/share/fonts/
 fc-cache -f -v
 
 echo "Done!"
