@@ -95,11 +95,11 @@ update-notification-timestamp=int64 1705542049
 enabled=true
 
 [terminal/legacy]
-theme-variant='system'
+theme-variant='dark'
 
 [terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
 background-transparency-percent=20
-default-size-columns=180
+default-size-columns=194
 default-size-rows=48
 font='JetBrainsMono Nerd Font Regular 10'
 preserve-working-directory='safe'

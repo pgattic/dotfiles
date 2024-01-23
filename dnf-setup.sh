@@ -9,5 +9,4 @@ sudo dnf copr enable atim/lazygit -y
 
 sudo dnf update -y
 sudo dnf install ripgrep neovim gcc gnome-tweaks libgda libgda-sqlite code lazygit gnome-extensions-app -y
-# NOTE: steam-devices requires the nonfree steam repo... I gotta figure out how to enable repos from the command line.
 
