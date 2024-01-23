@@ -27,6 +27,7 @@ local plugins = {
   },
   {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
   {"nvim-treesitter/nvim-treesitter-context"},
+  {"windwp/nvim-ts-autotag"},
 
   -- LSP Packages
   {"williamboman/mason.nvim"},
