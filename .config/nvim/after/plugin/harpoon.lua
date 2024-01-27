@@ -1,4 +1,7 @@
 
+require("harpoon").setup({
+  tabline = true
+})
 local h_ui = require("harpoon.ui")
 local h_mark = require("harpoon.mark")
 
@@ -15,10 +18,16 @@ vim.keymap.set("n", "<A-w>", h_ui.nav_prev)
 vim.keymap.set("n", "<A-e>", h_ui.nav_next)
 
 
-vim.keymap.set("n", "<A-z>", ":lua require('harpoon.term').gotoTerminal(1)<CR>a", {silent=true})
-vim.keymap.set("n", "<A-x>", ":lua require('harpoon.term').gotoTerminal(2)<CR>a", {silent=true})
-vim.keymap.set("n", "<A-c>", ":lua require('harpoon.term').gotoTerminal(3)<CR>a", {silent=true})
-vim.keymap.set("n", "<A-v>", ":lua require('harpoon.term').gotoTerminal(4)<CR>a", {silent=true})
+vim.keymap.set({"n", "t"}, "<A-z>", "<C-\\><C-n>:lua require('harpoon.term').gotoTerminal(1)<CR>a", {silent=true})
+vim.keymap.set({"n", "t"}, "<A-x>", "<C-\\><C-n>:lua require('harpoon.term').gotoTerminal(2)<CR>a", {silent=true})
+vim.keymap.set({"n", "t"}, "<A-c>", "<C-\\><C-n>:lua require('harpoon.term').gotoTerminal(3)<CR>a", {silent=true})
+vim.keymap.set({"n", "t"}, "<A-v>", "<C-\\><C-n>:lua require('harpoon.term').gotoTerminal(4)<CR>a", {silent=true})
+
+vim.cmd('highlight! HarpoonInactive guibg=NONE guifg=#63698c')
+vim.cmd('highlight! HarpoonActive guibg=NONE guifg=white')
+vim.cmd('highlight! HarpoonNumberActive guibg=NONE guifg=#7aa2f7')
+vim.cmd('highlight! HarpoonNumberInactive guibg=NONE guifg=#7aa2f7')
+vim.cmd('highlight! TabLineFill guibg=NONE guifg=white')
 
 -- vim.api.nvim_create_autocmd("FileType", {
 --  pattern = "harpoon-menu"

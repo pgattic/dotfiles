@@ -27,6 +27,7 @@ local plugins = {
   },
   {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
   {"nvim-treesitter/nvim-treesitter-context"},
+  {"nvim-treesitter/nvim-treesitter-refactor"},
   {"windwp/nvim-ts-autotag"},
 
   -- LSP Packages
@@ -59,7 +60,7 @@ local plugins = {
   },
 
   -- Harpoon
-  {"ThePrimeagen/harpoon"},
+  {"ThePrimeagen/harpoon", branch="harpoon2"},
 
 
   {
@@ -70,7 +71,7 @@ local plugins = {
       'stevearc/dressing.nvim', -- optional for vim.ui.select
     },
     config = true,
-  }
+  },
 }
 
 local opts = {}
