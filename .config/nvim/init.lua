@@ -60,7 +60,7 @@ local plugins = {
   },
 
   -- Harpoon
-  {"ThePrimeagen/harpoon", branch="harpoon2"},
+  {"ThePrimeagen/harpoon"},
 
 
   {

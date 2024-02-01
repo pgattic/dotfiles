@@ -235,4 +235,6 @@ bar {
     }
 }
 
+exec conky
+
 include /etc/sway/config.d/*
