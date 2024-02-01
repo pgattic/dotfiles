@@ -23,7 +23,7 @@ set $menu fuzzel | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Pictures/washington_dc_temple.jpg fill
+output * bg ~/.dotfiles/wallpaper/washington_dc_temple.jpg fill
 #
 # Example configuration:
 #
