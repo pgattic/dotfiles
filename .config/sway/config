@@ -46,8 +46,6 @@ output * bg ~/.dotfiles/wallpaper/washington_dc_temple.jpg fill
 
 ### Input configuration
 #
-# Example configuration:
-#
 input "type:touchpad" {
   click_method clickfinger
   dwt enabled
@@ -235,6 +233,8 @@ bar {
     }
 }
 
-exec conky
+bindsym $mod+g border toggle
+
+gaps inner 4
 
 include /etc/sway/config.d/*
