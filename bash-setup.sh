@@ -2,8 +2,8 @@
 
 echo "Linking Bash Scripts..."
 
-rm -rf ~/.bashrc.d
-ln -s ~/.dotfiles/.bashrc.d/ ~/
+rm -rf "$HOME/.bashrc.d"
+ln -s "$HOME/.dotfiles/.bashrc.d/" "$HOME/"
 
 echo "Done!"
 
