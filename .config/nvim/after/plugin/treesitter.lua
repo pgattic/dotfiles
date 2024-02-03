@@ -9,12 +9,6 @@ config.setup({
   ensure_installed = { "lua", "c" },
   highlight = {enable=true},
   indent = {enable=true},
-})
-
-require('nvim-ts-autotag').setup()
-
-
-require('nvim-treesitter.configs').setup {
   refactor = {
     highlight_definitions = {
       enable = true,
@@ -29,5 +23,11 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
+})
+
+require('treesitter-context').setup{
+  mode = 'topline',
 }
+
+require('nvim-ts-autotag').setup()
 

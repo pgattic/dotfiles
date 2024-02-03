@@ -31,3 +31,7 @@ vim.keymap.set("n", "<CR>", ":noh<CR><CR>", {silent = true}) -- Return also remo
 
 vim.keymap.set("x", "p", "\"_dP")  -- do not modify registers on paste
 
+vim.keymap.set("v", ">", ">gv") -- Indentation: Stay in Visual Mode
+vim.keymap.set("v", "<", "<gv")
+
+
