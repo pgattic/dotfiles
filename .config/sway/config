@@ -54,6 +54,7 @@ input "type:touchpad" {
   middle_emulation enabled
 }
 
+# Use capslock key as secondary escape
 input "type:keyboard" {
   xkb_options caps:escape
 }
@@ -215,25 +216,25 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86Search exec bemenu-run
 
 #
+# Disable Keys (They are in annoying locations on my laptop)
+#
+
+bindsym Home nop
+bindsym End nop
+bindsym Page_Up nop
+bindsym Page_Down nop
+
+#
 # Status Bar:
 #
-# Read `man 5 sway-bar` for more information about this section.
 bar {
     swaybar_command waybar
-    position bottom
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
 }
 
 bindsym $mod+g border toggle
+
+exec swaymsg titlebar_border_thickness 0
+exec swaymsg titlebar_padding 4 0
 
 gaps inner 4
 
