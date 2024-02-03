@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # NOTE: The configs depend on JetBrainsMono Nerd Font being installed on the system, and this setup script assumes the dnf package manager, connected to the default Fedora Linux repos.
 
 echo "Setting up Sway..."

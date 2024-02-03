@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ./dnf-setup.sh
 
