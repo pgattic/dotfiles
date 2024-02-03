@@ -234,7 +234,8 @@ bar {
 bindsym $mod+g border toggle
 
 exec swaymsg titlebar_border_thickness 0
-exec swaymsg titlebar_padding 4 0
+exec swaymsg titlebar_padding 4 1
+exec swaymsg font "JetBrainsMono Nerd Font 10"
 
 gaps inner 4
 

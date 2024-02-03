@@ -1,3 +1,4 @@
+#!/bin/bash
 
 echo "Setting up GNOME config..."
 
