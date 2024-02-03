@@ -17,17 +17,17 @@ echo "Done!"
 
 echo "Linking configs..."
 
-rm -rf ~/.config/sway
-ln -s ~/.dotfiles/.config/sway ~/.config/
+rm -rf "$HOME/.config/sway"
+ln -s "$HOME/.dotfiles/.config/sway" "$HOME/.config/"
 
-rm -rf ~/.config/waybar
-ln -s ~/.dotfiles/.config/waybar ~/.config/
+rm -rf "$HOME/.config/waybar"
+ln -s "$HOME/.dotfiles/.config/waybar" "$HOME/.config/"
 
-rm -rf ~/.config/foot
-ln -s ~/.dotfiles/.config/foot ~/.config/
+rm -rf "$HOME/.config/foot"
+ln -s "$HOME/.dotfiles/.config/foot" "$HOME/.config/"
 
-rm -rf ~/.config/fuzzel
-ln -s ~/.dotfiles/.config/fuzzel ~/.config/
+rm -rf "$HOME/.config/fuzzel"
+ln -s "$HOME/.dotfiles/.config/fuzzel" "$HOME/.config/"
 
 echo "Done!"
 echo "Press Win+Shift+C to restart Sway"
