@@ -2,6 +2,8 @@
 
 -- LSP (Mason) Setup --
 
+require("flutter-tools").setup({}) -- use defaults
+
 require("mason").setup()
 
 local mason_lspconfig = require("mason-lspconfig")
@@ -23,7 +25,6 @@ local servers = { -- use :Mason to search for language server names
   },
 }
 
-
 local server_deps = {
   "cc",
   "dotnet",
@@ -42,8 +43,15 @@ for i, dep in pairs(server_deps) do
   end
 end
 
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
+vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, {})
+vim.keymap.set("n", "<leader>d", vim.lsp.buf.hover, {})
+
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+
 local on_attach = function(_, _)
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
+  vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
   vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, {})
   vim.keymap.set("n", "<leader>d", vim.lsp.buf.hover, {})
 
