@@ -40,3 +40,5 @@ vim.opt.laststatus = 3 -- makes LuaLine fullwidth
 vim.opt.title = true
 --vim.opt.titlestring = "yeet"
 
+vim.cmd(":command W w") -- Resolves a carpal race condition
+

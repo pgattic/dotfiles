@@ -72,6 +72,8 @@ local plugins = {
     },
     config = true,
   },
+
+  {"Exafunction/codeium.vim"},
 }
 
 local opts = {}
