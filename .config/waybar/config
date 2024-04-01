@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media", "custom/dailyverse"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "mpd", "idle_inhibitor", "pulseaudio", "bluetooth", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2"],
+    "modules-right": ["tray", "mpd", "cpu", "memory", "temperature", "pulseaudio", "backlight", "bluetooth", "network", "battery", "battery#bat2"],
     // Modules configuration
     "sway/workspaces": {
         "disable-scroll": true,
@@ -128,10 +128,10 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
+        "format": "{capacity}% {icon} ",
         "format-charging": "{capacity}% 󱐋",
         "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
+        "format-alt": "{time} {icon} ",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
@@ -140,9 +140,9 @@
         "bat": "BAT2"
     },
     "bluetooth": {
-      "format": "  {status} ",
-      "format-connected": " {device_alias}",
-      "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+      "format": " {status}  ",
+      "format-connected": " {device_alias}  ",
+      "format-connected-battery": " {device_alias} {device_battery_percentage}%  ",
       // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
       "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
       "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
@@ -160,10 +160,10 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
+        "format": "{volume}% {icon}  {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": "󰝟 {format_source}",
+        "format-bluetooth-muted": "󰝟 {icon} {format_source}",
+        "format-muted": "󰝟  {format_source}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
@@ -191,8 +191,11 @@
     },
     "custom/dailyverse": {
         "format": "Come, Follow Me: {}",
-        "exec": "~/bin/daily-verse cfm",
+        "tooltip-format": "yeet",
+        "tooltip": false,
+        "exec": "~/bin/cfm canon",
         "interval": 4,
+        "on-click": "exec foot sh -c 'canon 1ne3 -n | less --wordwrap'"
     }
 }
 
