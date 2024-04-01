@@ -6,7 +6,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 vim.keymap.set("n", "Q", "<nop>")
 
-vim.keymap.set("n", "x", "\"_x") -- don't yank on "x"!
+vim.keymap.set({"n", "v"}, "x", "\"_x") -- don't yank on "x"!
 
 --vim.keymap.set("n", "<leader>pd", vim.cmd.Ex)
 

@@ -1,5 +1,6 @@
 
 cl() { builtin cd "$@" && ls -F; }
 
-can() { canon "$@" -v | canonmk -n | less --wordwrap -R; }
+can() { canon "$@" -v | marks -n; }
+canl() { can "$@" | less --wordwrap -R; }
 
