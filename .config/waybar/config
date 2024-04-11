@@ -5,40 +5,14 @@
     // "width": 1280, // Waybar width
     // "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media", "custom/dailyverse"],
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "mpd", "cpu", "memory", "temperature", "pulseaudio", "backlight", "bluetooth", "network", "battery", "battery#bat2"],
+    "modules-right": ["tray", "mpd", "cpu", "memory", "temperature", "backlight", "pulseaudio", "network", "battery", "battery#bat2"],
     // Modules configuration
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
-        "warp-on-scroll": false,
-        "format": "{icon}",
-        "format-icons": {
-            "1": "一",
-            "2": "二",
-            "3": "三",
-            "4": "四",
-            "5": "五",
-            "6": "六",
-            "7": "七",
-            "8": "八",
-            "9": "九",
-            "10": "〇"
-        },
-        "persistent_workspaces": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": [],
-          "5": [],
-          "6": [],
-          "7": [],
-          "8": [],
-          "9": [],
-          "10": []
-        }
-
+        "warp-on-scroll": false
     },
     "keyboard-state": {
         "numlock": true,

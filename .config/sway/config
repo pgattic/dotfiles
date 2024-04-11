@@ -227,8 +227,27 @@ bindsym Page_Down nop
 #
 # Status Bar:
 #
+#set $ws1 
+#set $ws3 
 bar {
     swaybar_command waybar
+
+#    position top
+#
+#    # When the status_command prints a new line to stdout, swaybar updates.
+#    # The default just shows the current date and time.
+#    status_command while date +'%d %b %I:%M %p'; do sleep 1; done
+#
+#    separator_symbol t
+#
+#    colors {
+#        statusline #ffffff
+#        background #000000CC
+#        inactive_workspace #000000CC #000000CC #FFFFFF
+#        focused_workspace #333333CC #333333CC #FFFFFF
+#        urgent_workspace #770000CC #770000CC #FFFFFF
+#    }
+
 }
 
 bindsym $mod+g border toggle
