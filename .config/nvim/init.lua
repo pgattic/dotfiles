@@ -47,9 +47,6 @@ local plugins = {
 
   {"lewis6991/gitsigns.nvim"},
 
-  {"nvim-tree/nvim-tree.lua"},
-  {"nvim-tree/nvim-web-devicons"},
-
   {"nvim-lualine/lualine.nvim"},
 
   { "m4xshen/autoclose.nvim" },
@@ -73,7 +70,8 @@ local plugins = {
     config = true,
   },
 
-  --{"Exafunction/codeium.vim"},
+  { 'echasnovski/mini.nvim', version = false },
+-- {"Exafunction/codeium.vim"},
 }
 
 local opts = {}
