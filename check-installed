@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Checks if the machine has a command available. First argument is the name of the command, second is the name of the package (optional).
 
