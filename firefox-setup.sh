@@ -24,7 +24,7 @@ if [ -n "$randomized_part" ]; then
   printf "${green}firefox setup complete.${color_off}\n"
 else
   printf "${red}ERROR${color_off}: No matching directory found. Make sure Firefox is installed as a system package.\n"
-  printf "${red}firefox setup failed.\n"
+  printf "${red}firefox setup failed.${color_off}\n"
 fi
 
 
