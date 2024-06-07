@@ -5,7 +5,7 @@ red='\033[0;31m'
 green='\033[0;32m'
 yellow_b='\033[1;33m'
 
-echo "Setting up Neovim..."
+echo "Setting up neovim..."
 
 ./check-installed nvim neovim
 

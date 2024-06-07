@@ -1,8 +1,9 @@
 #!/bin/bash
 
-echo "Setting up Firefox..."
+echo "Setting up firefox..."
 
 color_off='\033[0m'
+yellow_b='\033[1;33m'
 red='\033[0;31m'
 green='\033[0;32m'
 
@@ -10,10 +11,8 @@ green='\033[0;32m'
 randomized_part=$(find "$HOME/.mozilla/firefox/" -maxdepth 1 -type d -name '*default-release' | grep -oP '([^/]+)\.default-release')
 
 if [ -n "$randomized_part" ]; then
-  echo "Randomized part of the directory name: $randomized_part"
   ffox_dir="$HOME/.mozilla/firefox/$randomized_part"
-
-  echo "Linking Firefox configs..."
+  echo -e "[${yellow_b}INFO${color_off}] firefox's config directory for this machine: $ffox_dir"
 
   rm -rf "$ffox_dir/chrome"
   ln -s "$HOME/.dotfiles/.mozilla/firefox/default-release/chrome" "$ffox_dir/"
@@ -22,15 +21,15 @@ if [ -n "$randomized_part" ]; then
   ln -s "$HOME/.dotfiles/.mozilla/firefox/default-release/user.js" "$ffox_dir/"
 
   unset ffox_dir
-  echo "${green}Firefox setup - Done.${color_off}"
+  echo -e "${green}firefox setup complete.${color_off}"
 else
-  echo "${red}ERROR${color_off}: No matching directory found. Make sure Firefox is installed as a system package."
+  echo -e "${red}ERROR${color_off}: No matching directory found. Make sure Firefox is installed as a system package."
 fi
 
-echo -e "${green}Firefox setup complete."
 
 unset randomized_part
 unset color_off
+unset yellow_b
 unset red
 unset green
 
