@@ -2,6 +2,8 @@
 
 Acts as a mini "Home" directory, and automates installing my preset settings for various tools.
 
+The setup scripts were written with Arch Linux in mind, but they have been verified on Fedora, Ubuntu, and Android (with Termux).
+
 ## Setup
 
 In a Linux terminal:

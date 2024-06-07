@@ -10,7 +10,7 @@ echo "Setting up bash..."
 rm -rf "$HOME/.bashrc.d"
 ln -s "$HOME/.dotfiles/.bashrc.d/" "$HOME/"
 
-echo -e "${green}bash setup complete.${color_off}"
+printf "${green}bash setup complete.${color_off}\n"
 
 unset color_off
 unset red

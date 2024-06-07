@@ -16,7 +16,7 @@ rm -rf "$HOME/.config/nvim"
 # ln -s means symbolic link, and it applies to both directories and files.
 ln -s "$HOME/.dotfiles/.config/nvim/" "$HOME/.config/"
 
-echo -e "${green}neovim setup complete.${color_off}"
+printf "${green}neovim setup complete.${color_off}\n"
 
 unset color_off
 unset red

@@ -12,7 +12,7 @@ randomized_part=$(find "$HOME/.mozilla/firefox/" -maxdepth 1 -type d -name '*def
 
 if [ -n "$randomized_part" ]; then
   ffox_dir="$HOME/.mozilla/firefox/$randomized_part"
-  echo -e "[${yellow_b}INFO${color_off}] firefox's config directory for this machine: $ffox_dir"
+  printf "[${yellow_b}INFO${color_off}] firefox's config directory for this machine: $ffox_dir\n"
 
   rm -rf "$ffox_dir/chrome"
   ln -s "$HOME/.dotfiles/.mozilla/firefox/default-release/chrome" "$ffox_dir/"
@@ -21,9 +21,10 @@ if [ -n "$randomized_part" ]; then
   ln -s "$HOME/.dotfiles/.mozilla/firefox/default-release/user.js" "$ffox_dir/"
 
   unset ffox_dir
-  echo -e "${green}firefox setup complete.${color_off}"
+  printf "${green}firefox setup complete.${color_off}\n"
 else
-  echo -e "${red}ERROR${color_off}: No matching directory found. Make sure Firefox is installed as a system package."
+  printf "${red}ERROR${color_off}: No matching directory found. Make sure Firefox is installed as a system package.\n"
+  printf "${red}firefox setup failed.\n"
 fi
 
 
