@@ -71,6 +71,9 @@ local plugins = {
   },
 
   { 'echasnovski/mini.nvim', version = false },
+
+  {"Djancyp/better-comments.nvim"},
+  {'nvim-tree/nvim-web-devicons'},
 -- {"Exafunction/codeium.vim"},
 }
 

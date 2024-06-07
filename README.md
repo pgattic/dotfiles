@@ -2,22 +2,13 @@
 
 Acts as a mini "Home" directory, and automates installing my preset settings for various tools.
 
-## Prerequisites
-
-### Nvim
-
-- gcc-c++
-- a Nerd Font (included in the repo)
-- dotnet 7 (for C# language server)
-- rust-analyzer system package (for Rust language server)
-
-`sudo dnf install gcc-c++ dotnet-sdk-7.0 rust-analyzer`
-
 ## Setup
 
 In a Linux terminal:
 
-` git clone https://github.com/pgattic/dotfiles ~/.dotfiles/ && cd ~/.dotfiles && ./setup.sh `
+`git clone https://github.com/pgattic/dotfiles ~/.dotfiles/ && cd ~/.dotfiles && ./setup.sh`
+
+In addition, I have a list of packages that I usually want to have installed as a base on every Arch Linux system, found in `./packages-arch`. They can be installed using the command `sudo pacman -S $(cat packages-arch)`.
 
 After that, a simple `git commit` and `git pull` synchronize the dotfiles of my machine with these ones.
 
