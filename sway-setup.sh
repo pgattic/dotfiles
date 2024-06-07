@@ -29,7 +29,7 @@ ln -s "$HOME/.dotfiles/.config/foot" "$HOME/.config/"
 rm -rf "$HOME/.config/wofi"
 ln -s "$HOME/.dotfiles/.config/wofi" "$HOME/.config/"
 
-echo -e "${green}sway setup complete.${color_off}"
+printf "${green}sway setup complete.${color_off}\n"
 
 echo "Press Win+Shift+C to restart sway"
 

@@ -13,7 +13,7 @@ fi
 
 if ! command -v $1 &> /dev/null
 then
-  echo -e "${yellow_b}WARNING${color_off}: $pkg does not appear to be installed on this machine."
+  printf "${yellow_b}WARNING${color_off}: $pkg does not appear to be installed on this machine.\n"
 fi
 
 unset color_off

@@ -16,7 +16,7 @@ unlink "$HOME/.gitconfig"
 # ln -s means symbolic link, and it applies to both directories and files.
 ln -s "$HOME/.dotfiles/.gitconfig" "$HOME/.gitconfig"
 
-echo -e "${green}git setup complete.${color_off}"
+printf "${green}git setup complete.${color_off}\n"
 
 unset color_off
 unset red
