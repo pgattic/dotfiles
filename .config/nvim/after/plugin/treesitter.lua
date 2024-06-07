@@ -29,5 +29,5 @@ require('treesitter-context').setup{
   mode = 'topline',
 }
 
-require('nvim-ts-autotag').setup()
+-- require('nvim-ts-autotag').setup()
 

@@ -18,7 +18,7 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu fuzzel | xargs swaymsg exec --
+set $menu wofi --show drun | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -262,6 +262,8 @@ bindsym $mod+Print exec grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.typ
 
 # Notifications Daemon
 exec mako
+# Monitor manager
+exec_always kanshi
 
 titlebar_border_thickness 0
 titlebar_padding 4 1

@@ -1,3 +1,3 @@
 
-alias nvide="$HOME/Applications/AppImage/neovide.AppImage"
+alias vi=nvim
 

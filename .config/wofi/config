@@ -1,0 +1,11 @@
+
+width=25%
+prompt=wofi
+allow_images=true
+allow_markup=true
+insensitive=true
+matching=fuzzy
+gtk_dark=true
+#image_size=16
+key_expand=Tab
+

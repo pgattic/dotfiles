@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Checks if the machine has a command available. First argument is the name of the command, second is the name of the package (optional).
+
+color_off='\033[0m'
+yellow_b='\033[1;33m'
+
+if [ -z "$2" ]; then
+  pkg=$1
+else
+  pkg=$2
+fi
+
+if ! command -v $1 &> /dev/null
+then
+  echo -e "${yellow_b}WARNING${color_off}: $pkg does not appear to be installed on this machine."
+fi
+
+unset color_off
+unset yellow_b
+

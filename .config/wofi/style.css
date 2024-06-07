@@ -1,0 +1,35 @@
+
+window {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+}
+
+entry {
+  background-color: transparent;
+  border-radius: 12px 12px 0 0;
+}
+
+.entry label {
+  padding: 0 8px;
+}
+
+#entry image {
+  padding-left: 16px;
+}
+
+#entry expander image {
+  padding-left: 0;
+}
+
+list #entry image {
+  padding-left: 32px;
+}
+
+list {
+  background-color: transparent;
+}
+
+#entry:selected {
+  background-color: rgba(40, 85, 119, 0.5);
+}
+
