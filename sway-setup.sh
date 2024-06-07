@@ -7,23 +7,15 @@ red='\033[0;31m'
 green='\033[0;32m'
 yellow_b='\033[1;33m'
 
-echo "Setting up Sway..."
+echo "Setting up sway..."
 
 declare -a programs=(sway foot waybar wofi swaybg mako grim slurp kanshi)
 
+# Check if all of those programs are installed
 for i in "${programs[@]}"
 do
   ./check-installed $i
 done
-
-# sudo dnf install sway waybar brightnessctl pulseaudio-utils wofi -y
-
-# waybar: Alternative, more customizable statusbar for Wayland
-# brightnessctl: Utility to control screen brightness. Used by sway/config
-# pulseaudio-utils: Utility to control pulseaudio settings. Used by sway/config (provides pactl)
-# wofi: Fuzzy finder
-
-echo "Linking configs..."
 
 rm -rf "$HOME/.config/sway"
 ln -s "$HOME/.dotfiles/.config/sway" "$HOME/.config/"
@@ -39,5 +31,10 @@ ln -s "$HOME/.dotfiles/.config/wofi" "$HOME/.config/"
 
 echo -e "${green}sway setup complete.${color_off}"
 
-echo "Press Win+Shift+C to restart Sway"
+echo "Press Win+Shift+C to restart sway"
+
+unset color_off
+unset red
+unset green
+unset yellow_b
 

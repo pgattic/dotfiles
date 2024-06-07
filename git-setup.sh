@@ -7,7 +7,7 @@ yellow_b='\033[1;33m'
 
 echo "Setting up git..."
 
-./check-installed giasdfat
+./check-installed git
 
 # Remove current copies of the dotfiles
 # (Note to future self: both of these commands work whether there is a pre-existing link, or a pre-existing directory/file)
