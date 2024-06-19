@@ -1,9 +1,3 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
-
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -52,6 +46,7 @@ input "type:touchpad" {
   tap enabled
   natural_scroll enabled
   middle_emulation enabled
+  pointer_accel 0.2
 }
 
 # Use capslock key as secondary escape
