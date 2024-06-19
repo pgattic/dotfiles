@@ -1,0 +1,22 @@
+
+profile docked {
+  output eDP-1 disable
+  output DP-1 {
+    position 0,0
+    scale 1
+  }
+}
+
+profile hdmi-mirror {
+  output eDP-1 {
+    position -0,0
+  }
+  output HDMI-A-1 {
+    position -0,0
+  }
+}
+
+profile nomad {
+  output eDP-1 enable scale 1
+}
+

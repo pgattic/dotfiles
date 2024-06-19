@@ -5,9 +5,10 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.opt.fillchars = {eob = " "}
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = " "
 
 vim.opt.nu = true -- line numbers
 
@@ -39,6 +40,8 @@ vim.opt.laststatus = 3 -- makes LuaLine fullwidth
 
 vim.opt.title = true
 --vim.opt.titlestring = "yeet"
+
+-- vim.opt.cmdheight = 0
 
 vim.cmd(":command W w") -- Resolves a carpal race condition
 
