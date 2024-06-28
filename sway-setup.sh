@@ -9,7 +9,7 @@ yellow_b='\033[1;33m'
 
 echo "Setting up sway..."
 
-declare -a programs=(sway foot waybar wofi swaybg mako grim slurp kanshi)
+declare -a programs=(sway foot waybar fuzzel swaybg mako grim slurp kanshi)
 
 # Check if all of those programs are installed
 for i in "${programs[@]}"
@@ -26,8 +26,8 @@ ln -s "$HOME/.dotfiles/.config/waybar" "$HOME/.config/"
 rm -rf "$HOME/.config/foot"
 ln -s "$HOME/.dotfiles/.config/foot" "$HOME/.config/"
 
-rm -rf "$HOME/.config/wofi"
-ln -s "$HOME/.dotfiles/.config/wofi" "$HOME/.config/"
+rm -rf "$HOME/.config/fuzzel"
+ln -s "$HOME/.dotfiles/.config/fuzzel" "$HOME/.config/"
 
 rm -rf "$HOME/.config/kanshi"
 ln -s "$HOME/.dotfiles/.config/kanshi" "$HOME/.config/"
