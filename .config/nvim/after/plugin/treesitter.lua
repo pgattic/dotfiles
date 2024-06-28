@@ -1,11 +1,12 @@
 
 -- TreeSitter Config --
 
+require('nvim-ts-autotag').setup()
+
 local config = require("nvim-treesitter.configs")
 
 config.setup({
   auto_install = true,
-  autotag = { enable = true },
   ensure_installed = { "lua", "c" },
   highlight = {enable=true},
   indent = {enable=true},
@@ -28,6 +29,4 @@ config.setup({
 require('treesitter-context').setup{
   mode = 'topline',
 }
-
--- require('nvim-ts-autotag').setup()
 
