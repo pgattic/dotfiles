@@ -35,6 +35,8 @@ vim.keymap.set("n", "<leader>0x", ":%!xxd -g 1<CR>:set ft=xxd<CR>") -- Open buff
 vim.keymap.set("n", "<leader>0q", ":%!xxd -r<CR>:filetype detect<CR>") -- revert xxd buffer into text
 vim.keymap.set("n", "<leader>0r", "mz:%!xxd -r | xxd -g 1<CR>`z") -- "refresh" hex data (preserve cursor location)
 
+vim.keymap.set("n", "<Tab>", "<Esc>f|lR")
+
 -- Notes about shortcuts--
 -- <M-[> is alt-[
 -- <C-[> is ctrl-[

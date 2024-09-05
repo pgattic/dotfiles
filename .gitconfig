@@ -12,3 +12,5 @@
 	smudge = git-lfs smudge -- %f
 [color]
 	ui = auto
+[http]
+	postBuffer = 157286400

@@ -24,7 +24,7 @@ vim.opt.smartindent = true
 vim.opt.scrolloff = 4
 --vim.opt.sigcolumn = "yes"
 
---vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "100"
 
 vim.opt.mouse = "a"
 
@@ -44,4 +44,6 @@ vim.opt.title = true
 -- vim.opt.cmdheight = 0
 
 vim.cmd(":command W w") -- Resolves a carpal race condition
+
+vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 

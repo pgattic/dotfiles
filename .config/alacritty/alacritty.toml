@@ -15,7 +15,7 @@ resize_increments = false
 # Default colors
 [colors.primary]
 background = '#111111'
-foreground = '#b6b6b6'
+foreground = '#D0CFCC'
 
 
 # # Normal colors
