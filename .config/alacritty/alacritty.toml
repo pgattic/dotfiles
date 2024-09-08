@@ -14,11 +14,11 @@ resize_increments = false
 
 # Default colors
 [colors.primary]
-background = '#111111'
-foreground = '#D0CFCC'
+background = '#000000'
+foreground = '#DDDDDD'
 
 
-# # Normal colors
+# Normal colors
 [colors.normal]
 black   = '#000000'
 red     = '#C01C28'
