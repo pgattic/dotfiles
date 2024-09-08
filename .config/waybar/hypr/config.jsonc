@@ -81,7 +81,7 @@
     "format": " {icon0}{icon1}{icon2}{icon3} {usage:>2}%", // For quad-core CPU
     //"format": " {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15} {usage:>2}%", // For 16-core cpu
     "format-icons": [
-      "<span color='hsl()'>▁</span>", // green
+      "<span color='#69ff94'>▁</span>", // green
       "<span color='#2aa9ff'>▂</span>", // blue
       "<span color='#f8f8f2'>▃</span>", // white
       "<span color='#f8f8f2'>▄</span>", // white
