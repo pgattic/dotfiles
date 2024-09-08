@@ -7,8 +7,8 @@ yellow_b='\033[1;33m'
 
 echo "Setting up bash..."
 
-rm -rf "$HOME/.bashrc.d"
-ln -s "$HOME/.dotfiles/.bashrc.d/" "$HOME/"
+rm "$HOME/.bashrc"
+ln -s "$HOME/.dotfiles/.bashrc" "$HOME/"
 
 printf "${green}bash setup complete.${color_off}\n"
 
