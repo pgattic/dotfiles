@@ -227,7 +227,7 @@ bindsym Page_Down nop
 #set $ws1 
 #set $ws3 
 bar {
-    swaybar_command waybar
+    swaybar_command waybar --config ~/.config/waybar/sway/config.jsonc --style ~/.config/waybar/sway/style.css
 
 #    position top
 #

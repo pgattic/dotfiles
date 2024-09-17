@@ -2,9 +2,8 @@
 
 mkdir -p "$HOME/.config/"
 
-./bash-setup.sh
-./git-setup.sh
+./general-setup.sh
 ./firefox-setup.sh
 ./neovim-setup.sh
-./sway-setup.sh
+./hyprland-setup.sh
 
