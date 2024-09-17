@@ -8,7 +8,7 @@ style = "Regular"
 [window]
 
 dimensions = { columns = 92, lines = 28}
-opacity = 0.8
+opacity = 0.9
 title = "Terminal"
 resize_increments = false
 

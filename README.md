@@ -1,22 +1,25 @@
+
 # .dotfiles
 
-Acts as a mini "Home" directory, and automates installing my preset settings for various tools.
+This repository includes configuration and scripts for installation. Automates configuring various tools to my liking.
 
-It includes configuration files for the following tools:
+It includes configuration for the following:
 
 - Firefox
 - Neovim
-- Sway (including foot, waybar, and wofi)
 - Hyprland
+- Bash
 - git
+- GTK
+- MIME file associations
 
-The setup scripts were written with Arch Linux in mind, but they have been verified on Fedora, Ubuntu, and Android (with Termux).
+The setup scripts were written with Arch Linux in mind, but they have been verified on Fedora, Ubuntu, and Android (with Termux). Note that these settings will override the existing ones on the system, including the bashrc.
 
 ## Setup
 
 In a Linux terminal:
 
-`git clone https://github.com/pgattic/dotfiles ~/.dotfiles/ && cd ~/.dotfiles && ./setup.sh`
+`git clone https://github.com/pgattic/dotfiles ~/.dotfiles/ && cd ~/.dotfiles && ./setup-all.sh`
 
 In addition, I have a list of packages that I usually want to have installed as a base on every Arch Linux system, found in `./packages-arch`. They can be installed using the command `sudo pacman -S $(cat packages-arch)`.
 

@@ -1,0 +1,7 @@
+[Default Applications]
+image/png=imv-dir.desktop
+image/jpeg=imv-dir.desktop
+
+[Added Associations]
+image/png=imv-dir.desktop;
+image/jpeg=imv-dir.desktop;
