@@ -7,7 +7,7 @@
 // Choose the order of the modules
 "modules-left": ["hyprland/workspaces", "custom/media"],
 "modules-center": ["clock"],
-"modules-right": ["tray", "mpd", "cpu", "memory", "temperature", "backlight", "pulseaudio", "network", "battery"],
+"modules-right": ["tray", "mpd", "cpu", "memory", "temperature", "backlight", "pulseaudio", "network", "battery", "battery#bat2"],
 // Modules configuration
 "hyprland/workspaces": {
   "disable-scroll": true,
@@ -111,9 +111,21 @@
   "format-full": "󱟢",
   "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
 },
-//"battery#bat2": {
-//  "bat": "BAT2"
-//},
+"battery#bat2": {
+  "bat": "BAT1"
+  "states": {
+    // "good": 95,
+    "warning": 30,
+    "critical": 15
+  },
+  "format": "1{icon} {capacity}%",
+  "format-charging": "1󰂄 {capacity}%",
+  "format-plugged": "1 {capacity}%",
+  "format-alt": "1{icon} {time}",
+  //"format-good": "", // An empty format will hide the module
+  "format-full": "1󱟢",
+  "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+},
 "bluetooth": {
   "format": " {status}",
   "format-connected": " {device_alias}",
@@ -139,7 +151,7 @@
   "format-bluetooth": "{volume}% {icon} {format_source}",
   "format-bluetooth-muted": "󰝟 {icon} {format_source}",
   "format-muted": "󰝟  {format_source}",
-  "format-source": " {volume}%",
+  "format-source": "",
   "format-source-muted": "",
   "format-icons": {
     "headphone": "󰋋",
