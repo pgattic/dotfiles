@@ -11,7 +11,7 @@ this_dir=$(dirname $0)
 echo "Setting up bash..."
 
 rm "$HOME/.bashrc"
-ln -s "$this_dir/.bashrc" "$HOME/"
+ln -s "$HOME/.dotfiles/.bashrc" "$HOME/.bashrc"
 
 printf "${green}bash setup complete.${color_off}\n"
 

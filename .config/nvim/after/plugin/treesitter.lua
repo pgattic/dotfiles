@@ -7,7 +7,6 @@ local config = require("nvim-treesitter.configs")
 
 config.setup({
   auto_install = true,
-  ensure_installed = { "lua", "c" },
   highlight = {enable=true},
   indent = {enable=true},
   refactor = {
@@ -25,6 +24,8 @@ config.setup({
     -- },
   },
 })
+
+vim.keymap.set("n", "<leader>ast", ":InspectTree<CR>")
 
 require('treesitter-context').setup{
   mode = 'topline',

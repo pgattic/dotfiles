@@ -47,3 +47,7 @@ vim.cmd(":command W w") -- Resolves a carpal race condition
 
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 
+vim.o.guifont = "JetBrainsMono Nerd font:h10"
+vim.g.neovide_transparency = 0.8
+
+
