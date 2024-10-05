@@ -1,10 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 color_off='\033[0m'
 yellow_b='\033[1;33m'
 red='\033[0;31m'
 green='\033[0;32m'
-# this_dir=$(dirname $0)
 
 echo "Setting up firefox..."
 
@@ -34,5 +33,4 @@ unset color_off
 unset yellow_b
 unset red
 unset green
-# unset this_dir
 

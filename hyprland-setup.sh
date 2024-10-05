@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # NOTE: The configs depend on JetBrainsMono Nerd Font being installed on the system
 
