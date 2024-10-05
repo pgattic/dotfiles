@@ -25,9 +25,40 @@ else
 
   branch_char="󰘬"
   PS1='\[\e[97m\]\[\e[36;107m\]  \[\e[97;44;1m\] \u \[\e[0;34;100m\] \[\e[97m\]\w \[\e[0;90m\]\[\e[94m\]${GIT_BRANCH}\[\e[0m\]\n \$ '
+
+  # Idk lol
+  alias vi="neovide . &"
+  alias dup="alacritty &"
 fi
+
+# Vim motions
+set -o vi
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias tree='tree -C'
+alias class='cd "$HOME/OneDrive/Semesters/08 Fall 2024" && ls'
+
+PATH=$PATH:$HOME/.cargo/bin
+
+# functions
+
+canl() {
+  if [ -z "$1" ]; then
+    echo "Usage: canl [REFERENCE]"
+    return 1
+  fi
+  
+  canon "$1" -v | marks -n | less -R --wordwrap
+}
+
+open() {
+  if [ -z "$1" ]; then
+    echo "Usage: open [REFERENCE]"
+    return 1
+  fi
+
+  xdg-open $1 > /dev/null 2>&1 &
+}
+
 

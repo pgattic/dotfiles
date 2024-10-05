@@ -4,7 +4,7 @@ color_off='\033[0m'
 yellow_b='\033[1;33m'
 red='\033[0;31m'
 green='\033[0;32m'
-this_dir=$(dirname $0)
+# this_dir=$(dirname $0)
 
 echo "Setting up firefox..."
 
@@ -20,7 +20,7 @@ if [ -n "$randomized_part" ]; then
   ln -s "$HOME/.dotfiles/.mozilla/firefox/default-release/chrome" "$ffox_dir/"
 
   rm "$ffox_dir/user.js"
-  ln -s "$this_dir/.mozilla/firefox/default-release/user.js" "$ffox_dir/"
+  ln -s "$HOME/.dotfiles/.mozilla/firefox/default-release/user.js" "$ffox_dir/"
 
   unset ffox_dir
   printf "${green}firefox setup complete.${color_off}\n"
@@ -34,5 +34,5 @@ unset color_off
 unset yellow_b
 unset red
 unset green
-unset this_dir
+# unset this_dir
 
