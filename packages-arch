@@ -1,32 +1,66 @@
-firefox
-neovim
-hyprland
-wl-clipboard
-alacritty
-waybar
-fuzzel
-swaybg
-swaync
-imv
-grim
-slurp
-kanshi
-btop
-ripgrep
-ttf-jetbrains-mono-nerd
-nwg-look
+#!/bin/sh
+
+packages=(
+
+# Desktop Environment
+hyprland # Goated Compositor
+waybar # Status Bar
+fuzzel # App Launcher
+swaybg # BG utility (hyprbg is a memory hog)
+swaync # Notifications daemon
+# kanshi # Display output management
+wl-clipboard # Clipboard
+brightnessctl # Display brightness
+
+# Theming
+papirus-icon-theme # Icons
+ttf-jetbrains-mono-nerd # Terminal font
+noto-fonts # Emojis and stuff
+noto-fonts-cjk # Eastern languages
+
+# Commandline Utils
 tree
 less
-usbutils
-pavucontrol
-thunar
-brightnessctl
-mako
-pinta
-papirus-icon-theme
-gvfs
-xarchiver
-p7zip
-mpv
-neovide
+ripgrep
+usbutils # Provides stuff like lsusb
+btop # Task management
+
+# Basic Utils
+imv # Image Viewer
+grim # Screenshot utility
+slurp # Screen grabber (helps grim)
+mpv # Video Player
+
+# GUI programs
+alacritty # Terminal
+firefox
+nwg-look # GTK configurer
+pavucontrol # Audio mixer
+  pipewire-pulse # Compat between Pipewire and PulseAudio
+thunar # File manager
+  gvfs # Trashbin, USB devices
+  exfatprogs # exFAT Partition scheme
+xarchiver # Archiver tool
+  p7zip # 7-zip compat
+pinta # Simple paint tool
+guvcview # Camera program
+obsidian # Notes app
+discord # Communications app
+
+# Software development
+neovim # Terminal editor
+zed # GUI edior
+git # Version Control System
+
+)
+
+aur_pkgs=(
+github-desktop-bin
+mcpelauncher-ui # Minecraft launcher
+onedrive-abraunegg # CLI OneDrive client
+)
+
+for item in "${packages[@]}"; do
+  echo "$item"
+done
 
