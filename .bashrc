@@ -39,6 +39,7 @@ alias grep='grep --color=auto'
 alias tree='tree -C'
 alias class='cd "$HOME/OneDrive/Semesters/08 Fall 2024" && ls'
 
+# Cargo bin path
 PATH=$PATH:$HOME/.cargo/bin
 
 # functions
