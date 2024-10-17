@@ -24,6 +24,7 @@ less
 ripgrep
 usbutils # Provides stuff like lsusb
 btop # Task management
+fastfetch # You already know ;)
 
 # Basic Utils
 imv # Image Viewer
@@ -44,6 +45,7 @@ xarchiver # Archiver tool
   p7zip # 7-zip compat
 pinta # Simple paint tool
 guvcview # Camera program
+zbar # QR Code/Barcode reader
 obsidian # Notes app
 discord # Communications app
 
@@ -58,6 +60,22 @@ aur_pkgs=(
 github-desktop-bin
 mcpelauncher-ui # Minecraft launcher
 onedrive-abraunegg # CLI OneDrive client
+)
+
+obs_studio=(
+obs-studio
+xdg-desktop-portal-hyprland # Required for screen recording
+)
+
+flutter_android=(
+flutter # AUR - NOTE: paru won't update unless passed the -d flag (skip dependency checking)
+android-studio # AUR
+android-udev # Allows ADB in user mode
+)
+
+dioxus_desktop_native=(
+webkit2gtk-4.1
+xdotool
 )
 
 for item in "${packages[@]}"; do
