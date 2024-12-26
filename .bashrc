@@ -37,10 +37,9 @@ set -o vi
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias tree='tree -C'
-alias class='cd "$HOME/OneDrive/Semesters/08 Fall 2024" && ls'
 
-# Cargo bin path
-PATH=$PATH:$HOME/.cargo/bin
+# Cargo bin path, user bin path
+PATH=$PATH:$HOME/.cargo/bin:$HOME/.local/bin
 
 # functions
 
