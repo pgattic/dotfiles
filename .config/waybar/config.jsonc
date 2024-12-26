@@ -5,9 +5,9 @@
 // "width": 1280, // Waybar width
 // "spacing": 4, // Gaps between modules (4px)
 // Choose the order of the modules
-"modules-left": ["hyprland/workspaces", "custom/media"],
-"modules-center": ["clock"],
-"modules-right": ["tray", "mpd", "cpu", "memory", "temperature", "backlight", "pulseaudio", "network", "battery", "battery#bat2"],
+"modules-left": ["hyprland/workspaces", "cpu", "memory", "temperature", "custom/media"],
+"modules-center": ["hyprland/window"],
+"modules-right": ["tray", "mpd", "backlight", "pulseaudio", "network", "battery", "battery#bat2", "clock"],
 // Modules configuration
 "hyprland/workspaces": {
   "disable-scroll": true,
@@ -68,7 +68,8 @@
 },
 "cpu": {
   "interval": 1,
-  "format": " {icon0}{icon1}{icon2}{icon3} {usage:>2}%", // For quad-core CPU
+  //"format": " {icon0}{icon1}{icon2}{icon3} {usage:>2}%", // For quad-core CPU
+  "format": " {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7} {usage:>2}%", // For 8-core cpu
   //"format": " {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15} {usage:>2}%", // For 16-core cpu
   "format-icons": [
     "<span color='#69ff94'>▁</span>", // green

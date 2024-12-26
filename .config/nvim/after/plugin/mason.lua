@@ -9,9 +9,6 @@ require("mason").setup()
 
 local mason_lspconfig = require("mason-lspconfig")
 
-
-local servers = { }
-
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
 vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, {})
 
@@ -41,9 +38,18 @@ mason_lspconfig.setup_handlers {
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,
-      settings = servers[server_name],
     }
   end,
 }
 
+-- Temporary workaround for rust-analyzer changes
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+    local default_diagnostic_handler = vim.lsp.handlers[method]
+    vim.lsp.handlers[method] = function(err, result, context, config)
+        if err ~= nil and err.code == -32802 then
+            return
+        end
+        return default_diagnostic_handler(err, result, context, config)
+    end
+end
 

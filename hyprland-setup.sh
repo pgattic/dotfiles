@@ -23,14 +23,11 @@ ln -s "$HOME/.dotfiles/.config/hypr" "$HOME/.config/"
 rm -rf "$HOME/.config/waybar"
 ln -s "$HOME/.dotfiles/.config/waybar" "$HOME/.config/"
 
-rm -rf "$HOME/.config/alacritty"
-ln -s "$HOME/.dotfiles/.config/alacritty" "$HOME/.config/"
+rm -rf "$HOME/.config/ghostty"
+ln -s "$HOME/.dotfiles/.config/ghostty" "$HOME/.config/"
 
 rm -rf "$HOME/.config/fuzzel"
 ln -s "$HOME/.dotfiles/.config/fuzzel" "$HOME/.config/"
-
-# rm -rf "$HOME/.config/kanshi"
-# ln -s "$HOME/.dotfiles/.config/kanshi" "$HOME/.config/"
 
 printf "${green}hyprland setup complete.${color_off}\n"
 
