@@ -9,7 +9,7 @@ yellow_b='\033[1;33m'
 
 echo "Setting up hyprland..."
 
-declare -a programs=(Hyprland alacritty waybar fuzzel swaybg mako grim slurp)
+declare -a programs=(Hyprland waybar fuzzel swaybg mako grim slurp)
 
 # Check if all of those programs are installed
 for i in "${programs[@]}"
@@ -22,9 +22,6 @@ ln -s "$HOME/.dotfiles/.config/hypr" "$HOME/.config/"
 
 rm -rf "$HOME/.config/waybar"
 ln -s "$HOME/.dotfiles/.config/waybar" "$HOME/.config/"
-
-rm -rf "$HOME/.config/ghostty"
-ln -s "$HOME/.dotfiles/.config/ghostty" "$HOME/.config/"
 
 rm -rf "$HOME/.config/fuzzel"
 ln -s "$HOME/.dotfiles/.config/fuzzel" "$HOME/.config/"

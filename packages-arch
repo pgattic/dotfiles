@@ -36,7 +36,7 @@ slurp # Screen grabber (helps grim)
 mpv # Video Player
 
 # GUI programs
-# ghostty # Terminal
+ghostty # Terminal
 firefox
 nwg-look # GTK configurer
 pavucontrol # Audio mixer

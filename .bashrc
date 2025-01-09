@@ -28,7 +28,6 @@ else
 
   # Idk lol
   alias vi="neovide . &"
-  alias dup="alacritty &"
 fi
 
 # Vim motions
