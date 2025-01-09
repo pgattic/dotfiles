@@ -21,6 +21,7 @@ vim.opt.termguicolors = true
 
 vim.opt.smartindent = true
 
+vim.opt.mousescroll = "ver:1,hor:6" -- For some reason, Neovim scrolls way fast on Ghostty
 vim.opt.scrolloff = 4
 --vim.opt.sigcolumn = "yes"
 
