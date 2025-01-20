@@ -62,7 +62,7 @@
 },
 "clock": {
   "timezone": "US/Mountain",
-  "format": "{:%d %b %I:%M %p}",
+  "format": "{:%a %b %d %I:%M %p}",
   "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
   "format-alt": "{:%Y-%m-%d}"
 },
