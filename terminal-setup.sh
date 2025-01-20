@@ -5,14 +5,14 @@ red='\033[0;31m'
 green='\033[0;32m'
 yellow_b='\033[1;33m'
 
-echo "Setting up ghostty..."
+echo "Setting up kitty..."
 
-./check-installed ghostty
+./check-installed kitty
 
-rm -rf "$HOME/.config/ghostty"
-ln -s "$HOME/.dotfiles/.config/ghostty" "$HOME/.config/"
+rm -rf "$HOME/.config/kitty"
+ln -s "$HOME/.dotfiles/.config/kitty" "$HOME/.config/"
 
-printf "${green}ghostty setup complete.${color_off}\n"
+printf "${green}kitty setup complete.${color_off}\n"
 
 unset color_off
 unset red

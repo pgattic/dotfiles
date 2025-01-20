@@ -87,7 +87,7 @@ webkit2gtk-4.1
 xdotool
 )
 
-for item in "${packages[@]}"; do
+for item in "${system[@]}"; do
   echo "$item"
 done
 
