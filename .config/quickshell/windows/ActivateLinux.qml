@@ -37,7 +37,7 @@ Variants {
     // Use the wlroots specific layer property to ensure it displays over
     // fullscreen windows.
     // NOTE: This seems to throw a warning currently
-    //WlrLayershell.layer: WlrLayer.Overlay
+    WlrLayershell.layer: WlrLayer.Overlay
 
     ColumnLayout {
       id: content
