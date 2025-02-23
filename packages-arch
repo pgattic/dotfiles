@@ -14,7 +14,8 @@ brightnessctl # Display brightness
 
 # Theming
 papirus-icon-theme # Icons
-ttf-jetbrains-mono-nerd # Font
+ttf-jetbrains-mono-nerd # Nerd Font
+ttf-joypixels # Twitter Emojis
 noto-fonts # Emojis and stuff
 noto-fonts-cjk # Eastern languages
 
