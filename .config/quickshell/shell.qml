@@ -1,5 +1,4 @@
-import Quickshell // for ShellRoot and PanelWindow
-import QtQuick // for Text
+import Quickshell
 import "./windows"
 
 ShellRoot {
