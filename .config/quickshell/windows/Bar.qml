@@ -41,6 +41,7 @@ Variants {
 
         // Left-aligned items go here
         Workspaces {}
+        Important {}
 
         //Text {
         //  text: Hyprland.focusedMonitor.name
@@ -58,7 +59,7 @@ Variants {
         spacing: 5
 
         // Center-aligned items go here
-        Important {}
+        CurrentApp {}
       }
 
       // Right
@@ -70,9 +71,11 @@ Variants {
         anchors.top: parent.top
         anchors.rightMargin: 5
 
-        spacing: 5
+        spacing: 8
 
         // Right-aligned items go here
+        Tray {}
+        Power {}
         Clock {}
       }
     }
