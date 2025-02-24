@@ -2,30 +2,21 @@ import Quickshell
 import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
-import "../../"
-
-// TODO: Sort the workspaces by their `id` attribute (they currently just vibe with whatever order)
+import "../../" // For `Constants`
 
 RowLayout {
   id: workspaces
 
   spacing: 0 // Spacing for between each of those `Rectangle`s
 
-  // Proxy model to handle sorting
-  //SortFilterProxyModel {
-  //  id: sortedWorkspaces
-  //  sourceModel: Hyprland.workspaces
-  //  sortRole: "id"  // Ensure this role exists in your model
-  //  sortOrder: Qt.AscendingOrder
-  //}
-
-  //Component.onCompleted: {
-  //  // Assuming the "id" attribute is in column 0:
-  //  Hyprland.workspaces.values.sort(0, Qt.AscendingOrder)
-  //}
+  function getSortedWorkspaces() {
+    var arr = Hyprland.workspaces.values.slice(); // Create a copy
+    arr.sort(function(a, b) { return a.id - b.id; }); // Sort numerically by id
+    return arr;
+  }
 
   Repeater {
-    model: Hyprland.workspaces.values
+    model: getSortedWorkspaces()
 
     Rectangle {
       required property HyprlandWorkspace modelData
@@ -47,3 +38,4 @@ RowLayout {
     }
   }
 }
+
