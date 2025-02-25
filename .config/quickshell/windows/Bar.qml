@@ -74,6 +74,7 @@ Variants {
         spacing: 8
 
         // Right-aligned items go here
+        Mixer {}
         Tray {}
         Power {}
         Clock {}
