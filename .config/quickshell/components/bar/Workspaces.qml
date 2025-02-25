@@ -10,8 +10,8 @@ RowLayout {
   spacing: 0 // Spacing for between each of those `Rectangle`s
 
   function getSortedWorkspaces() {
-    var arr = Hyprland.workspaces.values.slice(); // Create a copy
-    arr.sort(function(a, b) { return a.id - b.id; }); // Sort numerically by id
+    var arr = Hyprland.workspaces.values.slice();
+    arr.sort(function(a, b) { return a.id - b.id; });
     return arr;
   }
 
