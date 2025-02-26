@@ -12,21 +12,37 @@ RowLayout {
   //}
 
   Repeater {
-    model: SystemTray.items.values
+    model: SystemTray.items
 
-    Rectangle {
-      required property SystemTrayItem trayItem
+    RowLayout {
+      required property SystemTrayItem modelData
 
-      color: "transparent"
-      width: content.width
-      height: Constants.barHeight
-
-      Text {
-        id: content
-        anchors.centerIn: parent
-        text: `yeet`
-        color: palette.active.text
+      Image {
+        source: modelData.icon
+    //source: `image://icon/emblem-information`
+        sourceSize.width: 16
+        sourceSize.height: 16
       }
+
+      MouseArea {
+        anchors.fill: parent
+        onClicked: event => {
+          event.accepted = true;
+
+          if (event.button == Qt.LeftButton) {
+            modelData.activate();
+          } else if (event.button == Qt.MiddleButton) {
+            modelData.secondaryActivate();
+          }
+        }
+      }
+
+      //Text {
+      //  id: content
+      //  anchors.centerIn: parent
+      //  text: modelData.icon
+      //  color: palette.active.text
+      //}
     }
   }
 }

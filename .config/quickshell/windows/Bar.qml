@@ -21,8 +21,7 @@ PanelWindow {
   Rectangle {
     id: bar
     anchors.fill: parent
-    // This somehow gets the QT window color :) Will have to read up on this
-    color: palette.active.window
+    color: Constants.windowColor
 
     // Left
     RowLayout {

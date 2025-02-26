@@ -18,7 +18,7 @@ RowLayout {
 
         let plural = (x) => {return x == 1 ? "" : "s"}
 
-        let hours = Math.floor(seconds / (3600));
+        let hours = Math.floor(seconds / 3600);
         let minutes = Math.floor((seconds / 60) % 60);
         let result = []
         if (hours != 0) {
