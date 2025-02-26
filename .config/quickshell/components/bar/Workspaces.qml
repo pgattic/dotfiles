@@ -21,14 +21,15 @@ RowLayout {
     Rectangle {
       required property HyprlandWorkspace modelData
 
-      width: Constants.barHeight
+      width: 24
       height: Constants.barHeight
-      color: Hyprland.focusedMonitor?.activeWorkspace.id == modelData.id ? "#444444" : "transparent"
+      color: "transparent"
+      //color: Hyprland.focusedMonitor?.activeWorkspace.id == modelData.id ? "#2FFFFFFF" : "transparent"
 
       Text {
         anchors.centerIn: parent
         text: modelData.id == -98 ? "S" : modelData.name
-        color: palette.active.text
+        color: Hyprland.focusedMonitor?.activeWorkspace.id == modelData.id ? "#4488FF" : palette.active.text
       }
 
       MouseArea {
