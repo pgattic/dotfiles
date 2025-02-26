@@ -9,13 +9,10 @@ ColumnLayout {
 	// bind the node so we can read its properties
 	PwObjectTracker { objects: [ node ] }
 
+  width: mixerPopup.width
 	RowLayout {
 		Image {
-			visible: source != ""
-			source: {
-				const icon = node.properties["application.icon-name"] ?? "audio-volume-high-symbolic";
-				return `image://icon/${icon}`;
-			}
+			source: `image://icon/${mixerButton.determineIconName(node)}`
 
 			sourceSize.width: 20
 			sourceSize.height: 20

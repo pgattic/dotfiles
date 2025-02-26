@@ -3,12 +3,82 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
-import "./elements"
+import "./elements" as Elements
 
-Button {
+RowLayout {
   id: mixerButton
-  text: "audio stuff"
-  onClicked: mixerPopup.visible = !mixerPopup.visible
+
+  function determineIconName(node) {
+    // Return recommended one if exists
+    if (node.properties["application.icon-name"]) return node.properties["application.icon-name"];
+    // Figure out volume level
+    if (node.isSink) { // Audio Output
+      if (node.audio.muted) return "audio-volume-muted";
+      if (node.audio.volume < 0.3) return "audio-volume-low";
+      else if (node.audio.volume < 0.7) return "audio-volume-medium";
+      return "audio-volume-high";
+    } else { // Audio Input (mic)
+      //if (node.audio.muted) return "audio-input-microphone-muted";
+      //if (node.audio.volume < 0.3) return "audio-input-microphone-low";
+      //else if (node.audio.volume < 0.7) return "audio-input-microphone-medium";
+      return "audio-input-microphone-high";
+    }
+    return "audio-input-microphone-high";
+  }
+
+  RowLayout {
+    Image {
+      source: `image://icon/${determineIconName(Pipewire.defaultAudioSink)}`
+
+      sourceSize.width: 16
+      sourceSize.height: 16
+    }
+
+    Label {
+      text: `${Math.floor(Pipewire.defaultAudioSink.audio.volume * 100)}%`
+    }
+
+    MouseArea {
+      anchors.fill: parent
+      acceptedButtons: Qt.RightButton
+
+      onClicked: event => {
+        Pipewire.defaultAudioSink.audio.muted = !Pipewire.defaultAudioSink.audio.muted;
+      }
+
+      onWheel: (event) => {
+        Pipewire.defaultAudioSink.audio.muted = false;
+        Pipewire.defaultAudioSink.audio.volume += event.angleDelta.y / (120 * 10);
+      }
+    }
+  }
+
+  //RowLayout {
+  //  Image {
+  //    source: `image://icon/${determineIconName(Pipewire.defaultAudioSource)}`
+  //
+  //    sourceSize.width: 16
+  //    sourceSize.height: 16
+  //  }
+  //
+  //  MouseArea {
+  //    anchors.fill: parent
+  //    acceptedButtons: Qt.RightButton
+  //
+  //    onClicked: event => {
+  //      Pipewire.defaultAudioSource.audio.muted = !Pipewire.defaultAudioSource.audio.muted;
+  //    }
+  //  }
+  //}
+
+  MouseArea {
+    anchors.fill: parent
+    acceptedButtons: Qt.LeftButton
+
+    onClicked: event => {
+      mixerPopup.visible = !mixerPopup.visible;
+    }
+  }
 
   PopupWindow {
     id: mixerPopup
@@ -18,7 +88,7 @@ Button {
     anchor.window: barWindow
     anchor.rect.x: parentWindow.width
     anchor.rect.y: parentWindow.height
-    width: 500
+    width: 800
     height: 300
     visible: false
 
@@ -36,7 +106,7 @@ Button {
           node: Pipewire.defaultAudioSink
         }
 
-        MixerEntry {
+        Elements.MixerEntry {
           node: Pipewire.defaultAudioSink
         }
 
@@ -49,7 +119,7 @@ Button {
         Repeater {
           model: linkTracker.linkGroups
 
-          MixerEntry {
+          Elements.MixerEntry {
             required property PwLinkGroup modelData
             // Each link group contains a source and a target.
             // Since the target is the default sink, we want the source.
