@@ -2,6 +2,8 @@
 
 system=(
 
+greetd-agreety # TUI greeter (installs greetd as a dep)
+
 # Desktop Environment
 hyprland # Goated Compositor
 waybar # Status Bar
@@ -37,19 +39,19 @@ slurp # Screen grabber (helps grim)
 mpv # Video Player
 
 # GUI programs
-ghostty # Terminal
-firefox
+kitty # Terminal
 nwg-look # GTK configurer
 pavucontrol # Audio mixer
   pipewire-pulse # Compat between Pipewire and PulseAudio
 thunar # File manager
   gvfs # Trashbin, USB devices
   exfatprogs # exFAT Partition scheme
+  ntfs-3g # NT Filesystem Support
 xarchiver # Archiver tool
   p7zip # 7-zip compat
 pinta # Simple paint tool
 guvcview # Camera program
-zbar # QR Code/Barcode reader
+# zbar # QR Code/Barcode reader
 obsidian # Notes app
 discord # Communications app
 
@@ -61,14 +63,12 @@ git # Version Control System
 
 # Bluetooth packages
 blueman
-
-ntfs-3g # NT Filesystem Support
 )
 
 aur=(
-github-desktop-bin
 hyprshot
-mcpelauncher-ui # Minecraft launcher
+zen-browser-bin
+mcpelauncher-appimage # Minecraft launcher
 onedrive-abraunegg # CLI OneDrive client
 )
 
