@@ -34,11 +34,11 @@ RowLayout {
       }
 
       function toolTipText() {
-        if (modelData.timeToFull != 0) {
+        if (modelData.timeToFull != 0) { // Charging
           return `${formatSecs(modelData.timeToFull)} until full`;
-        } else if (modelData.timeToEmpty != 0) {
+        } else if (modelData.timeToEmpty != 0) { // Discharging
           return `${formatSecs(modelData.timeToEmpty)} until empty`;
-        } else {
+        } else { // Just chillin
           return "Idle";
         }
       }

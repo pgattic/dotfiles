@@ -11,7 +11,7 @@ RowLayout {
 
   function getSortedWorkspaces() {
     var arr = Hyprland.workspaces.values.slice();
-    arr.sort(function(a, b) { return a.id - b.id; });
+    arr.sort((a, b) => { return a.id - b.id; });
     return arr;
   }
 
@@ -27,7 +27,7 @@ RowLayout {
 
       Text {
         anchors.centerIn: parent
-        text: modelData.name
+        text: modelData.id == -98 ? "S" : modelData.name
         color: palette.active.text
       }
 
