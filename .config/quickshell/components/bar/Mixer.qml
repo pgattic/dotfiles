@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
 import "./elements" as Elements
+import "../../" // for Constants.qml
 
 RowLayout {
   id: mixerButton
@@ -84,46 +85,52 @@ RowLayout {
     id: mixerPopup
 
     // match the system theme background color
-    color: contentItem.palette.active.window
+    color: "transparent"
     anchor.window: barWindow
     anchor.rect.x: parentWindow.width
     anchor.rect.y: parentWindow.height
-    width: 800
+    width: 600
     height: 300
     visible: false
 
-    ScrollView {
+    Rectangle {
+      color: Constants.windowColor
       anchors.fill: parent
-      contentWidth: availableWidth
+      radius: 12
 
-      ColumnLayout {
+      ScrollView {
         anchors.fill: parent
-        anchors.margins: 10
+        contentWidth: availableWidth
 
-        // get a list of nodes that output to the default sink
-        PwNodeLinkTracker {
-          id: linkTracker
-          node: Pipewire.defaultAudioSink
-        }
+        ColumnLayout {
+          anchors.fill: parent
+          anchors.margins: 10
 
-        Elements.MixerEntry {
-          node: Pipewire.defaultAudioSink
-        }
-
-        Rectangle {
-          Layout.fillWidth: true
-          color: palette.active.text
-          implicitHeight: 1
-        }
-
-        Repeater {
-          model: linkTracker.linkGroups
+          // get a list of nodes that output to the default sink
+          PwNodeLinkTracker {
+            id: linkTracker
+            node: Pipewire.defaultAudioSink
+          }
 
           Elements.MixerEntry {
-            required property PwLinkGroup modelData
-            // Each link group contains a source and a target.
-            // Since the target is the default sink, we want the source.
-            node: modelData.source
+            node: Pipewire.defaultAudioSink
+          }
+
+          Rectangle {
+            Layout.fillWidth: true
+            color: palette.active.text
+            implicitHeight: 1
+          }
+
+          Repeater {
+            model: linkTracker.linkGroups
+
+            Elements.MixerEntry {
+              required property PwLinkGroup modelData
+              // Each link group contains a source and a target.
+              // Since the target is the default sink, we want the source.
+              node: modelData.source
+            }
           }
         }
       }

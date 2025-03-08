@@ -12,7 +12,7 @@ RowLayout {
 
     function randomMessage() {
       const items = [
-        "GNU Plus Linux!",
+        "GNU Plus Linux!🐧",
         "💍💞2025/05/31💖👫",
         "hahaha funny poopoo",
         "Did you work out today?",
@@ -24,6 +24,8 @@ RowLayout {
         "Written in Qt/QML!",
         "I use Arch btw",
         "Learn some Rust",
+        "'MURICA 🇺🇸",
+        "I love Skylar! 🥰",
       ];
       return items[Math.floor(Math.random() * items.length)];
     }

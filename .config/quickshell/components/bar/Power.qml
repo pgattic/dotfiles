@@ -38,9 +38,12 @@ RowLayout {
           return `${formatSecs(modelData.timeToFull)} until full`;
         } else if (modelData.timeToEmpty != 0) { // Discharging
           return `${formatSecs(modelData.timeToEmpty)} until empty`;
-        } else { // Just chillin
-          return "Idle";
+        } else if (modelData.percentage == 1) {
+          return "Full";
+        } else if (modelData.percentage == 0) {
+          return "Empty";
         }
+        return "Idle";
       }
 
       MouseArea {

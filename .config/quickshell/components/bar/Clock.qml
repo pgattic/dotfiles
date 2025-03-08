@@ -1,13 +1,14 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "../../" // for Constants.qml
 
 Text {
   SystemClock {
     id: clock
     precision: SystemClock.Seconds
   }
-  text: Qt.formatDateTime(clock.date, "ddd MMM d h:mm:ss AP")
+  text: Qt.formatDateTime(clock.date, "ddd MMM d  h:mm:ss AP")
   color: palette.active.text
 
   MouseArea {
@@ -24,7 +25,7 @@ Text {
     id: calendarPopup
 
     // match the system theme background color
-    color: contentItem.palette.active.window
+    color: "transparent"
     anchor.window: barWindow
     anchor.rect.x: parentWindow.width
     anchor.rect.y: parentWindow.height
@@ -33,20 +34,25 @@ Text {
     visible: false
 
     Rectangle {
+      color: Constants.windowColor
+      radius: 12
       anchors.fill: parent
-      anchors.margins: 8
-      color: "transparent"
-      Text {
-        id: calendarText
-        font.family: "monospace"
-        color: "white"
-      }
-      Process {
-        id: process_calendar
-        running: true
-        command: ["sh", "-c", "cal -3"]
-        stdout: SplitParser {
-          onRead: data => calendarText.text += data + "\n"
+      Rectangle {
+        color: "transparent"
+        anchors.fill: parent
+        anchors.margins: 8
+        Text {
+          id: calendarText
+          font.family: "monospace"
+          color: "white"
+        }
+        Process {
+          id: process_calendar
+          running: true
+          command: ["sh", "-c", "cal -3"]
+          stdout: SplitParser {
+            onRead: data => calendarText.text += data + "\n"
+          }
         }
       }
     }

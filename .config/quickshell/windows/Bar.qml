@@ -32,10 +32,11 @@ PanelWindow {
       anchors.top: parent.top
       //anchors.leftMargin: 5
 
-      spacing: 5
+      spacing: 12
 
       // Left-aligned items go here
       Workspaces {}
+      Resources {}
       Important {}
     }
 
@@ -60,12 +61,13 @@ PanelWindow {
       anchors.bottom: parent.bottom
       anchors.right: parent.right
       anchors.top: parent.top
-      anchors.rightMargin: 5
+      anchors.rightMargin: 12
 
       spacing: 8
 
       // Right-aligned items go here
       Tray {}
+      Brightness {}
       Mixer {}
       Power {}
       Clock {}
