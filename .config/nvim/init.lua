@@ -80,6 +80,7 @@ local plugins = {
   {"Djancyp/better-comments.nvim"},
   {'nvim-tree/nvim-web-devicons'},
 -- {"Exafunction/codeium.vim"},
+  {'petertriho/nvim-scrollbar'},
 }
 
 local opts = {}
