@@ -46,6 +46,12 @@ RowLayout {
         return "Idle";
       }
 
+      function batIcon(percentage, charging) {
+        const range = Math.round(percentage * 10) * 10;
+        const rangeStr = ("" + range).padStart(3, '0');
+        return `image://icon/battery-${rangeStr}${charging?"-charging":""}`
+      }
+
       MouseArea {
         anchors.fill: parent
         hoverEnabled: true
@@ -56,7 +62,7 @@ RowLayout {
       }
 
       Image {
-        source: `image://icon/${modelData.iconName}`
+        source: batIcon(modelData.percentage, modelData.state == UPowerDeviceState.Charging)
         sourceSize.width: 16
         sourceSize.height: 16
       }
