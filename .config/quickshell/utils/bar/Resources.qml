@@ -5,7 +5,7 @@ import Quickshell.Io
 import QtQuick
 
 Singleton {
-  property int cpu_percent
+  property real cpu_percent
   //property string cpu_freq
   property string mem_used
   //property int mem_percent
@@ -14,9 +14,12 @@ Singleton {
   Process {
     id: process_cpu_percent
     running: true
-    command: ["sh", "-c", "top -bn1 | rg '%Cpu' | awk '{print 100-$8}'"]
+    command: ["sh", "-c", "top -bn1 | awk 'NR==3'"]
     stdout: SplitParser {
-      onRead: data => cpu_percent = Math.round(data)
+      onRead: data => {
+        const idle = data.split(',')[3].trim().split(' ')[0];
+        cpu_percent = (100 - idle).toFixed(1);
+      }
     }
   }
 
@@ -64,7 +67,7 @@ Singleton {
   }
 
   Timer {
-    interval: 1000
+    interval: 3000
     running: true
     repeat: true
     onTriggered: () => {

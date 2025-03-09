@@ -5,28 +5,26 @@ import "../../utils/bar" as Utils
 
 RowLayout {
   id: resources
+  spacing: 10
 
   RowLayout {
+    id: cpu_usage
+    property int cores: 8
+
     Image {
-      source: "image://icon/cpu"
+      source: "image://icon/cpu-frequency-indicator"
+      //source: "image://icon/cpu-x"
       sourceSize.width: 16
       sourceSize.height: 16
     }
-    Label {
-      color: palette.active.text
-      text: Utils.Resources.cpu_percent + "%"
-      Layout.alignment: Qt.AlignCenter
-    }
     Rectangle {
-      id: cpu_box
-      width: 4 * 8 + 4  // Adjust width to fit the bars, Utils.Resources.cpu_cores_percent.length
-      height: 20 // Box height
+      width: 4 * cpu_usage.cores + 4  // Utils.Resources.cpu_cores_percent.length
+      height: 20
       color: "transparent"
-      border.color: "gray"
+      border.color: Utils.Resources.cpu_percent > 90 ? "red" : "gray"
       border.width: 1
 
       RowLayout {
-        id: cpu_bars
         anchors.fill: parent
         anchors.margins: 2
         spacing: 0
@@ -37,11 +35,16 @@ RowLayout {
             width: 4
             height: (modelData / 100) * 16
             color: Qt.hsla((1/3) - (modelData/300), 1, .5, .75)
-            anchors.bottom: parent.bottom // Align bars to the bottom
+            anchors.bottom: parent.bottom
           }
         }
       }
     }
+    //Label {
+    //  color: palette.active.text
+    //  text: Utils.Resources.cpu_percent + "%"
+    //  Layout.alignment: Qt.AlignCenter
+    //}
   }
 
   RowLayout {
