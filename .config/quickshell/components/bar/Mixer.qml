@@ -37,6 +37,7 @@ RowLayout {
 
     Label {
       text: `${Math.floor(Pipewire.defaultAudioSink.audio.volume * 100)}%`
+      color: Pipewire.defaultAudioSink.audio.muted ? "#5affffff" : palette.active.text
     }
 
     MouseArea {

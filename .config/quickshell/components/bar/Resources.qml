@@ -13,7 +13,6 @@ RowLayout {
 
     Image {
       source: "image://icon/cpu-frequency-indicator"
-      //source: "image://icon/cpu-x"
       sourceSize.width: 16
       sourceSize.height: 16
     }

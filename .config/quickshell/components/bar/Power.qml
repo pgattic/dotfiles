@@ -49,7 +49,7 @@ RowLayout {
       function batIcon(percentage, charging) {
         const range = Math.round(percentage * 10) * 10;
         const rangeStr = ("" + range).padStart(3, '0');
-        return `image://icon/battery-${rangeStr}${charging?"-charging":""}`
+        return `image://icon/battery-${rangeStr}${charging ? "-charging" : ""}`
       }
 
       MouseArea {
@@ -69,7 +69,7 @@ RowLayout {
 
       Label {
         text: `${Math.round(modelData.percentage * 100)}%`
-        color: modelData.state == UPowerDeviceState.Charging ? "#00FF00" : modelData.percentage < 0.15 ? "#FF0000" : palette.active.text
+        color: modelData.state == UPowerDeviceState.Charging ? "#4caf50" : modelData.percentage < 0.15 ? "#f44336" : palette.active.text // Colors stolen from Papirus Icon Theme
       }
     }
   }
