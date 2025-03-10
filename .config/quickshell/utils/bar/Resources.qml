@@ -5,36 +5,18 @@ import Quickshell.Io
 import QtQuick
 
 Singleton {
-  property real cpu_percent
-  //property string cpu_freq
+  //property real cpu_percent
   property string mem_used
-  //property int mem_percent
   property list<real> cpu_cores_percent
 
-  Process {
-    id: process_cpu_percent
-    running: true
-    command: ["sh", "-c", "top -bn1 | awk 'NR==3'"]
-    stdout: SplitParser {
-      onRead: data => {
-        const idle = data.split(',')[3].trim().split(' ')[0];
-        cpu_percent = (100 - idle).toFixed(1);
-      }
-    }
-  }
-
   //Process {
-  //  id: process_cpu_freq
+  //  id: process_cpu_percent
   //  running: true
-  //  command: ["sh", "-c", "lscpu --parse=MHZ"]
+  //  command: ["sh", "-c", "top -bn1 | awk 'NR==3'"]
   //  stdout: SplitParser {
   //    onRead: data => {
-  //      // delete the first 4 lines (comments)
-  //      const mhz = data.split("\n").slice(4);
-  //      // compute mean frequency
-  //      const freq = mhz.reduce((acc, e) => acc + Number(e), 0) / mhz.length;
-  //
-  //      cpu_freq = Math.round(freq) + " MHz";
+  //      const idle = data.split(',')[3].trim().split(' ')[0];
+  //      cpu_percent = (100 - idle).toFixed(1);
   //    }
   //  }
   //}
@@ -47,15 +29,6 @@ Singleton {
       onRead: data => cpu_cores_percent = data.trim().split(",")
     }
   }
-
-  //Process {
-  //  id: process_mem_percent
-  //  running: true
-  //  command: ["sh", "-c", "free | awk 'NR==2{print $3/$2*100}'"]
-  //  stdout: SplitParser {
-  //    onRead: data => mem_percent = Math.round(data)
-  //  }
-  //}
 
   Process {
     id: process_mem_used
@@ -71,10 +44,8 @@ Singleton {
     running: true
     repeat: true
     onTriggered: () => {
-      process_cpu_percent.running = true
-      //process_cpu_freq.running = true
+      //process_cpu_percent.running = true
       process_cpu_cores_percent.running = true
-      //process_mem_percent.running = true
       process_mem_used.running = true
     }
   }
