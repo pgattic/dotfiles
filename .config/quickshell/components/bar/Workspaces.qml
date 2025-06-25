@@ -9,14 +9,8 @@ RowLayout {
 
   spacing: 0 // Spacing for between each of those `Rectangle`s
 
-  function getSortedWorkspaces() {
-    var arr = Hyprland.workspaces.values.slice();
-    arr.sort((a, b) => { return a.id - b.id; });
-    return arr;
-  }
-
   Repeater {
-    model: getSortedWorkspaces()
+    model: Hyprland.workspaces.values
 
     Rectangle {
       required property HyprlandWorkspace modelData

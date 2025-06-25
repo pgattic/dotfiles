@@ -3,6 +3,8 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 
+// NOTE: This is currently a stub, it has no interaction with the desktop.
+
 RowLayout {
 
   function determineIconName(brightness) {
@@ -26,13 +28,5 @@ RowLayout {
     text: `20%`
   }
 
-  //MouseArea {
-  //  anchors.fill: parent
-  //
-  //  onWheel: (event) => {
-  //    Pipewire.defaultAudioSink.audio.muted = false;
-  //    Pipewire.defaultAudioSink.audio.volume += event.angleDelta.y / (120 * 10);
-  //  }
-  //}
 }
 

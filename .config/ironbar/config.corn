@@ -1,0 +1,141 @@
+let {
+  $workspaces = {
+    type = "workspaces"
+    all_monitors = false
+  }
+
+  $focused = {
+    type = "focused"
+    show_icon = true
+    show_title = true
+    icon_size = 16
+    truncate = "end"
+  }
+
+  $sys_info = {
+    type = "sys_info"
+
+    interval.memory = 3
+    interval.cpu = 1
+    interval.temps = 5
+    // interval.disks = 300
+
+    format = [
+      "  {cpu_percent}%"
+      "  {memory_used}G"
+      " {temp_f@CPU}°F"
+      // "󰋊 {disk_used#T@/:.1} / {disk_total#T@/:.1} TB ({disk_percent@/}%) | {disk_read} / {disk_write} MB/s"
+      // "󰖡 {load_average1} | {load_average5} | {load_average15}"
+    ]
+  }
+
+  $mpris = {
+    type = "music"
+    player_type = "mpris"
+    truncate = "end"
+
+    format = ""
+
+    on_click_middle = "playerctl play-pause"
+    // on_scroll_up = "playerctl volume +5"
+    // on_scroll_down = "playerctl volume -5"
+  }
+
+  $notifications = {
+    type = "notifications"
+
+    icons = {
+      closed_none = "󰍥"
+      closed_some = "󱥂"
+      closed_dnd = "󱅯"
+      open_none = "󰍡"
+      open_some = "󱥁"
+      open_dnd = "󱅮"
+    }
+  }
+
+  $tray = { type = "tray" }
+
+  $clock = {
+    type = "clock"
+    format = "%a %b %d %I:%M %p"
+  }
+
+  $clipboard = {
+    type = "clipboard"
+    max_items = 5
+    truncate.mode = "end"
+    truncate.length = 50
+  }
+
+  $power = {
+    type = "upower"
+    format = "{percentage}%"
+    icon_size = 16
+  }
+
+  $network = {
+    type = "network_manager"
+    icon_size = 16
+  }
+
+  $volume = {
+    type = "volume"
+    format = "{icon}  {percentage}%"
+    max_volume = 120
+    icons = {
+      volume_high = "󰕾"
+      volume_medium = "󰖀"
+      volume_low = "󰕿"
+      muted = "󰝟"
+    }
+  }
+
+  // $label = { type = "label" label = "random num: {{500:echo yeet}}" }
+
+  // -- begin custom --
+  $button = { type = "button" name="power-btn" label = "" on_click = "popup:toggle" }
+
+  $popup = {
+    type = "box"
+    orientation = "vertical"
+    widgets = [
+      { type = "label" name = "header" label = "Power menu" }
+      {
+        type = "box"
+        widgets = [
+          { type = "button" class="power-btn" label = "<span font-size='40pt'></span>" on_click = "!shutdown now" }
+          { type = "button" class="power-btn" label = "<span font-size='40pt'></span>" on_click = "!reboot" }
+        ]
+      }
+      { type = "label" name = "uptime" label = "Uptime: {{30000:uptime -p | cut -d ' ' -f2-}}" }
+    ]
+  }
+
+  $power_menu = {
+    type = "custom"
+    class = "power-menu"
+
+    bar = [ $button ]
+    popup = [ $popup ]
+
+    tooltip = "Up: {{30000:uptime -p | cut -d ' ' -f2-}}"
+  }
+  // -- end custom --
+
+  $left = [ $workspaces $mpris $sys_info ]
+  $center = [ $focused ]
+  $right = [ $tray $clipboard $volume $network $power $clock $notifications ]
+
+} in {
+
+  anchor_to_edges = true
+  position = "top"
+  height = 24
+  icon_theme = "Papirus"
+
+  start = $left
+  center = $center
+  end = $right
+}
+

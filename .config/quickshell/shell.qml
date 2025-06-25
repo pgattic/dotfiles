@@ -1,8 +1,12 @@
 import Quickshell
 import Quickshell.Wayland
 import "./windows" as Windows
+//import QtQuick
 
 ShellRoot {
+
+  //Component.onCompleted: [Windows.Launcher.Controller.init()]
+
   Variants {
     // For each monitor
     model: Quickshell.screens

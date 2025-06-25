@@ -1,0 +1,86 @@
+@define-color bg_color rgba(0, 0, 0, 0.6);
+@define-color popup_bg_color rgba(16, 16, 16, 0.8);
+
+* {
+  border: none;
+  text-shadow: none;
+  border-radius: 0;
+}
+
+.widget, .item, .notifications > .text-button {
+  background: transparent;
+}
+
+.background {
+  background: transparent;
+}
+
+#bar {
+  background: @bg_color;
+}
+
+.widget {
+  margin: 0 4px;
+}
+
+/* GNOME-inspired pill shapes */
+.workspaces > .item {
+  font-size: 0;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  margin: 12px 4px;
+  min-width: 8px;
+  min-height: 8px;
+}
+.workspaces > .item.focused {
+  background: rgba(255, 255, 255, 1);
+  min-width: 24px;
+  /* margin: 10px 4px; */
+}
+
+.popup {
+  background: @popup_bg_color;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.popup-clipboard .item .btn-remove {
+  border-radius: 8px;
+}
+
+.popup-clipboard .item .btn {
+  border-radius: 8px;
+}
+
+.popup-clipboard .item .btn-remove:hover {
+  background: #c11;
+}
+
+.music {
+  margin: 0;
+  padding-left: 2px;
+  padding-right: 4px;
+}
+
+.music .contents {
+  /* background: rgba(68, 153, 85, 1); */
+  background: #495;
+  border-radius: 12px;
+  padding-right: 12px;
+  /* font-size: 0; */
+}
+
+.popup-music .controls {
+}
+
+.popup-music .progress .slider {
+  background: #448;
+  border-radius: 24px;
+  padding: 0 10px;
+}
+
+.popup-music .progress .slider * { /* only way to access the slider handle for now */
+  border-radius: 24px;
+}
+

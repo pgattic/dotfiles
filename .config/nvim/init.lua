@@ -28,7 +28,7 @@ local plugins = {
   {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
   {"nvim-treesitter/nvim-treesitter-context"},
   {"nvim-treesitter/nvim-treesitter-refactor"},
-  {"windwp/nvim-ts-autotag"},
+  {"windwp/nvim-ts-autotag"}, -- HTML closing tags
 
   -- LSP Packages
   {"williamboman/mason.nvim"},
@@ -79,8 +79,18 @@ local plugins = {
 
   {"Djancyp/better-comments.nvim"},
   {'nvim-tree/nvim-web-devicons'},
--- {"Exafunction/codeium.vim"},
+  -- {"Exafunction/codeium.vim"},
   {'petertriho/nvim-scrollbar'},
+
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  }
 }
 
 local opts = {}
