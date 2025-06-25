@@ -10,7 +10,6 @@ waybar # Status Bar
 fuzzel # App Launcher
 swaybg # BG utility (hyprbg is a memory hog)
 swaync # Notifications daemon
-# kanshi # Display output management
 wl-clipboard # Clipboard
 brightnessctl # Display brightness
 

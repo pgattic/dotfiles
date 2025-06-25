@@ -3,7 +3,7 @@ import QtQuick.Layouts
 
 RowLayout {
   Image {
-    source: `image://icon/dialog-information`
+    source: `image://icon/dialog-information-symbolic`
     sourceSize.width: 16
     sourceSize.height: 16
   }

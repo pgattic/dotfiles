@@ -27,31 +27,32 @@ RowLayout {
     return "audio-input-microphone-high";
   }
 
-  RowLayout {
-    Image {
-      source: `image://icon/${determineIconName(Pipewire.defaultAudioSink)}`
+  MouseArea {
+    acceptedButtons: Qt.RightButton
+    implicitWidth: childrenRect.width
+    implicitHeight: childrenRect.height
 
-      sourceSize.width: 16
-      sourceSize.height: 16
+    onClicked: event => {
+      Pipewire.defaultAudioSink.audio.muted = !Pipewire.defaultAudioSink.audio.muted;
     }
 
-    Label {
-      text: `${Math.floor(Pipewire.defaultAudioSink.audio.volume * 100)}%`
-      color: Pipewire.defaultAudioSink.audio.muted ? "#5affffff" : palette.active.text
+    onWheel: (event) => {
+      Pipewire.defaultAudioSink.audio.muted = false;
+      Pipewire.defaultAudioSink.audio.volume += event.angleDelta.y / (120 * 10);
     }
+    RowLayout {
+      Image {
+        source: `image://icon/${determineIconName(Pipewire.defaultAudioSink)}`
 
-    MouseArea {
-      anchors.fill: parent
-      acceptedButtons: Qt.RightButton
-
-      onClicked: event => {
-        Pipewire.defaultAudioSink.audio.muted = !Pipewire.defaultAudioSink.audio.muted;
+        sourceSize.width: 16
+        sourceSize.height: 16
       }
 
-      onWheel: (event) => {
-        Pipewire.defaultAudioSink.audio.muted = false;
-        Pipewire.defaultAudioSink.audio.volume += event.angleDelta.y / (120 * 10);
+      Label {
+        text: `${Math.floor(Pipewire.defaultAudioSink.audio.volume * 100)}%`
+        color: Pipewire.defaultAudioSink.audio.muted ? "#5affffff" : palette.active.text
       }
+
     }
   }
 

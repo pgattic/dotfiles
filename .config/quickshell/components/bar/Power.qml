@@ -6,13 +6,17 @@ import Quickshell.Services.UPower
 
 RowLayout {
 
+  id: power
+  // Only want laptop batteries
+  property var batteries: UPower.devices.values.filter((device) => device.isLaptopBattery && device.isPresent)
+  visible: batteries.filter((bat) => bat.percentage != 1).length > 0
+
   Repeater {
-    // Only want laptop batteries
-    model: UPower.devices.values.filter((device) => device.isLaptopBattery && device.isPresent)
+    model: power.batteries
 
     RowLayout {
       required property UPowerDevice modelData
-      spacing: 0
+      spacing: 2
 
       function formatSecs(seconds) {
 
@@ -47,9 +51,9 @@ RowLayout {
       }
 
       function batIcon(percentage, charging) {
-        const range = Math.round(percentage * 10) * 10;
+        const range = Math.floor(percentage * 10) * 10;
         const rangeStr = ("" + range).padStart(3, '0');
-        return `image://icon/battery-${rangeStr}${charging ? "-charging" : ""}`
+        return `image://icon/battery-${rangeStr}${charging ? "-charging" : ""}-symbolic`
       }
 
       MouseArea {
@@ -69,7 +73,11 @@ RowLayout {
 
       Label {
         text: `${Math.round(modelData.percentage * 100)}%`
-        color: modelData.state == UPowerDeviceState.Charging ? "#4caf50" : modelData.percentage < 0.15 ? "#f44336" : palette.active.text // Colors stolen from Papirus Icon Theme
+        // Colors stolen from Papirus Icon Theme
+        color: modelData.state == UPowerDeviceState.Charging ? "#4caf50" :
+          modelData.percentage < 0.20 ? "#f44336" :
+          modelData.percentage < 0.30 ? "#ff9800" :
+          palette.active.text
       }
     }
   }

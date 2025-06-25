@@ -63,11 +63,11 @@ PanelWindow {
       anchors.top: parent.top
       anchors.rightMargin: 12
 
-      spacing: 8
+      spacing: 10
 
       // Right-aligned items go here
       Tray {}
-      Brightness {}
+      //Brightness {}
       Mixer {}
       Power {}
       Clock {}
