@@ -31,8 +31,8 @@ local plugins = {
   {"windwp/nvim-ts-autotag"}, -- HTML closing tags
 
   -- LSP Packages
-  {"williamboman/mason.nvim"},
-  {"williamboman/mason-lspconfig.nvim"},
+  {"mason-org/mason.nvim"},
+  {"mason-org/mason-lspconfig.nvim"},
   {"neovim/nvim-lspconfig"},
 
   -- Autocomplete
