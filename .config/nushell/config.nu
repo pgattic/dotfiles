@@ -11,9 +11,18 @@ $env.path ++= [
   $"($env.home)/.ghcup/bin" # Haskell binaries
 ]
 
+# MacOS stuff
+if (sys host).name == Darwin {
+  $env.path ++= [
+    "/usr/local/bin" # Homebrew packages
+  ]
+}
+
 # Startup commands
 if not (which pokeget | is-empty) {
   pokeget 389 --hide-name # Torterra
+} else {
+  cat ($nu.default-config-dir | path join torterra.txt) # Torterra!!!
 }
-$"Uptime: (ansi light_green_bold)(uptime -p | str substring 3..)(ansi reset)"
+$"Uptime: (ansi light_green_bold)((sys host).uptime)(ansi reset)"
 

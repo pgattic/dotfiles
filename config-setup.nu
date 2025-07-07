@@ -43,6 +43,14 @@ let missing_progs = (
   | uniq
 )
 
+# MacOS stuff
+if (sys host).name == Darwin {
+  if ($nu.default-config-dir | path exists) {
+    rm -rf $nu.default-config-dir
+  }
+  ln -s ($repo_dir | path join ".config/nushell") $nu.default-config-dir
+}
+
 print $"(ansi green)Done(ansi reset)." 
 if (not ($missing_progs | is-empty)) {
   print $"Missing programs: ($missing_progs | str join ' ')"
