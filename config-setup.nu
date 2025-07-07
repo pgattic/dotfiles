@@ -44,7 +44,7 @@ let missing_progs = (
 )
 
 # MacOS stuff
-if (sys host).name == Darwin {
+if $nu.os-info.name == macos {
   if ($nu.default-config-dir | path exists) {
     rm -rf $nu.default-config-dir
   }
