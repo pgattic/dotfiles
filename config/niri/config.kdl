@@ -13,7 +13,7 @@
 // Also, a few miscellaneous options here:
 
 spawn-at-startup "swaync" // notification daemon
-spawn-at-startup "swaybg" "--image" "/home/pgattic/.dotfiles/wallpaper/wedding_temple.jpg" "--mode" "fill"
+spawn-at-startup "swaybg" "--image" "/home/pgattic/.config/wallpaper/wedding_temple.jpg" "--mode" "fill"
 spawn-at-startup "ironbar"
 spawn-at-startup "xwayland-satellite"
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png" // `man strftime`
