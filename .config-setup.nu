@@ -24,7 +24,7 @@ let configs = [
     } else if $nu.os-info.name == "android" {
       [
         { dir: "nushell", deps: ["nu", "nvim"] },
-        { dir: "termux", target: ($nu.home-path | path join ".termux") },
+        { dir: "termux" },
       ]
     } else if $nu.os-info.name == "macos" {
       [
