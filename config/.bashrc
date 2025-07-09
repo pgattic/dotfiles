@@ -26,38 +26,46 @@ else
   branch_char="󰘬"
   PS1='\[\e[97m\]\[\e[36;107m\]  \[\e[97;44;1m\] \u \[\e[0;34;100m\] \[\e[97m\]\w \[\e[0;90m\]\[\e[94m\]${GIT_BRANCH}\[\e[0m\]\n \$ '
 
-  # Idk lol
-  alias vi="neovide . &"
 fi
-
-# Vim motions
-set -o vi
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias tree='tree -C'
 
 # Cargo bin path, user bin path
-PATH=$PATH:$HOME/.cargo/bin:$HOME/.local/bin
+PATH=$PATH:$HOME/.cargo/bin:$HOME/bin
 
-# functions
+# POKEMON STUFF
 
-canl() {
-  if [ -z "$1" ]; then
-    echo "Usage: canl [REFERENCE]"
-    return 1
-  fi
-  
-  canon "$1" -v | marks -n | less -R --wordwrap
-}
-
-open() {
-  if [ -z "$1" ]; then
-    echo "Usage: open [REFERENCE]"
-    return 1
-  fi
-
-  xdg-open $1 > /dev/null 2>&1 &
-}
-
-
+# random_number=$((RANDOM % 3))
+#
+# case $random_number in
+#   "0") # Torterra
+#     pokemon_id=389
+#     pokemon_name=Torterra
+#     color_escape="\e[32m"
+#     ps1_color="\[\e[32m\]"
+#     ;;
+#   "1") # Infernape
+#     pokemon_id=392
+#     pokemon_name=Infernape
+#     color_escape="\e[31m"
+#     ps1_color="\[\e[31m\]"
+#     ;;
+#   "2") # Empoleon
+#     pokemon_id=395
+#     pokemon_name=Empoleon
+#     color_escape="\e[34m"
+#     ps1_color="\[\e[34m\]"
+#     ;;
+# esac
+#
+# pokeget $pokemon_id --hide-name
+#
+# printf "\e[1m"
+# printf "%b" "$color_escape"
+# echo "$(uptime -p)"
+# printf "\e[0m"
+#
+# PS1="${ps1_color}\u \w \$ \[\e[0m\]"
+#

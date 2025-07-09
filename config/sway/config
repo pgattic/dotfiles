@@ -17,7 +17,7 @@ set $menu fuzzel | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/.dotfiles/wallpaper/washington_dc_temple.jpg fill
+output * bg ~/.config/wallpaper/washington_dc_temple.jpg fill
 # output * bg ~/vim-motions.png fill
 # output HDMI-A-1  wl-mirror eDP-1
 #

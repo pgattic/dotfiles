@@ -1,0 +1,7 @@
+[user]
+  name = pgattic
+  email = pgattic@gmail.com
+[color]
+  ui = auto
+[init]
+  defaultBranch = master
