@@ -51,14 +51,14 @@ def link_and_check [
   # Find missing commands
   let $missing = ($deps | default []) | where {|p| (which $p | is-empty) }
   for prog in $missing {
-    print $"(ansi yellow_bold)Warning:(ansi reset) Command (ansi blue)($prog)(ansi reset) not found on this system \(required by (ansi light_blue)($dirname)(ansi reset)\)"
+    print $"(ansi yellow_bold)Warning:(ansi reset) Command (ansi blue)($prog)(ansi reset) not found on this system \(required by (ansi blue)($dirname)(ansi reset)\)"
   }
 
   # Symlinking operations
   let source = ($dotfiles_path | path join "config" | path join $dirname)
   let target_dir = ($target | default ($env.HOME | path join ".config" | path join $dirname))
 
-  print $"Linking (ansi light_cyan)($source)(ansi reset) -> (ansi light_purple)($target_dir)(ansi reset)"
+  print $"Linking (ansi cyan)($source)(ansi reset) -> (ansi purple)($target_dir)(ansi reset)"
   if ($target_dir | path exists) { rm -rf $target_dir }
   ln -s $source $target_dir
 
@@ -83,11 +83,11 @@ def link_check_all [] {
 
 print "Temporarily added the following to your environment:"
 print ""
-print $"(ansi light_green)Commands(ansi reset):"
-print $"  (ansi light_cyan)link_and_check(ansi reset) {flags} <dirname>"
-print $"  (ansi light_cyan)link_check_all(ansi reset)"
+print $"(ansi green)Commands(ansi reset):"
+print $"  (ansi cyan)link_and_check(ansi reset) {flags} <dirname>"
+print $"  (ansi cyan)link_check_all(ansi reset)"
 print ""
-print $"(ansi light_green)Variables(ansi reset):"
+print $"(ansi green)Variables(ansi reset):"
 print $"  (ansi purple)$configs(ansi reset) \(($configs | length) item\(s\)\): ($configs)"
 print $"  (ansi purple)$dotfiles_path(ansi reset): ($dotfiles_path)"
 print ""

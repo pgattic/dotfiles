@@ -5,7 +5,6 @@ let base_pkgs = [
 
   # Desktop Environment
   niri # Compositor
-  ironbar # Status Bar
   fuzzel # App Launcher
   swaybg # BG utility (hyprbg is a memory hog)
   swaync # Notifications daemon
@@ -18,7 +17,6 @@ let base_pkgs = [
 
   papirus-icon-theme # Icons
   ttf-jetbrains-mono-nerd # Nerd Font
-  ttf-joypixels # Twitter Emojis
   noto-fonts # Emojis and stuff
   noto-fonts-cjk # Eastern languages
 
@@ -41,38 +39,47 @@ let base_pkgs = [
     pipewire-pulse # Compat between Pipewire and PulseAudio
   thunar # File manager
     gvfs # Trashbin, USB devices
-    exfatprogs # exFAT Partition scheme
-    ntfs-3g # NT Filesystem Support
+    # exfatprogs # exFAT Partition scheme
+    # ntfs-3g # NT Filesystem Support
   xarchiver # Archiver tool
-    p7zip # 7-zip compat
-# guvcview # Camera program
-# zbar # QR Code/Barcode reader
+    7zip # 7-zip compat
+  # guvcview # Camera program
+  # zbar # QR Code/Barcode reader
   obsidian
   discord
 
-# Software development
+  # Software development
   tinyxxd # Hex dump tool
 
-# Bluetooth packages
-  blueman
+  # Bluetooth packages
+  # blueman
 ]
 
-let aur = [
-  hyprshot
+let aur_pkgs = [
+  ironbar # Status Bar
   zen-browser-bin
-  mcpelauncher-appimage # Minecraft launcher
-  onedrive-abraunegg # CLI OneDrive client
-  pinta # simple paint tool
+  ttf-joypixels # Twitter Emojis
+  # mcpelauncher-appimage # Minecraft launcher
+  # onedrive-abraunegg # CLI OneDrive client
+  # pinta # simple paint tool
 ]
 
-let flutter_android = [
+let flutter_android_pkgs = [
   flutter # AUR - NOTE: paru won't update unless passed the -d flag (skip dependency checking)
   android-studio # AUR
   android-udev # Allows ADB in user mode
 ]
 
-let dioxus_desktop = [
+let dioxus_desktop_pkgs = [
   webkit2gtk-4.1
   xdotool
 ]
+
+print "Temporarily added the following variables to your environment:"
+print ""
+print $"  (ansi purple)$base_pkgs(ansi reset) \(($base_pkgs | length) items\): ($base_pkgs)"
+print $"  (ansi purple)$aur_pkgs(ansi reset) \(($aur_pkgs | length) items\): ($aur_pkgs)"
+print ""
+print $"Example usage: (ansi cyan)sudo (ansi green)pacman -Syu (ansi yellow)...(ansi purple)$base_pkgs"
+print ""
 
