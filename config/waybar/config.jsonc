@@ -1,15 +1,15 @@
 {
-// "layer": "top", // Waybar at top layer
+"layer": "top", // Waybar at top layer
 // "position": "bottom", // Waybar position (top|bottom|left|right)
 "height": 24, // Waybar height (to be removed for auto height)
 // "width": 1280, // Waybar width
 // "spacing": 4, // Gaps between modules (4px)
 // Choose the order of the modules
-"modules-left": ["hyprland/workspaces", "cpu", "memory", "temperature", "custom/media"],
-"modules-center": ["hyprland/window"],
+"modules-left": ["niri/workspaces", "cpu", "memory", "temperature", "custom/media"],
+"modules-center": ["niri/window"],
 "modules-right": ["tray", "mpd", "backlight", "pulseaudio", "network", "battery", "battery#bat2", "clock"],
 // Modules configuration
-"hyprland/workspaces": {
+"niri/workspaces": {
   "disable-scroll": true,
   "all-outputs": true,
   "warp-on-scroll": false
@@ -83,7 +83,7 @@
   ]
 },
 "memory": {
-  "format": " {used:0.1f}G"
+  "format": "  {used:0.1f}G"
 },
 "temperature": {
   // "thermal-zone": 2,
@@ -95,7 +95,7 @@
 },
 "backlight": {
   // "device": "acpi_video1",
-  "format": "{icon} {percent}%",
+  "format": "{icon}  {percent}%",
   "format-icons": ["", "", "", "", "", "", "", "", ""]
 },
 "battery": {
@@ -139,7 +139,7 @@
 },
 "network": {
   // "interface": "wlp2*", // (Optional) To force the use of this interface
-  "format-wifi": "  {essid} ({signalStrength}%)",
+  "format-wifi": "   {essid} ({signalStrength}%)",
   "format-ethernet": "{ipaddr}/{cidr} 󱂇",
   "tooltip-format": "{ifname} via {gwaddr}",
   "format-linked": "{ifname} (No IP) ",
@@ -148,7 +148,7 @@
 },
 "pulseaudio": {
   // "scroll-step": 1, // %, can be a float
-  "format": "{icon} {volume}% {format_source}",
+  "format": "{icon}   {volume}% {format_source}",
   "format-bluetooth": "{volume}% {icon} {format_source}",
   "format-bluetooth-muted": "󰝟 {icon} {format_source}",
   "format-muted": "󰝟  {format_source}",
@@ -165,17 +165,17 @@
   },
   "on-click": "pavucontrol"
 },
-"custom/media": {
-  //"tooltip-format": "{}",
-  "return-type": "json",
-  "max-length": 40,
-  "format-icons": {
-    "spotify": "",
-    "default": "🎜"
-  },
-  "escape": true,
-  "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-  // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-},
+// "custom/media": {
+//   //"tooltip-format": "{}",
+//   "return-type": "json",
+//   "max-length": 40,
+//   "format-icons": {
+//     "spotify": "",
+//     "default": "🎜"
+//   },
+//   "escape": true,
+//   "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+//   // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+// },
 },
 

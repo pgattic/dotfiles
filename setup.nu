@@ -1,40 +1,40 @@
 #!/usr/bin/nu
 
-# `dir`: name of directory
+# `name`: name of directory or file
 # `deps` (optional): system programs that the config depends on
-# `target` (optional): location to symlink to (defaults to `$HOME/.config/$dir`)
+# `target` (optional): location to symlink to (defaults to `$HOME/.config/$item`)
 let configs = [
-  { dir: "nvim", deps: ["nvim", "rg"]},
+  { name: "nvim", deps: ["nvim", "rg"]},
 
   ...(
     # Platform-specific programs
     if $nu.os-info.name == "linux" {
       [
-        { dir: "gtk-3.0" },
-        { dir: "wallpaper" },
-        # { dir: "ghostty", deps: ["ghostty"] },
-        { dir: "kitty", deps: ["kitty", "nu"] }, # Also needs `ttf-jetbrains-mono-nerd` package
-        # { dir: "waybar", deps: ["waybar", "pavucontrol", "python3", "nmtui"] },
-        { dir: "fuzzel", deps: ["fuzzel"] },
-        # { dir: "hypr", deps: ["hyprland", "waybar", "fuzzel", "swaync", "swaybg", "brightnessctl", "blueman", "nmtui"] },
-        { dir: "zed", deps: ["zeditor"] },
-        { dir: "niri", deps: ["niri", "ironbar", "thunar", "fuzzel", "swaync", "swaybg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
-        { dir: "ironbar", deps: ["ironbar", "playerctl"] },
-        { dir: "nushell", deps: ["nu", "nvim"] },
-        { dir: ".gitconfig", target: ($nu.home-path | path join ".gitconfig")}
-        { dir: ".bashrc", target: ($nu.home-path | path join ".bashrc")}
-        # { dir: "helix", deps: ["helix", "rust-analyzer"] },
+        { name: "gtk-3.0" },
+        { name: "wallpaper" },
+        # { name: "ghostty", deps: ["ghostty"] },
+        { name: "kitty", deps: ["kitty", "nu"] }, # Also needs `ttf-jetbrains-mono-nerd` package
+        { name: "waybar", deps: ["waybar", "pavucontrol"] },
+        { name: "fuzzel", deps: ["fuzzel"] },
+        # { name: "hypr", deps: ["hyprland", "waybar", "fuzzel", "swaync", "swaybg", "brightnessctl", "blueman", "nmtui"] },
+        { name: "zed", deps: ["zeditor"] },
+        { name: "niri", deps: ["niri", "waybar", "thunar", "fuzzel", "swaync", "swaybg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
+        { name: "ironbar", deps: ["ironbar", "playerctl"] },
+        { name: "nushell", deps: ["nu", "nvim"] },
+        { name: ".gitconfig", deps: ["git"], target: ($nu.home-path | path join ".gitconfig")}
+        { name: ".bashrc", deps: ["bash", "tree"], target: ($nu.home-path | path join ".bashrc")}
+        # { name: "helix", deps: ["helix", "rust-analyzer"] },
       ]
     } else if $nu.os-info.name == "android" {
       [
-        { dir: "nushell", deps: ["nu", "nvim"] },
-        { dir: "termux", target: ($nu.home-path | path join ".termux") },
+        { name: "nushell", deps: ["nu", "nvim"] },
+        { name: "termux", target: ($nu.home-path | path join ".termux") },
       ]
     } else if $nu.os-info.name == "macos" {
       [
-        # { dir: "ghostty", deps: ["ghostty"] },
-        { dir: "kitty", deps: ["kitty", "nu"] }, # Also needs `ttf-jetbrains-mono-nerd` package
-        { dir: "nushell", deps: ["nu", "nvim"], target: ($nu.home-path | path join "Library/Application Support/nushell") }, # Nushell config dir is different on MacOS
+        # { name: "ghostty", deps: ["ghostty"] },
+        { name: "kitty", deps: ["kitty", "nu"] }, # Also needs `ttf-jetbrains-mono-nerd` package
+        { name: "nushell", deps: ["nu", "nvim"], target: ($nu.home-path | path join "Library/Application Support/nushell") }, # Nushell config dir is different on MacOS
       ]
     } else { [] }
   )
@@ -42,25 +42,25 @@ let configs = [
 
 let dotfiles_path = $env.FILE_PWD
 
-# Symlink a directory from `$dotfiles_path/config`, reporting missing dependencies
+# Symlink a directory/file from `$dotfiles_path/config`, reporting missing dependencies
 def link_and_check [
-  dirname: string, # Name of directory from `$dotfiles_path/config` to work with
+  item_name: string, # Name of directory/file from `$dotfiles_path/config` to work with
   --deps: list<string>, # Programs that the config depends on
-  --target: string # System target path to symlink $dir to
+  --target: string # System target path to symlink $item_name to
 ] {
   # Find missing commands
   let $missing = ($deps | default []) | where {|p| (which $p | is-empty) }
   for prog in $missing {
-    print $"(ansi yellow_bold)Warning:(ansi reset) Command (ansi blue)($prog)(ansi reset) not found on this system \(required by (ansi blue)($dirname)(ansi reset)\)"
+    print $"(ansi yellow_bold)Warning:(ansi reset) Command (ansi blue)($prog)(ansi reset) not found on this system \(required by (ansi blue)($item_name)(ansi reset)\)"
   }
 
   # Symlinking operations
-  let source = ($dotfiles_path | path join "config" | path join $dirname)
-  let target_dir = ($target | default ($env.HOME | path join ".config" | path join $dirname))
+  let source = ($dotfiles_path | path join "config" | path join $item_name)
+  let target_abs = ($target | default ($env.HOME | path join ".config" | path join $item_name))
 
-  print $"Linking (ansi cyan)($source)(ansi reset) -> (ansi purple)($target_dir)(ansi reset)"
-  if ($target_dir | path exists) { rm -rf $target_dir }
-  ln -s $source $target_dir
+  print $"Linking (ansi cyan)($source)(ansi reset) -> (ansi purple)($target_abs)(ansi reset)"
+  if ($target_abs | path exists) { rm -rf $target_abs }
+  ln -s $source $target_abs
 
   # Return missing commands
   $missing | wrap "missing"
@@ -70,7 +70,7 @@ def link_and_check [
 def link_check_all [] {
   let missing_progs = (
     $configs
-    | each {|conf| (link_and_check $conf.dir --deps $conf.deps? --target $conf.target?).missing }
+    | each {|conf| (link_and_check $conf.name --deps $conf.deps? --target $conf.target?).missing }
     | flatten
     | uniq
   )
@@ -84,7 +84,7 @@ def link_check_all [] {
 print "Temporarily added the following to your environment:"
 print ""
 print $"(ansi green)Commands(ansi reset):"
-print $"  (ansi cyan)link_and_check(ansi reset) {flags} <dirname>"
+print $"  (ansi cyan)link_and_check(ansi reset) {flags} <item_name>"
 print $"  (ansi cyan)link_check_all(ansi reset)"
 print ""
 print $"(ansi green)Variables(ansi reset):"
