@@ -32,7 +32,7 @@ let configs = [
       ]
     } else if $nu.os-info.name == "macos" {
       [
-        # { name: "ghostty", deps: ["ghostty"] },
+        { name: "ghostty", deps: ["ghostty"] },
         { name: "kitty", deps: ["kitty", "nu"] }, # Also needs `ttf-jetbrains-mono-nerd` package
         { name: "nushell", deps: ["nu", "nvim"], target: ($nu.home-path | path join "Library/Application Support/nushell") }, # Nushell config dir is different on MacOS
       ]
