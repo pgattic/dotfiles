@@ -14,7 +14,7 @@
 
 spawn-at-startup "swaync" // notification daemon
 spawn-at-startup "swaybg" "--image" "/home/pgattic/.config/wallpaper/wedding_temple.jpg" "--mode" "fill"
-spawn-at-startup "ironbar"
+spawn-at-startup "waybar"
 spawn-at-startup "xwayland-satellite"
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png" // `man strftime`
 
@@ -152,9 +152,9 @@ layout {
 
   // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout#shadow
   shadow {
-    on
+    // on
     softness 5 // Blends the border
-    spread 1 // "Expands the border" of the shadow
+    spread 1 // Expands the borders of the shadow
     offset x=0 y=0
     color "#0007"
   }
