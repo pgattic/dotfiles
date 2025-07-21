@@ -4,7 +4,8 @@
 # `deps` (optional): system programs that the config depends on
 # `target` (optional): location to symlink to (defaults to `$HOME/.config/$item`)
 let configs = [
-  { name: "nvim", deps: ["nvim", "rg"]},
+  { name: "nvim", deps: ["nvim", "rg"] },
+  { name: "bat", deps: ["bat", "less"] },
 
   ...(
     # Platform-specific programs
@@ -21,8 +22,8 @@ let configs = [
         { name: "niri", deps: ["niri", "waybar", "thunar", "fuzzel", "swaync", "swaybg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
         { name: "ironbar", deps: ["ironbar", "playerctl"] },
         { name: "nushell", deps: ["nu", "nvim"] },
-        { name: ".gitconfig", deps: ["git"], target: ($nu.home-path | path join ".gitconfig")}
-        { name: ".bashrc", deps: ["bash", "tree"], target: ($nu.home-path | path join ".bashrc")}
+        { name: ".gitconfig", deps: ["git"], target: ($nu.home-path | path join ".gitconfig") }
+        { name: ".bashrc", deps: ["bash", "tree"], target: ($nu.home-path | path join ".bashrc") }
         # { name: "helix", deps: ["helix", "rust-analyzer"] },
       ]
     } else if $nu.os-info.name == "android" {
@@ -43,6 +44,9 @@ let configs = [
 let dotfiles_path = $env.FILE_PWD
 
 # Symlink a directory/file from `$dotfiles_path/config`, reporting missing dependencies
+#
+# Example: Symlink $dotfiles_path/config/nvim -> ~/.config/nvim
+#   > link_and_check nvim
 def link_and_check [
   item_name: string, # Name of directory/file from `$dotfiles_path/config` to work with
   --deps: list<string>, # Programs that the config depends on

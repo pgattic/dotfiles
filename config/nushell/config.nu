@@ -32,6 +32,18 @@ if $nu.os-info.name == macos {
   ]
 }
 
+# Print out the names of all files, followed by their content. Useful for LLM usage
+def llm-ify [] {
+  ls **/* | where type == file | reduce -f "" {|f, acc|
+    try {
+      let content = open $f.name
+      $acc + $"=== ($f.name) ===\n" + ($content | into string) + "\n\n"
+    } catch {
+      $acc  # Skip unreadable (likely binary) files
+    }
+  }
+}
+
 # Startup commands
 open --raw ($nu.default-config-dir | path join "torterra.txt") | print
 $"Uptime: (ansi light_green_bold)((sys host).uptime)(ansi reset)"
