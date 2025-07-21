@@ -294,10 +294,14 @@ binds {
 
   // Metaphorical "whack with a shovel" (https://futurism.com/the-byte/nasa-mars-lander-hit-itself-shovel)
   // https://github.com/JakeStanger/ironbar/issues/1044
-  Mod+Ctrl+Page_Down { spawn "bash" "-c" "niri msg action move-workspace-down && ironbar reload"; }
-  Mod+Ctrl+Page_Up   { spawn "bash" "-c" "niri msg action move-workspace-up && ironbar reload"; }
-  Mod+Ctrl+U         { spawn "bash" "-c" "niri msg action move-workspace-down && ironbar reload"; }
-  Mod+Ctrl+I         { spawn "bash" "-c" "niri msg action move-workspace-up && ironbar reload"; }
+  Mod+Ctrl+Page_Down { move-workspace-down; }
+  Mod+Ctrl+Page_Up   { move-workspace-up; }
+  Mod+Ctrl+U         { move-workspace-down; }
+  Mod+Ctrl+I         { move-workspace-up; }
+  // Mod+Ctrl+Page_Down { spawn "bash" "-c" "niri msg action move-workspace-down && ironbar reload"; }
+  // Mod+Ctrl+Page_Up   { spawn "bash" "-c" "niri msg action move-workspace-up && ironbar reload"; }
+  // Mod+Ctrl+U         { spawn "bash" "-c" "niri msg action move-workspace-down && ironbar reload"; }
+  // Mod+Ctrl+I         { spawn "bash" "-c" "niri msg action move-workspace-up && ironbar reload"; }
 
   // https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings#scroll-bindings
   Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
