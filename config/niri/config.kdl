@@ -15,7 +15,6 @@
 spawn-at-startup "swaync" // notification daemon
 spawn-at-startup "swaybg" "--image" "/home/pgattic/.config/wallpaper/wedding_temple.jpg" "--mode" "fill"
 spawn-at-startup "waybar"
-spawn-at-startup "xwayland-satellite"
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png" // `man strftime`
 
 environment {
@@ -175,6 +174,11 @@ layout {
     corner-radius 8
     gaps-between-tabs 8
   }
+}
+
+cursor {
+  hide-when-typing
+  hide-after-inactive-ms 1000
 }
 
 prefer-no-csd // No client-side decorations
@@ -397,5 +401,11 @@ binds {
   Mod+Shift+E { quit; }
 
   Mod+Shift+P { power-off-monitors; }
+
+  // Disable the keys I only ever hit on accident
+  Home { spawn ; }
+  End { spawn ; }
+  Page_Up { spawn ; }
+  Page_Down { spawn ; }
 }
 

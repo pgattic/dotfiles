@@ -11,7 +11,7 @@ let configs = [
     # Platform-specific programs
     if $nu.os-info.name == "linux" {
       [
-        { name: "gtk-3.0" },
+        # { name: "gtk-3.0" },
         { name: "wallpaper" },
         # { name: "ghostty", deps: ["ghostty"] },
         { name: "kitty", deps: ["kitty", "nu"] }, # Also needs `ttf-jetbrains-mono-nerd` package
@@ -20,10 +20,10 @@ let configs = [
         # { name: "hypr", deps: ["hyprland", "waybar", "fuzzel", "swaync", "swaybg", "brightnessctl", "blueman", "nmtui"] },
         { name: "zed", deps: ["zeditor"] },
         { name: "niri", deps: ["niri", "waybar", "thunar", "fuzzel", "swaync", "swaybg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
-        { name: "ironbar", deps: ["ironbar", "playerctl"] },
+        # { name: "ironbar", deps: ["ironbar", "playerctl"] },
         { name: "nushell", deps: ["nu", "nvim"] },
         { name: ".gitconfig", deps: ["git"], target: ($nu.home-path | path join ".gitconfig") }
-        { name: ".bashrc", deps: ["bash", "tree"], target: ($nu.home-path | path join ".bashrc") }
+        # { name: ".bashrc", deps: ["bash", "tree"], target: ($nu.home-path | path join ".bashrc") }
         # { name: "helix", deps: ["helix", "rust-analyzer"] },
       ]
     } else if $nu.os-info.name == "android" {
