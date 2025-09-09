@@ -13,6 +13,9 @@ $env.config = {
     file_format: 'sqlite',
     isolation: true, # Don't mix history from concurrent sessions
   }
+  completions: {
+    case_sensitive: true,
+  }
   # table: {
   #   index_mode: "auto",
   # }
@@ -23,6 +26,8 @@ $env.path ++= [
   $"($env.home)/bin", # User binaries
   $"($env.home)/.cargo/bin", # Rust binaries
   $"($env.home)/.ghcup/bin" # Haskell binaries
+  $"($env.home)/.moon/bin" # MoonBit binaries
+  $"($env.home)/.opam/default/bin" # OPAM binaries
 ]
 
 # MacOS stuff
@@ -46,5 +51,7 @@ def llm-ify [] {
 
 # Startup commands
 open --raw ($nu.default-config-dir | path join "torterra.txt") | print
-$"Uptime: (ansi light_green_bold)((sys host).uptime)(ansi reset)"
+$"Uptime: (ansi green_bold)((sys host).uptime)(ansi reset)" | print
+$"Memory used: (ansi green_bold)(sys mem | get used)(ansi reset)/(ansi green_bold)(sys mem | get total)(ansi reset)" | print
+"\"You are nothing but an unreliable wizard\" - Bruce Webster" | print
 
