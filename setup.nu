@@ -19,7 +19,7 @@ let configs = [
         { name: "fuzzel", deps: ["fuzzel"] },
         # { name: "hypr", deps: ["hyprland", "waybar", "fuzzel", "swaync", "swaybg", "brightnessctl", "blueman", "nmtui"] },
         { name: "zed", deps: ["zeditor"] },
-        { name: "niri", deps: ["niri", "waybar", "thunar", "fuzzel", "swaync", "swaybg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
+        { name: "niri", deps: ["niri", "waybar", "thunar", "fuzzel", "swaync", "wbg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
         # { name: "ironbar", deps: ["ironbar", "playerctl"] },
         { name: "nushell", deps: ["nu", "nvim"] },
         { name: ".gitconfig", deps: ["git"], target: ($nu.home-path | path join ".gitconfig") }

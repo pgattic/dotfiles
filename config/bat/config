@@ -1,7 +1,7 @@
 # Generated with `bat --generate-config-file`
 
 # `bat --list-themes`
---theme="Visual Studio Dark+"
+# --theme="Visual Studio Dark+"
 
 # Don't pipe into pager (like `less`)
 #--paging=never

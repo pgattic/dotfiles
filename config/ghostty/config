@@ -1,13 +1,24 @@
 
 font-size = 10
 
-background-opacity = 0.8
-background = #000000
+theme = "Dark+"
+# background = #000000
 
-gtk-adwaita = false
-gtk-titlebar = false
+cursor-style = bar
+
+mouse-scroll-multiplier = 1
+
+background-opacity = 0.8
+# background-blur = true
+
+command = "nu"
+
 window-padding-x = 0
 window-padding-y = 0
+window-inherit-working-directory = false
 
-theme = "Dark+"
+custom-shader = "shader.glsl"
+
+# gtk-adwaita = false
+# gtk-titlebar = false
 
