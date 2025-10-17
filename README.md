@@ -12,5 +12,3 @@ This repository includes config files and scripts for their installation.
 
 The provided commands perform a symlink operation, which means that when the configs are edited in their destination location, the changes apply to the repository as well. This allows changes to be synchronized through Git with little effort.
 
-For ease of installation, I also have a few collections of packages that I typically have in a Linux installation. `source packages.nu` for more information.
-
