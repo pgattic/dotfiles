@@ -13,9 +13,9 @@
 // Also, a few miscellaneous options here:
 
 spawn-at-startup "swaync" // notification daemon
-spawn-at-startup "swaybg" "--image" "/home/pgattic/.config/wallpaper/wedding_temple.jpg" "--mode" "fill"
+spawn-at-startup "wbg" "-s" "/home/pgattic/.config/wallpaper/wedding_temple.jpg"
 spawn-at-startup "waybar"
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png" // `man strftime`
+screenshot-path "~/screenshots/%Y-%m-%d %H-%M-%S.png" // `man strftime`
 
 environment {
   ELECTRON_OZONE_PLATFORM_HINT "auto" // Prefer Wayland for electron apps (doesn't always work)
@@ -76,8 +76,7 @@ input {
   // Cursor moves with focus change
   warp-mouse-to-focus
 
-  // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-  focus-follows-mouse // max-scroll-amount="0%"
+  focus-follows-mouse max-scroll-amount="34%"
 }
 
 
@@ -117,7 +116,7 @@ output "eDP-1" {
 // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 layout {
   gaps 8
-  background-color "transparent"
+  // background-color "transparent"
 
   // Mod+R switches windows between these sizes
   preset-column-widths {
@@ -171,12 +170,14 @@ layout {
     length total-proportion=1.0
     position "left"
     place-within-column
-    corner-radius 8
+    // corner-radius 8
     gaps-between-tabs 8
   }
 }
 
 cursor {
+  xcursor-theme "Bibata-Modern-Classic"
+  xcursor-size 24
   hide-when-typing
   hide-after-inactive-ms 1000
 }
@@ -191,22 +192,21 @@ animations {
 
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
 
-// Rounded corners
 window-rule {
-  geometry-corner-radius 8
-  clip-to-geometry true
+  // geometry-corner-radius 8 // Rounded corners
+  clip-to-geometry true // Dont let windows draw over the border/focus ring
 }
 
 // Put swaybg inside the overview backdrop. Also works with `overview:workspace-shadow:off` and `layout:background-color "transparent"`
-layer-rule {
-  match namespace="^wallpaper$"
-  place-within-backdrop true
-}
+// layer-rule {
+//   match namespace="^wallpaper$"
+//   place-within-backdrop true
+// }
 
 overview {
   // zoom 0.25
   workspace-shadow {
-    off
+    // off
   }
 }
 
@@ -222,8 +222,9 @@ binds {
 
   Mod+Shift+Slash { show-hotkey-overlay; }
 
-  Mod+Return hotkey-overlay-title="Terminal (kitty)" { spawn "kitty"; }
-  Mod+T hotkey-overlay-title="Quick terminal (kitty)" { spawn "kitten quick-access-terminal"; }
+  Mod+Return hotkey-overlay-title="Terminal" { spawn "kitty"; }
+  Mod+N hotkey-overlay-title="Quick Note" { spawn "kitty" "-e" "nvim" "note.md"; }
+  // Mod+T hotkey-overlay-title="Quick terminal" { spawn "kitten" "quick-access-terminal"; }
   Mod+Space hotkey-overlay-title="Application launcher (fuzzel)" { spawn "fuzzel"; }
   Mod+E hotkey-overlay-title="File manager (thunar)" { spawn "thunar"; }
   // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }

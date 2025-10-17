@@ -5,7 +5,7 @@
 // "width": 1280, // Waybar width
 // "spacing": 4, // Gaps between modules (4px)
 // Choose the order of the modules
-"modules-left": ["niri/workspaces", "cpu", "memory", "temperature", "custom/media"],
+"modules-left": ["niri/workspaces", "cpu", "memory", "temperature"],
 "modules-center": ["niri/window"],
 "modules-right": ["tray", "mpd", "backlight", "pulseaudio", "network", "battery", "battery#bat2", "clock"],
 // Modules configuration
@@ -157,7 +157,7 @@
   "format-icons": {
     "headphone": "󰋋",
     "hands-free": "",
-    "headset": "",
+    "headset": "󰋋",
     "phone": "",
     "portable": "",
     "car": "",

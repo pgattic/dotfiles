@@ -69,7 +69,7 @@ let {
   }
 
   $power = {
-    type = "upower"
+    type = "battery"
     format = "{percentage}%"
     icon_size = 16
   }
