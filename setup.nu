@@ -51,11 +51,12 @@ def link_and_check [
   item_name: string, # Name of directory/file from `$dotfiles_path/config` to work with
   --deps: list<string>, # Programs that the config depends on
   --target: string # System target path to symlink $item_name to
+  --force (-f) # Skip confirmation dialogs, automatically overwrite
 ] {
   # Find missing commands
   let $missing = ($deps | default []) | where {|p| (which $p | is-empty) }
   for prog in $missing {
-    print $"(ansi yellow_bold)Warning:(ansi reset) Command (ansi blue)($prog)(ansi reset) not found on this system \(required by (ansi blue)($item_name)(ansi reset)\)"
+    print $"  (ansi yellow_bold)Warning(ansi reset): Command (ansi blue)($prog)(ansi reset) not found on this system \(required by (ansi blue)($item_name)(ansi reset)\)"
   }
 
   # Symlinking operations
@@ -63,18 +64,34 @@ def link_and_check [
   let target_abs = ($target | default ($env.HOME | path join ".config" | path join $item_name))
 
   print $"Linking (ansi cyan)($source)(ansi reset) -> (ansi purple)($target_abs)(ansi reset)"
-  if ($target_abs | path exists) { rm -rf $target_abs }
-  ln -s $source $target_abs
+  if ($target_abs | path exists) {
+    if $force or ((input $"  (ansi yellow_bold)Warning(ansi reset): (ansi purple)($target_abs)(ansi reset) already exists. Overwrite? [Y/n] ") | str trim | str downcase) in ["y", ""] {
+      rm -rf $target_abs
+      ln -s $source $target_abs
+    } else {
+      print "Canceled."
+    }
+  } else {
+    ln -s $source $target_abs
+  }
 
   # Return missing commands
   $missing | wrap "missing"
 }
 
 # Link and check all configs, as defined in `$configs`
-def link_check_all [] {
+def link_check_all [
+  --force (-f) # Skip confirmation dialogs, automatically overwrite
+] {
   let missing_progs = (
     $configs
-    | each {|conf| (link_and_check $conf.name --deps $conf.deps? --target $conf.target?).missing }
+    | each {
+      |conf| if $force {
+        (link_and_check --force $conf.name --deps $conf.deps? --target $conf.target?).missing
+      } else {
+        (link_and_check $conf.name --deps $conf.deps? --target $conf.target?).missing
+      }
+    }
     | flatten
     | uniq
   )
