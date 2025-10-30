@@ -17,6 +17,9 @@ spawn-at-startup "wbg" "-s" "/home/pgattic/.config/wallpaper/wedding_temple.jpg"
 spawn-at-startup "waybar"
 screenshot-path "~/screenshots/%Y-%m-%d %H-%M-%S.png" // `man strftime`
 
+// For when it's ready
+// spawn-at-startup "ghostty" "--gtk-single-instance=true" "--quit-after-last-window-closed=false" "--initial-window=false"
+
 environment {
   ELECTRON_OZONE_PLATFORM_HINT "auto" // Prefer Wayland for electron apps (doesn't always work)
   DISPLAY ":0" // required for X11 apps to connect to xwayland-satellite properly
@@ -197,6 +200,37 @@ window-rule {
   clip-to-geometry true // Dont let windows draw over the border/focus ring
 }
 
+// KDE Connect Presentation Pointer fix (hacky)
+window-rule {
+  // Match the window by its title. Note: app-id is more reliable if available.
+  match app-id=r"org.kde.kdeconnect.daemon"
+
+  // Forces the window to open as a floating window.
+  open-floating true
+
+  // Sets the window opacity to 1.0 (fully opaque).
+  // opacity 1.0
+
+  default-floating-position x=0 y=0 relative-to="top-left"
+
+  // Prevents the compositor from adding its own server-side decorations (like borders).
+  // The client application is instead asked to provide its own decorations.
+  // prefer-no-csd
+
+  // Suppresses fullscreen events, which is similar to the Hyprland rule.
+  open-fullscreen false
+  focus-ring {
+    off
+  }
+  shadow {
+    off
+  }
+  // draw-border-with-background false
+
+  // Sets the minimum size of the window. Replace 1920 and 1080 with your desired resolution.
+  min-width 1920
+  min-height 1080
+}
 // Put swaybg inside the overview backdrop. Also works with `overview:workspace-shadow:off` and `layout:background-color "transparent"`
 // layer-rule {
 //   match namespace="^wallpaper$"
@@ -223,7 +257,9 @@ binds {
   Mod+Shift+Slash { show-hotkey-overlay; }
 
   Mod+Return hotkey-overlay-title="Terminal" { spawn "kitty"; }
+  // Mod+Return hotkey-overlay-title="Terminal" { spawn "ghostty" "--gtk-single-instance=true"; }
   Mod+N hotkey-overlay-title="Quick Note" { spawn "kitty" "-e" "nvim" "note.md"; }
+  // Mod+N hotkey-overlay-title="Quick Note" { spawn "ghostty" "--gtk-single-instance=true" "-e" "nvim" "note.md"; }
   // Mod+T hotkey-overlay-title="Quick terminal" { spawn "kitten" "quick-access-terminal"; }
   Mod+Space hotkey-overlay-title="Application launcher (fuzzel)" { spawn "fuzzel"; }
   Mod+E hotkey-overlay-title="File manager (thunar)" { spawn "thunar"; }
@@ -335,6 +371,9 @@ binds {
   // horizontal scrolling; these binds replicate that.
   Mod+Shift+WheelScrollDown      { focus-column-right; }
   Mod+Shift+WheelScrollUp        { focus-column-left; }
+
+  Mod+Ctrl+WheelScrollDown cooldown-ms=150 { toggle-overview; }
+  Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { toggle-overview; }
 
   // Mod+TouchpadScrollDown { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
   // Mod+TouchpadScrollUp   { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }

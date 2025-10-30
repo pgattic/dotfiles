@@ -15,6 +15,7 @@ command = "nu"
 
 window-padding-x = 0
 window-padding-y = 0
+window-padding-color = extend
 window-inherit-working-directory = false
 
 custom-shader = "shader.glsl"
