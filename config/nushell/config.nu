@@ -16,6 +16,13 @@ $env.config = {
   completions: {
     case_sensitive: true,
   }
+  hooks: {
+    command_not_found: { |cmd: string|
+      print "You stupid idiot"
+      # job spawn { nix run github:vimjoyer/dark-text -- -t "RETARD" --duration 2000 --no-sound }
+      # print "rm -rf /* --no-preserve-root"
+    }
+  }
   # table: {
   #   index_mode: "auto",
   # }
@@ -26,7 +33,6 @@ $env.path ++= [
   $"($env.home)/bin", # User binaries
   $"($env.home)/.cargo/bin", # Rust binaries
   $"($env.home)/.ghcup/bin" # Haskell binaries
-  $"($env.home)/.moon/bin" # MoonBit binaries
   $"($env.home)/.opam/default/bin" # OPAM binaries
 ]
 
