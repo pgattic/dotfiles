@@ -19,7 +19,9 @@ $env.config = {
   hooks: {
     command_not_found: { |cmd: string|
       print "You stupid idiot"
-      # job spawn { nix run github:vimjoyer/dark-text -- -t "RETARD" --duration 2000 --no-sound }
+      if (which dark-text | length) > 0 {
+        job spawn { dark-text -t "RETARD" --duration 2000 --no-sound }
+      }
       # print "rm -rf /* --no-preserve-root"
     }
   }
