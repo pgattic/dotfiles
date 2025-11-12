@@ -41,7 +41,6 @@ local plugins = {
     opts = { experimental = {ghost_text = true,},},
   },
   {"hrsh7th/cmp-nvim-lsp"},
-  {"L3MON4D3/LuaSnip"},
 
   {"mbbill/undotree"},
 

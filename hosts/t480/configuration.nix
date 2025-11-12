@@ -15,18 +15,10 @@
     enable = true;
     logo = "${pkgs.nixos-icons}/share/icons/hicolor/128x128/apps/nix-snowflake.png";
   };
-  # from https://raw.githubusercontent.com/AntiMicroX/antimicrox/master/other/60-antimicrox-uinput.rules
-  services.udev.extraRules = ''
-    SUBSYSTEM=="misc", KERNEL=="uinput", OPTIONS+="static_node=uinput", TAG+="uaccess"
-  '';
 
-  networking.hostName = "t480"; # Define your hostname.
+  networking.hostName = "t480";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   hardware.bluetooth.enable = true;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   networking.networkmanager.enable = true;
 
@@ -149,11 +141,12 @@
     bambu-studio
     nicotine-plus # Soulseek client
     pinta
+    mullvad-vpn
 
     kdePackages.dolphin
 
     luanti
-    antimicrox
+    # antimicrox
     # calibre
 
     vscode
@@ -266,10 +259,10 @@
   };
 
   environment.sessionVariables = {
-    NH_FLAKE = "/home/pgattic/dotfiles";
+    NH_OS_FLAKE = "/home/pgattic/dotfiles";
     GTK_USE_PORTAL = "1";
     NIXOS_OZONE_WL = "1";
-    XDG_CURRENT_DESKTOP = "GNOME";
+    XDG_CURRENT_DESKTOP = "GNOME"; # cap
     XDG_SESSION_DESKTOP = "niri";
   };
 
@@ -295,7 +288,6 @@
       };
     };
     gvfs.enable = true; # Automatic drive mounting, network shares, recycle bin
-    getty.autologinUser = "pgattic";
     flatpak.enable = true; # Only good source for Zen Browser
     syncthing = {
       enable = true;
@@ -312,3 +304,4 @@
   # Do not modify
   system.stateVersion = "25.05";
 }
+
