@@ -8,13 +8,13 @@ style = "Regular"
 [window]
 
 dimensions = { columns = 92, lines = 28}
-opacity = 0.85
+opacity = 0.8
 resize_increments = false
 
 # Default colors
 [colors.primary]
-background = '#000000'
-foreground = '#DDDDDD'
+# background = '#000000'
+# foreground = '#DDDDDD'
 
 
 # Normal colors
@@ -49,5 +49,6 @@ thickness = 0.2
 
 hide_when_typing = true
 
-
+[terminal]
+shell = "nu"
 
