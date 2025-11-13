@@ -283,8 +283,8 @@ binds {
   Mod+Up    { focus-window-up; }
   Mod+Right { focus-column-right; }
   Mod+H     { focus-column-left; }
-  Mod+J     { focus-window-down; }
-  Mod+K     { focus-window-up; }
+  Mod+J     { focus-workspace-down; }
+  Mod+K     { focus-workspace-up; }
   Mod+L     { focus-column-right; }
 
   Mod+Shift+Left  { move-column-left; }
@@ -292,8 +292,8 @@ binds {
   Mod+Shift+Up    { move-window-up; }
   Mod+Shift+Right { move-column-right; }
   Mod+Shift+H     { move-column-left; }
-  Mod+Shift+J     { move-window-down; }
-  Mod+Shift+K     { move-window-up; }
+  Mod+Shift+J     { move-column-to-workspace-down; }
+  Mod+Shift+K     { move-column-to-workspace-up; }
   Mod+Shift+L     { move-column-right; }
 
   // Alternative commands that move across workspaces when reaching
@@ -336,12 +336,12 @@ binds {
 
   Mod+Page_Down      { focus-workspace-down; }
   Mod+Page_Up        { focus-workspace-up; }
-  Mod+U              { focus-workspace-down; }
-  Mod+I              { focus-workspace-up; }
+  Mod+U              { focus-window-down; }
+  Mod+I              { focus-window-up; }
   Mod+Shift+Page_Down { move-column-to-workspace-down; }
   Mod+Shift+Page_Up   { move-column-to-workspace-up; }
-  Mod+Shift+U         { move-column-to-workspace-down; }
-  Mod+Shift+I         { move-column-to-workspace-up; }
+  Mod+Shift+U         { move-workspace-down; }
+  Mod+Shift+I         { move-workspace-up; }
 
   // Alternatively, there are commands to move just a single window:
   // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
