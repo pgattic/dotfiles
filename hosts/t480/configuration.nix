@@ -4,10 +4,6 @@
     ./hardware-configuration.nix
   ];
 
-  nixpkgs.overlays = [
-    (import ./overlays/bambu.nix)
-  ];
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "uinput" ];
@@ -145,7 +141,7 @@
 
     kdePackages.dolphin
 
-    luanti
+    luanti-client
     # antimicrox
     # calibre
 

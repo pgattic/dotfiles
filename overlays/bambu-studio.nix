@@ -1,3 +1,4 @@
+# Use the AppImage version of BambuStudio (The native one is broken)
 self: super: {
   bambu-studio = super.appimageTools.wrapType2 rec {
     name = "BambuStudio";
@@ -26,3 +27,4 @@ self: super: {
     ];
   };
 }
+

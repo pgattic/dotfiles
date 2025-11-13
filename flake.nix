@@ -8,17 +8,18 @@
 
   outputs = { self, nixpkgs, nixos-hardware }:
     let
+      default-overlays = import ./overlays;
+
       mkHost = { hostname, system, extraModules ? [] }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./hosts/${hostname}/configuration.nix
 
-            # ({ pkgs, ... }: { nixpkgs.hostPlatform = system; })
-
-            # Shared options go here
+            # Shared options
             ({ ... }: {
               nixpkgs.config.allowUnfree = true;
+              nixpkgs.overlays = default-overlays;
             })
           ] ++ extraModules;
         };
