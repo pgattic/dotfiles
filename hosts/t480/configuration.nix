@@ -137,7 +137,6 @@
     bambu-studio
     nicotine-plus # Soulseek client
     pinta
-    mullvad-vpn
 
     kdePackages.dolphin
 
@@ -277,10 +276,6 @@
           '';
           user = "greeter";
         };
-        # initial_session = {
-        #   command = "niri";
-        #   user = "pgattic";
-        # };
       };
     };
     gvfs.enable = true; # Automatic drive mounting, network shares, recycle bin
@@ -292,6 +287,7 @@
       dataDir = "/home/pgattic";
     };
     udisks2.enable = true; # For Calibre to access plugged-in devices
+    mullvad-vpn.enable = true;
   };
 
   systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # Don't need speech dispatcher
