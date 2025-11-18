@@ -190,7 +190,7 @@ prefer-no-csd // No client-side decorations
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
 animations {
   // off
-  slowdown 0.5 // Values below 1 here speed them up
+  // slowdown 0.5 // Values below 1 here speed them up
 }
 
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
