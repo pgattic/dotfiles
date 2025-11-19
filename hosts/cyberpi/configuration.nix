@@ -75,6 +75,7 @@
     papirus-icon-theme
     xwayland-satellite
     luanti-client
+    ungoogled-chromium
 
     nh
     nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
