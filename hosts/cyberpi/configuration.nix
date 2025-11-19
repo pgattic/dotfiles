@@ -9,12 +9,13 @@
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  hardware.raspberry-pi."4".fkms-3d.enable = true;
+  hardware.raspberry-pi."4".fkms-3d.enable = true; # display output
+  hardware.raspberry-pi."4".touch-ft5406.enable = true; # touchscreen input
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
 
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [ mesa.drivers ];
+    extraPackages = with pkgs; [ mesa ];
   };
 
   hardware.deviceTree.enable = true;
@@ -102,19 +103,21 @@
   };
 
   services = {
+    # libinput.enable = true;
+    mullvad-vpn.enable = true;
     openssh.enable = true;
     greetd = {
       enable = true;
       settings = {
         default_session = {
-	  command = ''
-	    ${pkgs.tuigreet}/bin/tuigreet --remember --asterisks --time \
-	    --time-format "%a %b %d %I:%M %p" \
-	    --window-padding 2 \
-	    --theme "border=cyan;action=cyan;time=cyan;button=gray"
-	  '';
-	  user = "greeter";
-	};
+          command = ''
+            ${pkgs.tuigreet}/bin/tuigreet --remember --asterisks --time \
+            --time-format "%a %b %d %I:%M %p" \
+            --window-padding 2 \
+            --theme "border=cyan;action=cyan;time=cyan;button=gray"
+          '';
+          user = "greeter";
+        };
       };
     };
     gvfs.enable = true;
