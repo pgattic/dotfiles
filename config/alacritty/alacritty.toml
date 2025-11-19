@@ -13,31 +13,35 @@ resize_increments = false
 
 # Default colors
 [colors.primary]
-# background = '#000000'
-# foreground = '#DDDDDD'
+background = '#1e1e1e'
+foreground = '#cccccc'
 
 
 # Normal colors
 [colors.normal]
 black   = '#000000'
-red     = '#C01C28'
-green   = '#26A269'
-yellow  = '#A2734C'
-blue    = '#12488B'
-magenta = '#A347BA'
-cyan    = '#2AA1B3'
-white   = '#D0CFCC'
+red     = '#cd3131'
+green   = '#0dbc79'
+yellow  = '#e5e510'
+blue    = '#2472c8'
+magenta = '#bc3fbc'
+cyan    = '#11a8cd'
+white   = '#e5e5e5'
 
 # Bright colors
 [colors.bright]
-black   = '#5E5C64'
-red     = '#F66151'
-green   = '#33D17A'
-yellow  = '#E9AD0C'
-blue    = '#2A7BDE'
-magenta = '#C061CB'
-cyan    = '#33C7DE'
-white   = '#FFFFFF'
+black   = '#666666'
+red     = '#f14c4c'
+green   = '#23d18b'
+yellow  = '#f5f543'
+blue    = '#3b8eea'
+magenta = '#d670d6'
+cyan    = '#29b8db'
+white   = '#e5e5e5'
+
+# cursor #ffffff
+# selection_background #3a3d41
+# selection_foreground #e0e0e0
 
 [cursor]
 
