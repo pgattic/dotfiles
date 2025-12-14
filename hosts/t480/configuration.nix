@@ -108,6 +108,8 @@
     wl-mirror # Thought I didn't need this, but then I had to go ahead and switch to Niri...
     kitty
     ghostty
+    alacritty
+    foot
     waybar
     ironbar
     fuzzel
@@ -141,6 +143,7 @@
     kdePackages.dolphin
 
     luanti-client
+    # prismlauncher
     # antimicrox
     # calibre
 
@@ -149,8 +152,10 @@
     ventoy
 
     nh
+    home-manager
     nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
-    nvd
+    waypipe
+    signal-desktop
   ];
 
   fonts.packages = with pkgs; [
@@ -159,6 +164,8 @@
   ];
 
   programs = {
+    nano.enable = false; # `true` should not have been the default
+
     nix-ld.enable = true;
     nix-ld.libraries = with pkgs; [
       wayland
@@ -167,7 +174,10 @@
 
     kdeconnect.enable = true;
 
-    niri.enable = true;
+    niri = {
+      enable = true;
+      useNautilus = false; # Silly default options
+    };
 
     thunar.enable = true;
     xfconf.enable = true; # XFCE configuration storage

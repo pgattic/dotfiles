@@ -87,7 +87,10 @@
   ];
 
   programs = {
-    niri.enable = true;
+    niri = {
+      enable = true;
+      useNautilus = false;
+    };
     firefox.enable = true;
     thunar.enable = true;
     xfconf.enable = true;
