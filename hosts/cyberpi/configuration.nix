@@ -43,6 +43,7 @@
     ];
     trusted-users = [ "root" "pgattic" ];
   };
+  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     git

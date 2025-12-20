@@ -4,40 +4,45 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware }:
-    let
-      default-overlays = import ./overlays;
+  outputs = { self, nixpkgs, ... }@inputs: {
+    nixosConfigurations = {
+      t480 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/t480/configuration.nix
+          inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+          inputs.home-manager.nixosModules.home-manager
 
-      mkHost = { hostname, system, extraModules ? [] }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./hosts/${hostname}/configuration.nix
+          ({ ... }: {
+            nixpkgs.overlays = (import ./overlays) ++ [ ];
 
-            # Shared options
-            ({ ... }: {
-              nixpkgs.config.allowUnfree = true;
-              nixpkgs.overlays = default-overlays;
-            })
-          ] ++ extraModules;
-        };
-    in
-      {
-      nixosConfigurations = {
-        t480 = mkHost {
-          hostname = "t480";
-          system = "x86_64-linux";
-        };
-        cyberpi = mkHost {
-          hostname = "cyberpi";
-          system = "aarch64-linux";
-          extraModules = [
-            nixos-hardware.nixosModules.raspberry-pi-4
-          ];
-        };
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.pgattic = import ./home/pgattic.nix;
+            };
+          })
+        ];
+      };
+
+      cyberpi = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./hosts/cyberpi/configuration.nix
+          inputs.nixos-hardware.nixosModules.raspberry-pi-4
+
+          ({ ... }: {
+            nixpkgs.overlays = (import ./overlays) ++ [ ];
+          })
+        ];
       };
     };
+  };
 }
 

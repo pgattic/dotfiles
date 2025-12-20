@@ -1,5 +1,5 @@
 # `man configuration.nix 5`, `nixos-help`
-{ config, pkgs, ... }: {
+{ lib, config, optins, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -68,6 +68,7 @@
     packages = with pkgs; [
     ];
   };
+
   hardware.uinput.enable = true; # Added alongside the "dialout" user group for work
 
   nix.settings = {
@@ -84,55 +85,20 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
-    git
-    neovim
-    gcc # Neovim requires a C compiler for filetype detection
-    usbutils
-    nushell
-    btop
-    ripgrep
-    bat
-    wl-clipboard-rs
-    gdu
-    less
-    file
-    tree
-    fastfetch
-    ouch # Archive manager
     helix # Terminal editor that I can't seem to get the hang of
-    jq
-    wf-recorder
 
     # Desktop
-    wl-mirror # Thought I didn't need this, but then I had to go ahead and switch to Niri...
     kitty
     ghostty
     alacritty
     foot
-    waybar
     ironbar
-    fuzzel
-    lazygit
-    swaynotificationcenter
-    wbg # Wayland Background
-    pavucontrol
-    overskride # Bluetooth manager
-    brightnessctl
     zed-editor
-    imv
-    mpv-unwrapped
-    zathura
-    xarchiver
-    tinyxxd
     libnotify
     mcpelauncher-ui-qt
     discord
     obsidian
-    xwayland-satellite
-    bibata-cursors
     nwg-look
-    papirus-icon-theme
     slack
     ungoogled-chromium
     qbittorrent
@@ -140,10 +106,9 @@
     nicotine-plus # Soulseek client
     pinta
 
-    kdePackages.dolphin
 
     luanti-client
-    # prismlauncher
+    prismlauncher
     # antimicrox
     # calibre
 
@@ -151,11 +116,10 @@
     zoom-us
     ventoy
 
-    nh
-    home-manager
-    nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
     waypipe
     signal-desktop
+    openscad
+    freecad
   ];
 
   fonts.packages = with pkgs; [
