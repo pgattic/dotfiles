@@ -33,7 +33,7 @@
         system = "x86_64-linux";
         modules = [
           ({ ... }: {
-            nixpkgs.overlays = (import ./overlays/mineclonia-game.nix) ++ [ ];
+            nixpkgs.overlays = (import ./overlays) ++ [ ];
           })
           ./hosts/corlessfam/configuration.nix
         ];

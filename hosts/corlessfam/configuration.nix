@@ -324,7 +324,7 @@ in {
     };
   };
 
-  systemd.services.minetest-server.environment.MINETEST_GAME_PATH = pkgs.minecloniaGamePath;
+  systemd.services.minetest-server.environment.MINETEST_GAME_PATH = pkgs.mineclonia-game;
 
   # systemd.services.transmission = {
   #   serviceConfig = {
@@ -393,7 +393,6 @@ in {
   };
 
   networking.firewall = {
-    enabled = true;
     allowedTCPPorts = [
       # 53 # DNS
       80 # HTTP
