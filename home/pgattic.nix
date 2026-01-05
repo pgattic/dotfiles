@@ -14,6 +14,7 @@
     usbutils
     nushell
     btop
+    openssh_hpn
     ripgrep
     bat
     wl-clipboard-rs

@@ -110,7 +110,6 @@
   services = {
     # libinput.enable = true;
     mullvad-vpn.enable = true;
-    openssh.enable = true;
     greetd = {
       enable = true;
       settings = {

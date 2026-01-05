@@ -19,7 +19,7 @@
             nixpkgs.overlays = (import ./overlays) ++ [ ];
           })
           inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
-          ./hosts/t480/configuration.nix
+          ./hosts/t480
           inputs.home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -35,7 +35,7 @@
           ({ ... }: {
             nixpkgs.overlays = (import ./overlays) ++ [ ];
           })
-          ./hosts/corlessfam/configuration.nix
+          ./hosts/corlessfam
         ];
       };
 
@@ -46,7 +46,7 @@
             nixpkgs.overlays = (import ./overlays) ++ [ ];
           })
           inputs.nixos-hardware.nixosModules.raspberry-pi-4
-          ./hosts/cyberpi/configuration.nix
+          ./hosts/cyberpi
         ];
       };
     };

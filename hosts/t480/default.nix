@@ -118,7 +118,6 @@
     waypipe
     signal-desktop
     openscad
-    freecad
   ];
 
   fonts.packages = with pkgs; [

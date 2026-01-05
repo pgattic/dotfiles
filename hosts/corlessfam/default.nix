@@ -94,7 +94,10 @@ in {
   };
 
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      package = pkgs.openssh_hpn;
+    };
 
     postgresql = {
       enable = true;
