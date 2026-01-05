@@ -46,6 +46,18 @@ vim.keymap.set("n", "n", "nzzzv") -- Keep search terms in the middle of the scre
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "<CR>", ":noh<CR><CR>", {silent = true}) -- Return also removes search highlights
 
+-- OTHER --
+
+-- Custom filetype configs
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("CustomFileConfigs", { clear = true }),
+  callback = function(ev)
+    if ev.match == "openscad" then
+      vim.bo.commentstring = "// %s"
+    end
+  end,
+})
+
 -- PLUGINS --
 
 local plugins = {
@@ -145,6 +157,7 @@ vim.lsp.inlay_hint.enable()
 local lsp_servers = {
   rust_analyzer = {},
   clangd = {},
+  openscad_lsp = {},
 }
 for server, config in pairs(lsp_servers) do
   vim.lsp.config(server, config)
