@@ -1,11 +1,16 @@
 { config, pkgs, inputs, ... }: {
 
+  # xdg.configFile."niri" = {
+  #   source = ../config/niri;
+  #   recursive = true;
+  # };
+
   home.username = "pgattic";
   home.homeDirectory = "/home/pgattic";
 
   home.packages = with pkgs; [
     (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
-    neovim gcc # Tree-sitter requires a C compiler
+    gcc # Neovim's tree-sitter requires a C compiler
     usbutils
     nushell
     btop
@@ -17,6 +22,7 @@
     file
     tree
     fastfetch
+    lazygit
     ouch # Archive manager
     jq
     tinyxxd
@@ -27,7 +33,6 @@
     wl-mirror # Thought I didn't need this, but then I had to go ahead and switch to Niri...
     waybar
     fuzzel
-    lazygit
     swaynotificationcenter
     wbg
     pavucontrol
@@ -55,6 +60,15 @@
         color.ui = "auto";
         init.defaultBranch = "master";
       };
+    };
+    foot = {
+      enable = true;
+    };
+    neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
     };
   };
 

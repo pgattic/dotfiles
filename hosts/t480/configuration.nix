@@ -91,7 +91,6 @@
     kitty
     ghostty
     alacritty
-    foot
     ironbar
     zed-editor
     libnotify
@@ -110,7 +109,7 @@
     luanti-client
     prismlauncher
     # antimicrox
-    # calibre
+    calibre
 
     vscode
     zoom-us
@@ -124,7 +123,6 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
-    material-symbols
   ];
 
   programs = {

@@ -15,31 +15,28 @@
       t480 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./hosts/t480/configuration.nix
-          inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
-          inputs.home-manager.nixosModules.home-manager
-
           ({ ... }: {
             nixpkgs.overlays = (import ./overlays) ++ [ ];
-
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.pgattic = import ./home/pgattic.nix;
-            };
           })
+          inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+          ./hosts/t480/configuration.nix
+          inputs.home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.pgattic = import ./home/pgattic.nix;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
 
       cyberpi = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
-          ./hosts/cyberpi/configuration.nix
-          inputs.nixos-hardware.nixosModules.raspberry-pi-4
-
           ({ ... }: {
             nixpkgs.overlays = (import ./overlays) ++ [ ];
           })
+          inputs.nixos-hardware.nixosModules.raspberry-pi-4
+          ./hosts/cyberpi/configuration.nix
         ];
       };
     };
