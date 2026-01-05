@@ -29,6 +29,16 @@
         ];
       };
 
+      corlessfam = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ({ ... }: {
+            nixpkgs.overlays = (import ./overlays/mineclonia-game.nix) ++ [ ];
+          })
+          ./hosts/corlessfam/configuration.nix
+        ];
+      };
+
       cyberpi = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
