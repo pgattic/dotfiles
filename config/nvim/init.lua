@@ -158,6 +158,7 @@ local lsp_servers = {
   rust_analyzer = {},
   clangd = {},
   openscad_lsp = {},
+  nil_ls = {},
 }
 for server, config in pairs(lsp_servers) do
   vim.lsp.config(server, config)

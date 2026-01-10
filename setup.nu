@@ -21,8 +21,8 @@ let configs = [
         { name: "zed", deps: ["zeditor"] },
         { name: "niri", deps: ["niri", "waybar", "thunar", "fuzzel", "swaync", "wbg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
         # { name: "ironbar", deps: ["ironbar", "playerctl"] },
-        { name: "nushell", deps: ["nu", "nvim"] },
-        { name: ".gitconfig", deps: ["git"], target: ($nu.home-path | path join ".gitconfig") }
+        # { name: "nushell", deps: ["nu", "nvim"] },
+        # { name: ".gitconfig", deps: ["git"], target: ($nu.home-path | path join ".gitconfig") }
         # { name: ".bashrc", deps: ["bash", "tree"], target: ($nu.home-path | path join ".bashrc") }
         # { name: "helix", deps: ["helix", "rust-analyzer"] },
       ]

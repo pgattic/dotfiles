@@ -20,11 +20,14 @@
           })
           inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
           ./hosts/t480
-          inputs.home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.pgattic = import ./home/pgattic.nix;
-            home-manager.extraSpecialArgs = { inherit inputs; };
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.pgattic = import ./home/hosts/t480.nix;
+              extraSpecialArgs = { inherit inputs; };
+            };
           }
         ];
       };

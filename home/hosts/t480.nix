@@ -1,37 +1,16 @@
 { config, pkgs, inputs, ... }: {
+  imports = [ ../default.nix ];
 
   # xdg.configFile."niri" = {
   #   source = ../config/niri;
   #   recursive = true;
   # };
 
-  home.username = "pgattic";
-  home.homeDirectory = "/home/pgattic";
-
   home.packages = with pkgs; [
-    (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
-    gcc # Neovim's tree-sitter requires a C compiler
-    usbutils
-    nushell
-    btop
-    openssh_hpn
-    ripgrep
-    bat
     wl-clipboard-rs
-    gdu
-    less
-    file
-    tree
-    fastfetch
-    lazygit
-    ouch # Archive manager
-    jq
-    tinyxxd
-    nh
-    nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
 
     wf-recorder
-    wl-mirror # Thought I didn't need this, but then I had to go ahead and switch to Niri...
+    wl-mirror
     waybar
     fuzzel
     swaynotificationcenter
@@ -53,23 +32,8 @@
   ];
 
   programs = {
-    git = {
-      enable = true;
-      settings = {
-        user.name = "pgattic";
-        user.email = "pgattic@gmail.com";
-        color.ui = "auto";
-        init.defaultBranch = "master";
-      };
-    };
     foot = {
       enable = true;
-    };
-    neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
     };
   };
 
@@ -86,11 +50,6 @@
     # '';
   };
 
-  home.sessionVariables = { # For terminal shells, not for the desktop
-    EDITOR = "nvim";
-  };
-
   home.stateVersion = "25.11"; # Don't
-  programs.home-manager.enable = true;
 }
 

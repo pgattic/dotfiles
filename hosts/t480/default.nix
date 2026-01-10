@@ -104,7 +104,7 @@
     bambu-studio
     nicotine-plus # Soulseek client
     pinta
-
+    antigravity-fhs
 
     luanti-client
     prismlauncher
@@ -228,7 +228,7 @@
     NH_OS_FLAKE = "/home/pgattic/dotfiles";
     GTK_USE_PORTAL = "1";
     NIXOS_OZONE_WL = "1";
-    XDG_CURRENT_DESKTOP = "GNOME"; # cap
+    XDG_CURRENT_DESKTOP = "niri";
     XDG_SESSION_DESKTOP = "niri";
   };
 
