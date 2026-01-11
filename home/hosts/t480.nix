@@ -1,40 +1,10 @@
 { config, pkgs, inputs, ... }: {
   imports = [ ../default.nix ];
 
-  # xdg.configFile."niri" = {
-  #   source = ../config/niri;
-  #   recursive = true;
-  # };
-
-  home.packages = with pkgs; [
-    wl-clipboard-rs
-
-    wf-recorder
-    wl-mirror
-    waybar
-    fuzzel
-    swaynotificationcenter
-    wbg
-    pavucontrol
-    overskride # Bluetooth manager
-    brightnessctl
-    imv
-    mpv-unwrapped
-    zathura
-    xarchiver
-    xwayland-satellite
-    bibata-cursors
-    papirus-icon-theme
-    kdePackages.dolphin
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-  ];
-
-  programs = {
-    foot = {
-      enable = true;
-    };
+  my.desktop = {
+    enable = true;
+    enable_bluetooth = true;
+    # cpu_cores = 8;
   };
 
   home.file = {
@@ -49,7 +19,5 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
-
-  home.stateVersion = "25.11"; # Don't
 }
 

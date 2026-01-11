@@ -3,6 +3,10 @@ let
   username = "pgattic";
   home_dir = "/home/${username}";
 in {
+  imports = [ # Importing these doesn't automatically enable their options
+    ./desktop.nix
+  ];
+
   home.username = username;
   home.homeDirectory = home_dir;
 
@@ -122,5 +126,7 @@ in {
   home.sessionVariables = { # For terminal shells, not for the desktop
     EDITOR = "nvim";
   };
+
+  home.stateVersion = "25.11"; # Don't
 }
 
