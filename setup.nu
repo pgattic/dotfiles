@@ -5,21 +5,21 @@
 # `target` (optional): location to symlink to (defaults to `$HOME/.config/$item`)
 let configs = [
   { name: "nvim", deps: ["nvim", "rg"] },
-  { name: "bat", deps: ["bat", "less"] },
+  # { name: "bat", deps: ["bat", "less"] },
 
   ...(
     # Platform-specific programs
     if $nu.os-info.name == "linux" {
       [
         # { name: "gtk-3.0" },
-        { name: "wallpaper" },
+        # { name: "wallpaper" },
         # { name: "ghostty", deps: ["ghostty"] },
-        { name: "kitty", deps: ["kitty", "nu"] }, # Also needs `ttf-jetbrains-mono-nerd` package
-        { name: "waybar", deps: ["waybar", "pavucontrol"] },
-        { name: "fuzzel", deps: ["fuzzel"] },
+        # { name: "kitty", deps: ["kitty", "nu"] }, # Also needs `ttf-jetbrains-mono-nerd` package
+        # { name: "waybar", deps: ["waybar", "pavucontrol"] },
+        # { name: "fuzzel", deps: ["fuzzel"] },
         # { name: "hypr", deps: ["hyprland", "waybar", "fuzzel", "swaync", "swaybg", "brightnessctl", "blueman", "nmtui"] },
         { name: "zed", deps: ["zeditor"] },
-        { name: "niri", deps: ["niri", "waybar", "thunar", "fuzzel", "swaync", "wbg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
+        # { name: "niri", deps: ["niri", "waybar", "thunar", "fuzzel", "swaync", "wbg", "xwayland-satellite", "wpctl", "brightnessctl", "nmtui"] },
         # { name: "ironbar", deps: ["ironbar", "playerctl"] },
         # { name: "nushell", deps: ["nu", "nvim"] },
         # { name: ".gitconfig", deps: ["git"], target: ($nu.home-path | path join ".gitconfig") }
