@@ -1,4 +1,6 @@
-{ config, lib, pkgs, inputs, ... }: {
+{ config, lib, pkgs, inputs, ... }: let
+  cfg = config.my.desktop;
+in {
   imports = [
     inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
   ];
@@ -16,11 +18,11 @@
       description = "Whether to enable Bluetooth-related applications/configs";
     };
 
-    # cpu_cores = mkOption {
-    #   type = types.int;
-    #   default = 8;
-    #   description = "Number of CPU cores (used by Waybar module)";
-    # };
+    cpu_cores = mkOption {
+      type = types.int;
+      default = 8;
+      description = "Number of CPU cores (used by Waybar module)";
+    };
 
     mod_key = mkOption {
       type = types.enum [ "Super" "Alt" ];
@@ -36,7 +38,7 @@
     };
   };
 
-  config = lib.mkIf config.my.desktop.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       wl-clipboard-rs
 
@@ -58,7 +60,7 @@
       #   echo "Hello, ${config.home.username}!"
       # '')
     ]
-    ++ lib.optionals config.my.desktop.enable_bluetooth [
+    ++ lib.optionals cfg.enable_bluetooth [
       overskride # Bluetooth manager
     ];
 
@@ -108,7 +110,6 @@
         # enable = true;
         package = pkgs.niri;
         settings = { # https://github.com/sodiboo/niri-flake/blob/main/docs.md
-          mod-key = config.my.desktop.mod_key;
           spawn-at-startup = [
             { argv = [ "swaync" ]; }
             { argv = [ "wbg" "-s" "/home/pgattic/dotfiles/config/wallpaper/wedding_temple.jpg" ]; }
@@ -121,6 +122,7 @@
             DISPLAY = ":0"; # required for X11 apps to connect to xwayland-satellite properly
           };
           input = {
+            mod-key = cfg.mod_key;
             keyboard.xkb.options = "caps:escape";
             touchpad = {
               tap = true;
@@ -175,7 +177,7 @@
             hide-when-typing = true;
             hide-after-inactive-ms = 1000;
           };
-          prefer-no-csd = !config.my.desktop.touch_options;
+          prefer-no-csd = !cfg.touch_options;
           window-rules = [
             { clip-to-geometry = true; }
             { # KDE Connect Presentation Pointer fix
@@ -377,7 +379,7 @@
             height = 24; # Waybar height (to be removed for auto height)
             # spacing = 4; # Gaps between modules (4px)
             # Choose the order of the modules
-            modules-left = ["niri/workspaces" "cpu" "memory" "temperature"];
+            modules-left = ["niri/workspaces" ] ++ lib.optionals cfg.touch_options [ "custom/overview" "custom/launcher" ] ++ [ "cpu" "memory" "temperature"];
             modules-center = ["niri/window"];
             modules-right = ["tray" "mpd" "backlight" "pulseaudio" "network" "battery" "battery#bat2" "clock"];
             # Modules configuration
@@ -432,11 +434,12 @@
               tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
               format-alt = "{:%Y-%m-%d}";
             };
-            cpu = {
+            cpu = let
+              cores = cfg.cpu_cores;
+              icon_string = lib.concatStrings (builtins.genList (i: "{icon${toString i}}") cores);
+            in {
               interval = 1;
-              #format = " {icon0}{icon1}{icon2}{icon3} {usage:>2}%"; # For quad-core CPU
-              format = " {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7} {usage:>2}%"; # For 8-core cpu
-              #format = " {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15} {usage:>2}%"; # For 16-core cpu
+              format = " ${icon_string} {usage:>2}%"; # For 8-core cpu
               format-icons = [
                 "<span color='#69ff94'>▁</span>" # green
                 "<span color='#2aa9ff'>▂</span>" # blue
@@ -503,7 +506,7 @@
             };
             network = {
               # interface = "wlp2*"; # (Optional) To force the use of this interface
-              format-wifi = "   {essid} ({signalStrength}%)";
+              format-wifi = if cfg.touch_options then "   {signalStrength}%" else "   {essid} ({signalStrength}%)";
               format-ethernet = "{ipaddr}/{cidr} 󱂇";
               tooltip-format = "{ifname} via {gwaddr}";
               format-linked = "{ifname} (No IP) ";
@@ -528,6 +531,18 @@
                 default = ["" "" ""];
               };
               on-click = "pavucontrol";
+            };
+          }
+          // lib.optionalAttrs cfg.touch_options {
+            "custom/overview" = {
+              format = "󰍹  ";
+              tooltip-format = "Toggle Overview";
+              on-click = "niri msg action toggle-overview";
+            };
+            "custom/launcher" = {
+              format = "󱄅 ";
+              tooltip-format = "Open App Launcher";
+              on-click = "fuzzel";
             };
           };
         };
@@ -748,8 +763,9 @@
         settings = {
           main = {
             font = "Sans:size=18";
+            terminal = "foot";
             dpi-aware = false;
-            prompt = "🔍 ";
+            prompt = "🔍";
             lines = 8;
             width = 18;
             horizontal-pad = 10;

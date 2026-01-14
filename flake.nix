@@ -54,6 +54,15 @@
           })
           inputs.nixos-hardware.nixosModules.raspberry-pi-4
           ./hosts/cyberpi
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.pgattic = import ./home/hosts/cyberpi.nix;
+              extraSpecialArgs = { inherit inputs; };
+            };
+          }
         ];
       };
     };

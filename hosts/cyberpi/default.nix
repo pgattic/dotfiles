@@ -46,41 +46,9 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    git
-    tree
-    neovim
-    gcc
-    tmux
-    nushell
-    btop
-    ripgrep
-    bat
-    wl-clipboard-rs
-    less
-    file
-    fastfetch
-    ouch
-    wl-mirror
-    kitty
-    alacritty
-    waybar
-    fuzzel
-    lazygit
-    swaynotificationcenter
-    wbg
-    pavucontrol
-    imv
-    mpv
-    bibata-cursors
     nwg-look
-    papirus-icon-theme
-    xwayland-satellite
     luanti-client
     ungoogled-chromium
-
-    nh
-    nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
-    nvd
   ];
 
   fonts.packages = with pkgs; [
