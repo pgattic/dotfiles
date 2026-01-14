@@ -79,7 +79,7 @@ in {
       '';
       extraConfig = ''
         # Startup commands
-        open --raw ($nu.default-config-dir | path join "torterra.txt") | print
+        open --raw "${home_dir}/dotfiles/config/nushell/torterra.txt" | print
         $"Uptime: (ansi green_bold)((sys host).uptime)(ansi reset)" | print
         $"Memory used: (ansi green_bold)(sys mem | get used)(ansi reset)/(ansi green_bold)(sys mem | get total)(ansi reset)" | print
         "\"You are nothing but an unreliable wizard\" - Bruce Webster" | print
