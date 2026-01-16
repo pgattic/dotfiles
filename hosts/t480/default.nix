@@ -76,7 +76,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.config.permittedInsecurePackages = [
-    "ventoy-1.1.07"
+    "ventoy-1.1.10"
   ];
 
   # List packages installed in system profile. To search, run:
@@ -211,9 +211,7 @@
   # };
   # virtualisation.spiceUSBRedirection.enable = true;
 
-  # Android Development
   virtualisation.docker.enable = true;
-  programs.adb.enable = true;
 
   environment.sessionVariables = {
     NH_OS_FLAKE = "/home/pgattic/dotfiles";
