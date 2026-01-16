@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +27,7 @@
             nixpkgs.overlays = (import ./overlays) ++ [ ];
           })
           inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+          inputs.stylix.nixosModules.stylix
           ./hosts/t480
           inputs.home-manager.nixosModules.home-manager
           {

@@ -30,6 +30,8 @@ in {
     nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
   ];
 
+  stylix.targets.neovim.enable = false;
+
   programs = {
     home-manager.enable = true;
     git = {

@@ -47,7 +47,6 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       wl-clipboard-rs
-
       wf-recorder
       wl-mirror
       swaynotificationcenter
@@ -59,9 +58,10 @@ in {
       zathura
       xarchiver
       xwayland-satellite
-      bibata-cursors
       papirus-icon-theme
       kdePackages.dolphin
+      adwaita-qt
+      adwaita-qt6
       # (pkgs.writeShellScriptBin "my-hello" ''
       #   echo "Hello, ${config.home.username}!"
       # '')
@@ -73,6 +73,32 @@ in {
       overskride # Bluetooth manager
     ];
 
+    stylix = {
+      targets = {
+        waybar.enable = false;
+        qt.platform = "qtct";
+      };
+      cursor = {
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Classic";
+        size = 24;
+      };
+      fonts = {
+        monospace = {
+          package = pkgs.nerd-fonts.jetbrains-mono;
+          name = "JetBrainsMono Nerd Font";
+        };
+        sizes.terminal = 10;
+      };
+      icons = {
+        enable = true;
+        package = pkgs.papirus-icon-theme;
+        dark = "Papirus-Dark";
+        light = "Papirus-Light";
+      };
+      polarity = "dark";
+    };
+
     programs = {
       foot = {
         enable = true;
@@ -80,33 +106,11 @@ in {
           main = {
             shell = "nu";
             term = "xterm-256color";
-            font = "JetBrainsMono Nerd Font:size=10";
             resize-delay-ms = 0;
           };
           cursor = {
             style = "beam";
             blink = true;
-          };
-          colors = {
-            # alpha = 0.8
-            foreground = "cccccc";
-            background = "1e1e1e";
-            regular0 = "000000";
-            regular1 = "cd3131";
-            regular2 = "0dbc79";
-            regular3 = "e5e510";
-            regular4 = "2472c8";
-            regular5 = "bc3fbc";
-            regular6 = "11a8cd";
-            regular7 = "e5e5e5";
-            bright0 = "666666";
-            bright1 = "f14c4c";
-            bright2 = "23d18b";
-            bright3 = "f5f543";
-            bright4 = "3b8eea";
-            bright5 = "d670d6";
-            bright6 = "29b8db";
-            bright7 = "e5e5e5";
           };
           csd = {
             font = "Sans:size=10";
@@ -129,6 +133,7 @@ in {
           environment = {
             ELECTRON_OZONE_PLATFORM_HINT = "auto"; # Prefer Wayland for electron apps (doesn't always work)
             DISPLAY = ":0"; # required for X11 apps to connect to xwayland-satellite properly
+            WAYBAR_DISABLE_PORTAL = "1";
           };
           input = {
             mod-key = cfg.mod_key;
@@ -179,8 +184,6 @@ in {
             };
           };
           cursor = {
-            theme = "Bibata-Modern-Classic";
-            size = 24;
             hide-when-typing = true;
             hide-after-inactive-ms = 1000;
           };
@@ -774,21 +777,12 @@ in {
         enable = true;
         settings = {
           main = {
-            font = "Sans:size=18";
             terminal = "foot";
-            dpi-aware = false;
             prompt = "🔍";
-            lines = 8;
-            width = 18;
+            lines = 12;
+            width = 24;
             horizontal-pad = 10;
             vertical-pad = 4;
-          };
-          colors = {
-            background = "222222bb";
-            text = "ffffffff";
-            selection = "333333dd";
-            selection-text = "ffffffff";
-            border = "285544ff";
           };
           border = {
             width = 0;

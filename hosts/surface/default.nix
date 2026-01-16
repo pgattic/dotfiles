@@ -89,7 +89,33 @@
   };
 
   systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # Don't need speech dispatcher
-    systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
+  systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
+
+  stylix = {
+    enable = true;
+    base16Scheme = {
+      # Neutrals (background → brightest)
+      base00 = "1e1e1e";
+      base01 = "242424"; # panel background
+      base02 = "2b2b2b"; # alt background
+      base03 = "595959"; # muted text
+      base04 = "8e8e8e"; # border-ish
+      base05 = "cccccc"; # main fg
+      base06 = "dedede"; # brighter fg
+      base07 = "ffffff"; # highlight fg
+
+      base08 = "cd3131"; # red
+      base09 = "f14c4c"; # orange
+      base0A = "e5e510"; # yellow
+      base0B = "0dbc79"; # green
+      base0C = "11a8cd"; # cyan
+      base0D = "2472c8"; # blue
+      base0E = "bc3fbc"; # magenta
+      base0F = "d670d6"; # extra / misc
+    };
+
+    targets.plymouth.enable = false;
+  };
 
   system.stateVersion = "25.05"; # Do not modify
 }
