@@ -4,8 +4,12 @@
   my.desktop = {
     enable = true;
     enable_bluetooth = true;
-    cpu_cores = 8;
-    display_config."eDP-1".scale = 1.0;
+    cpu_cores = 4;
+    touch_options = true;
   };
+
+  home.packages = with pkgs; [
+    rnote
+  ];
 }
 

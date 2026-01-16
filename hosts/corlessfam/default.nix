@@ -1,8 +1,4 @@
-{ config, lib, pkgs, ... }:
-let
-  # localIP = "192.168.1.2";
-  # localIP6 = "fe80::4ba3:e094:bffe:51a5";
-in {
+{ config, lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./dynamic-dns.nix

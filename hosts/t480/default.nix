@@ -1,5 +1,5 @@
 # `man configuration.nix 5`, `nixos-help`
-{ lib, config, optins, pkgs, ... }: {
+{ lib, config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -13,7 +13,6 @@
   };
 
   networking.hostName = "t480";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   hardware.bluetooth.enable = true;
 
   networking.networkmanager.enable = true;
@@ -65,8 +64,6 @@
       "input"
       "dialout"
     ];
-    packages = with pkgs; [
-    ];
   };
 
   hardware.uinput.enable = true; # Added alongside the "dialout" user group for work
@@ -83,7 +80,7 @@
   ];
 
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # $ nh search wget
   environment.systemPackages = with pkgs; [
     helix # Terminal editor that I can't seem to get the hang of
 
@@ -217,12 +214,6 @@
   # Android Development
   virtualisation.docker.enable = true;
   programs.adb.enable = true;
-
-  environment.variables = {
-    XCURSOR_THEME = "Bibata-Modern-Classic";
-    XCURSOR_SIZE  = "24";
-    EDITOR = "nvim";
-  };
 
   environment.sessionVariables = {
     NH_OS_FLAKE = "/home/pgattic/dotfiles";

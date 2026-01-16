@@ -36,6 +36,12 @@ in {
       default = false;
       description = "Adds client-side decorations and other stuff";
     };
+
+    display_config = mkOption {
+      type = types.attrsOf types.attrs;
+      default = {};
+      description = "Display config to be forwarded to niri options";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -59,6 +65,9 @@ in {
       # (pkgs.writeShellScriptBin "my-hello" ''
       #   echo "Hello, ${config.home.username}!"
       # '')
+    ]
+    ++ lib.optionals cfg.touch_options [
+      wvkbd-deskintl # On-Screen Keyboard (package provided by overlay)
     ]
     ++ lib.optionals cfg.enable_bluetooth [
       overskride # Bluetooth manager
@@ -143,9 +152,7 @@ in {
           };
           gestures.hot-corners.enable = false;
           # recent-windows.enable = false; # This option doesn't exist in the flake yet for some reason
-          outputs = { # `niri msg outputs`
-            "eDP-1".scale = 1.0;
-          };
+          outputs = cfg.display_config; # `niri msg outputs`
           layout = {
             gaps = 8;
             always-center-single-column = true;
@@ -379,7 +386,7 @@ in {
             height = 24; # Waybar height (to be removed for auto height)
             # spacing = 4; # Gaps between modules (4px)
             # Choose the order of the modules
-            modules-left = ["niri/workspaces" ] ++ lib.optionals cfg.touch_options [ "custom/overview" "custom/launcher" ] ++ [ "cpu" "memory" "temperature"];
+            modules-left = ["niri/workspaces" ] ++ lib.optionals cfg.touch_options [ "custom/overview" "custom/launcher" "custom/osk" ] ++ [ "cpu" "memory" "temperature"];
             modules-center = ["niri/window"];
             modules-right = ["tray" "mpd" "backlight" "pulseaudio" "network" "battery" "battery#bat2" "clock"];
             # Modules configuration
@@ -535,14 +542,19 @@ in {
           }
           // lib.optionalAttrs cfg.touch_options {
             "custom/overview" = {
-              format = "󰍹  ";
+              format = " 󰍹  ";
               tooltip-format = "Toggle Overview";
               on-click = "niri msg action toggle-overview";
             };
             "custom/launcher" = {
-              format = "󱄅 ";
+              format = " 󱄅  ";
               tooltip-format = "Open App Launcher";
-              on-click = "fuzzel";
+              on-click = "pgrep fuzzel >/dev/null && pkill fuzzel || exec fuzzel";
+            };
+            "custom/osk" = let osk = "wvkbd-deskintl"; in {
+              format = " 󰌌  ";
+              tooltip-format = "Toggle On-Screen Keyboard";
+              on-click = "pgrep ${osk} >/dev/null && pkill ${osk} || exec ${osk} -L 412";
             };
           };
         };

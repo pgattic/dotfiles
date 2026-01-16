@@ -1,0 +1,96 @@
+{ lib, config, pkgs, ... }: {
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.plymouth = { # Cool boot splash screen
+    enable = true;
+    logo = "${pkgs.nixos-icons}/share/icons/hicolor/128x128/apps/nix-snowflake.png";
+  };
+
+  networking.hostName = "surface";
+  hardware.bluetooth.enable = true;
+  hardware.microsoft-surface.kernelVersion = "stable";
+
+  networking.networkmanager.enable = true;
+
+  time.timeZone = "America/Boise";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  users.users.pgattic = {
+    isNormalUser = true;
+    description = "Preston Corless";
+    extraGroups = [ "networkmanager" "wheel" ];
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  environment.systemPackages = with pkgs; [
+    zed-editor
+    ungoogled-chromium
+    luanti-client
+  ];
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
+
+  programs = {
+    nano.enable = false;
+    firefox.enable = true;
+    niri = {
+      enable = true;
+      useNautilus = false;
+    };
+  };
+
+  services = {
+    mullvad-vpn.enable = true;
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = ''
+            ${pkgs.tuigreet}/bin/tuigreet --remember --asterisks --time \
+            --time-format "%a %b %d %I:%M %p" \
+            --window-padding 2 \
+            --theme "border=cyan;action=cyan;time=cyan;button=gray"
+          '';
+          user = "greeter";
+        };
+      };
+    };
+    gvfs.enable = true; # Automatic drive mounting, network shares, recycle bin
+  };
+
+  environment.sessionVariables = {
+    NH_OS_FLAKE = "/home/pgattic/dotfiles";
+  };
+
+  systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # Don't need speech dispatcher
+    systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
+
+  system.stateVersion = "25.05"; # Do not modify
+}
+
