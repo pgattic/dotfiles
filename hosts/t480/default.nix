@@ -76,47 +76,6 @@
     "ventoy-1.1.10"
   ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nh search wget
-  environment.systemPackages = with pkgs; [
-    helix # Terminal editor that I can't seem to get the hang of
-
-    # Desktop
-    kitty
-    ghostty
-    alacritty
-    ironbar
-    zed-editor
-    libnotify
-    mcpelauncher-ui-qt
-    discord
-    obsidian
-    slack
-    ungoogled-chromium
-    qbittorrent
-    bambu-studio
-    nicotine-plus # Soulseek client
-    pinta
-    antigravity-fhs
-
-    luanti-client
-    prismlauncher
-    # antimicrox
-    calibre
-
-    vscode
-    zoom-us
-    ventoy
-
-    waypipe
-    signal-desktop
-    openscad
-  ];
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
-
   programs = {
     nano.enable = false; # `true` should not have been the default
 
@@ -210,11 +169,8 @@
   virtualisation.docker.enable = true;
 
   environment.sessionVariables = {
-    NH_OS_FLAKE = "/home/pgattic/dotfiles";
     GTK_USE_PORTAL = "1";
     NIXOS_OZONE_WL = "1";
-    XDG_CURRENT_DESKTOP = "niri";
-    XDG_SESSION_DESKTOP = "niri";
   };
 
   services = {

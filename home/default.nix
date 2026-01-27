@@ -127,6 +127,7 @@ in {
 
   home.sessionVariables = { # For terminal shells, not for the desktop
     EDITOR = "nvim";
+    NH_OS_FLAKE = "${home_dir}/dotfiles";
   };
 
   home.stateVersion = "25.11"; # Don't

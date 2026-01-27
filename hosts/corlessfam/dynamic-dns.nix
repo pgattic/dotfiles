@@ -3,7 +3,7 @@ let
   ddnsScript = pkgs.writeShellScript "namecheap-ddns" ''
     set -euo pipefail
 
-    HOSTS=("@" "www" "cinema" "finances" "library" "photos")
+    HOSTS=("@" "www" "cinema" "finances" "library" "photos" "paste")
     DOMAIN="corlessfamily.net"
 
     : "''${NAMECHEAP_DDNS_PASSWORD:?missing NAMECHEAP_DDNS_PASSWORD}"

@@ -48,6 +48,7 @@
             nixpkgs.overlays = (import ./overlays) ++ [ ];
           })
           inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
+          inputs.stylix.nixosModules.stylix
           ./hosts/surface
           inputs.home-manager.nixosModules.home-manager
           {
@@ -78,6 +79,7 @@
             nixpkgs.overlays = (import ./overlays) ++ [ ];
           })
           inputs.nixos-hardware.nixosModules.raspberry-pi-4
+          inputs.stylix.nixosModules.stylix
           ./hosts/cyberpi
           inputs.home-manager.nixosModules.home-manager
           {

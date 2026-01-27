@@ -65,21 +65,6 @@
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
-    configure = {
-      customRC = ''
-        set nu
-        
-        set expandtab
-        set tabstop=2
-        set softtabstop=2
-        set shiftwidth=2
-        
-        set termguicolors
-        set smartindent
-        set scrolloff=4
-        set colorcolumn="100"
-      '';
-    };
   };
 
   # sudo journalctl -u acme-corlessfamily.net.service
@@ -119,40 +104,6 @@
       };
     };
 
-    # pihole-ftl = {
-    #   enable = true;
-    #   settings = { # Maps to TOML config
-    #     dns = {
-    #       hosts = [
-    #         "${localIP} corlessfamily.net"
-    #         "${localIP} www.corlessfamily.net"
-    #         "${localIP} files.corlessfamily.net"
-    #         "${localIP} cinema.corlessfamily.net"
-    #         "${localIP} finances.corlessfamily.net"
-    #         "${localIP} cookbook.corlessfamily.net"
-    #         "${localIP} library.corlessfamily.net"
-    #
-    #         "${localIP6} corlessfamily.net"
-    #         "${localIP6} www.corlessfamily.net"
-    #         "${localIP6} files.corlessfamily.net"
-    #         "${localIP6} cinema.corlessfamily.net"
-    #         "${localIP6} finances.corlessfamily.net"
-    #         "${localIP6} cookbook.corlessfamily.net"
-    #         "${localIP6} library.corlessfamily.net"
-    #       ];
-    #       upstreams = [
-    #         "1.1.1.1" # Cloudflare ipv4 (DNSSEC)
-    #         "2606:4700:4700::1111" # Cloudflare ipv6 (DNSSEC)
-    #       ];
-    #     };
-    #   };
-    # };
-    #
-    # pihole-web = {
-    #   enable = true;
-    #   ports = [ "8081" ];
-    # };
-
     resolved.enable = false; # Avoid port-53 (DNS) conflicts (systemd-resolved)
 
     minetest-server = {
@@ -173,40 +124,6 @@
         creative_mode = false;
       };
     };
-
-    # copyparty = {
-    #   enable = true;
-    #   settings = {
-    #     i = "127.0.0.1";
-    #     p = [ 3210 ];
-    #     no-reload = true;
-    #     # ignored-flag = false;
-    #   };
-    #   accounts = {
-    #     pgattic.passwordFile = "/srv/copyparty/passwd/pgattic";
-    #     skylar.passwordFile = "/srv/copyparty/passwd/skylar";
-    #   };
-    #   volumes = {
-    #     "/family" = {
-    #       path = "/srv/copyparty/family";
-    #       access = {
-    #         rwd = [ "pgattic" "skylar" ];
-    #       };
-    #     };
-    #     "/pgattic" = {
-    #       path = "/srv/copyparty/pgattic";
-    #       access = {
-    #         rwd = [ "pgattic" ];
-    #       };
-    #     };
-    #     "/skylar" = {
-    #       path = "/srv/copyparty/skylar";
-    #       access = {
-    #         rwd = [ "skylar" ];
-    #       };
-    #     };
-    #   };
-    # };
 
     jellyfin = {
       enable = true;
@@ -233,12 +150,6 @@
       };
     };
 
-    # tandoor-recipes = {
-    #   enable = true;
-    #   address = "127.0.0.1";
-    #   port = 3421;
-    # };
-
     audiobookshelf.enable = true;
 
     immich = {
@@ -246,6 +157,15 @@
       host = "127.0.0.1";
       accelerationDevices = null;
       port = 2283;
+    };
+
+    microbin = {
+      enable = true;
+      settings = {
+        MICROBIN_HIDE_FOOTER = true;
+        MICROBIN_HIDE_LOGO = true;
+        MICROBIN_PORT = 3456;
+      };
     };
 
     nginx = {
@@ -257,7 +177,6 @@
         "corlessfamily.net" = {
           enableACME = true;
           forceSSL = true;
-      
           serverAliases = [ "www.corlessfamily.net" ];
           root = "/srv/home/public";
         };
@@ -285,14 +204,6 @@
           enableACME = true;
           forceSSL = true;
         };
-        "cookbook.corlessfamily.net" = {
-          enableACME = true;
-          forceSSL = true;
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:3421";
-            proxyWebsockets = true;
-          };
-        };
         "library.corlessfamily.net" = {
           enableACME = true;
           forceSSL = true;
@@ -317,6 +228,14 @@
               proxy_send_timeout   600s;
               send_timeout         600s;
             '';
+          };
+        };
+        "paste.corlessfamily.net" = {
+          enableACME = true;
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:3456";
+            proxyWebsockets = true;
           };
         };
       };

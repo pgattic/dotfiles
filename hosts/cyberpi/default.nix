@@ -33,7 +33,7 @@
   users.users.pgattic = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "video" ];
-    packages = with pkgs; [ ];
+    packages = [];
   };
 
   nix.settings = {
@@ -50,10 +50,6 @@
     ungoogled-chromium
   ];
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
-
   programs = {
     niri = {
       enable = true;
@@ -64,16 +60,6 @@
     xfconf.enable = true;
   };
   
-  environment.variables = {
-    XCURSOR_THEME = "Bibata-Modern-Classic";
-    XCURSOR_SIZE = "24";
-    EDITOR = "nvim";
-  };
-
-  environment.sessionVariables = {
-    NH_FLAKE = "/home/pgattic/dotfiles";
-  };
-
   services = {
     # libinput.enable = true;
     mullvad-vpn.enable = true;

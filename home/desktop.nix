@@ -45,6 +45,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    home.sessionVariables = {
+      XDG_CURRENT_DESKTOP = "niri";
+      XDG_SESSION_DESKTOP = "niri";
+    };
     home.packages = with pkgs; [
       wl-clipboard-rs
       wf-recorder
@@ -97,6 +101,12 @@ in {
         light = "Papirus-Light";
       };
       polarity = "dark";
+    };
+
+    qt = {
+      enable = true;
+      platformTheme.name = "qtct";
+      # style.name = "adwaita";
     };
 
     programs = {
@@ -343,6 +353,11 @@ in {
             "Mod+Ctrl+R".action.reset-window-height = {};
             "Mod+F".action.maximize-column = {};
             "Mod+Shift+F".action.fullscreen-window = {};
+
+            "Mod+BracketLeft".action.consume-or-expel-window-left = {};
+            "Mod+BracketRight".action.consume-or-expel-window-right = {};
+            "Mod+Comma".action.consume-window-into-column = {};
+            "Mod+Period".action.expel-window-from-column = {};
 
             # Expand column / center column(s)
             "Mod+Ctrl+F".action.expand-column-to-available-width = {};

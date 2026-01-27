@@ -84,10 +84,6 @@
     gvfs.enable = true; # Automatic drive mounting, network shares, recycle bin
   };
 
-  environment.sessionVariables = {
-    NH_OS_FLAKE = "/home/pgattic/dotfiles";
-  };
-
   systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # Don't need speech dispatcher
   systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
 
