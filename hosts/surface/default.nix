@@ -69,6 +69,7 @@
 
   services = {
     mullvad-vpn.enable = true;
+    upower.enable = true;
     greetd = {
       enable = true;
       settings = {

@@ -3,8 +3,6 @@
 
   my.desktop = {
     enable = true;
-    enable_bluetooth = true;
-    cpu_cores = 8;
     display_config."eDP-1".scale = 1.0;
   };
 

@@ -3,8 +3,6 @@
 
   my.desktop = {
     enable = true;
-    enable_bluetooth = true;
-    cpu_cores = 4;
     touch_options = true;
   };
 

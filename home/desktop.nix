@@ -1,5 +1,6 @@
 { config, lib, pkgs, inputs, ... }: let
   cfg = config.my.desktop;
+  corner_radius = 8.0;
 in {
   imports = [
     inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
@@ -11,18 +12,6 @@ in {
       type = types.bool;
       default = true;
       description = "Whether to enable the desktop configurations and packages";
-    };
-
-    enable_bluetooth = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Whether to enable Bluetooth-related applications/configs";
-    };
-
-    cpu_cores = mkOption {
-      type = types.int;
-      default = 8;
-      description = "Number of CPU cores (used by Waybar module)";
     };
 
     mod_key = mkOption {
@@ -73,9 +62,6 @@ in {
     ]
     ++ lib.optionals cfg.touch_options [
       wvkbd-deskintl # On-Screen Keyboard (package provided by overlay)
-    ]
-    ++ lib.optionals cfg.enable_bluetooth [
-      overskride # Bluetooth manager
     ];
 
     stylix = {
@@ -134,6 +120,7 @@ in {
         settings = {
           general = {
             enableShadows = false;
+            radiusRatio = corner_radius / 20.0;
           };
           dock.enabled = false;
           bar = {
@@ -251,6 +238,7 @@ in {
               position = "left";
               place-within-column = true;
               gaps-between-tabs = 8;
+              corner-radius = corner_radius;
             };
           };
           cursor = {
@@ -259,7 +247,15 @@ in {
           };
           prefer-no-csd = !cfg.touch_options;
           window-rules = [
-            { clip-to-geometry = true; }
+            { # General rules
+              geometry-corner-radius = {
+                bottom-left = corner_radius;
+                bottom-right = corner_radius;
+                top-left = corner_radius;
+                top-right = corner_radius;
+              };
+              clip-to-geometry = true;
+            }
             { # KDE Connect Presentation Pointer fix
               matches = [ { app-id = "org.kde.kdeconnect.daemon"; } ];
               open-floating = true;
