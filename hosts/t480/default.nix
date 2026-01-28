@@ -10,7 +10,11 @@
   boot.plymouth.enable = true;
 
   networking.hostName = "t480";
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+    settings.General.Experimental = true;
+  };
 
   networking.networkmanager.enable = true;
 
@@ -61,6 +65,7 @@
       "input"
       "dialout"
     ];
+    shell = pkgs.nushell;
   };
 
   hardware.uinput.enable = true; # Added alongside the "dialout" user group for work

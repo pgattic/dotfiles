@@ -1,6 +1,4 @@
-{ config, lib, pkgs, ... }:
-
-{
+{ config, lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -32,8 +30,9 @@
 
   users.users.pgattic = {
     isNormalUser = true;
+    description = "Preston Corless";
     extraGroups = [ "networkmanager" "wheel" "video" ];
-    packages = [];
+    shell = pkgs.nushell;
   };
 
   nix.settings = {
@@ -80,9 +79,6 @@
     gvfs.enable = true;
   };
 
-  systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # No speech dispatcher
-  systemd.services.NetworkManager-wait-online.enable = false;
-
   stylix = {
     enable = true;
     base16Scheme = {
@@ -108,6 +104,9 @@
 
     targets.plymouth.enable = false;
   };
+
+  systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # No speech dispatcher
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   system.stateVersion = "25.05"; # Do not modify
 }

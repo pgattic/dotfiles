@@ -9,12 +9,7 @@
   };
 
   home.packages = with pkgs; [
-    # Desktop
-    kitty
-    ghostty
-    alacritty
     zed-editor
-    libnotify
     mcpelauncher-ui-qt
     discord
     obsidian

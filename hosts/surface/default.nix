@@ -5,13 +5,14 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.plymouth = { # Cool boot splash screen
-    enable = true;
-    logo = "${pkgs.nixos-icons}/share/icons/hicolor/128x128/apps/nix-snowflake.png";
-  };
+  boot.plymouth.enable = true; # Cool boot splash screen
 
   networking.hostName = "surface";
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+    settings.General.Experimental = true;
+  };
   hardware.microsoft-surface.kernelVersion = "stable";
 
   networking.networkmanager.enable = true;
@@ -42,6 +43,7 @@
     isNormalUser = true;
     description = "Preston Corless";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.nushell;
   };
 
   nixpkgs.config.allowUnfree = true;

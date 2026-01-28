@@ -51,6 +51,10 @@ in {
     };
     nushell = {
       enable = true;
+      environmentVariables = {
+        EDITOR = "nvim";
+        NH_OS_FLAKE = "${home_dir}/dotfiles";
+      };
       settings = {
         buffer_editor = "nvim";
         show_banner = false;
@@ -99,6 +103,12 @@ in {
     nh = {
       enable = true;
       flake = "${home_dir}/dotfiles";
+    };
+    zellij = {
+      enable = true;
+      settings = {
+        show_startup_tips = false;
+      };
     };
     fastfetch = {
       enable = true;

@@ -3,6 +3,7 @@
 in {
   imports = [
     inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
+    inputs.noctalia.homeModules.default
   ];
 
   options.my.desktop = with lib; {
@@ -53,12 +54,11 @@ in {
       wl-clipboard-rs
       wf-recorder
       wl-mirror
-      swaynotificationcenter
-      wbg
       pavucontrol
       brightnessctl
       imv
       mpv-unwrapped
+      libnotify
       zathura
       xarchiver
       xwayland-satellite
@@ -66,6 +66,7 @@ in {
       kdePackages.dolphin
       adwaita-qt
       adwaita-qt6
+      cliphist # Clipboard history backend for Noctalia's Clipper plugin
       # (pkgs.writeShellScriptBin "my-hello" ''
       #   echo "Hello, ${config.home.username}!"
       # '')
@@ -114,7 +115,6 @@ in {
         enable = true;
         settings = {
           main = {
-            shell = "nu";
             term = "xterm-256color";
             resize-delay-ms = 0;
           };
@@ -129,14 +129,74 @@ in {
           };
         };
       };
+      noctalia-shell = {
+        enable = true;
+        settings = {
+          general = {
+            enableShadows = false;
+          };
+          dock.enabled = false;
+          bar = {
+            density = if cfg.touch_options then "default" else "compact";
+            showCapsule = false;
+            outerCorners = false;
+            widgets = {
+              left = [
+                { id = "Workspace"; labelMode = "none"; }
+                { id = "SystemMonitor"; }
+              ]
+              ++ lib.optionals cfg.touch_options [
+                { id = "Launcher"; }
+                { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
+                { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec wvkbd-deskintl -L 412"; }
+              ]
+              ++ [
+                { id = "MediaMini"; }
+                { id = "AudioVisualizer"; hideWhenIdle = true; }
+              ];
+              center = [
+                { id = "ActiveWindow"; maxWidth = 800; }
+              ];
+              right = [
+                { id = "Tray"; drawerEnabled = false; }
+                { id = "plugin:clipper"; }
+                { id = "NotificationHistory"; }
+                { id = "Brightness"; }
+                { id = "Volume"; }
+                { id = "Network"; }
+                { id = "Battery"; }
+                { id = "Clock"; formatHorizontal = "ddd MMM dd h:mm AP"; tooltipFormat = "h:mm:ss AP"; }
+                { id = "ControlCenter"; useDistroLogo = true; enableColorization = true; colorizeSystemIcon = "primary"; }
+              ];
+            };
+          };
+          sessionMenu = {
+            showHeader = false;
+            powerOptions = [
+              { action = "lock"; enabled = true; countdownEnabled = false; }
+              { action = "logout"; enabled = true; countdownEnabled = false; }
+              { action = "reboot"; enabled = true; }
+              { action = "shutdown"; enabled = true; }
+              { action = "suspend"; enabled = false; }
+              { action = "hibernate"; enabled = false; }
+            ];
+          };
+          location = {
+            name = "Provo, United States";
+            use12hourFormat = true;
+            useFahrenheit = true;
+          };
+          wallpaper = {
+            directory = "/home/pgattic/dotfiles/config/wallpaper";
+          };
+        };
+      };
       niri = {
         # enable = true;
         package = pkgs.niri;
         settings = { # https://github.com/sodiboo/niri-flake/blob/main/docs.md
           spawn-at-startup = [
-            { argv = [ "swaync" ]; }
-            { argv = [ "wbg" "-s" "/home/pgattic/dotfiles/config/wallpaper/wedding_temple.jpg" ]; }
-            { argv = [ "waybar" ]; }
+            { argv = [ "noctalia-shell" ]; }
             # { argv = [ "ghostty" "--gtk-single-instance=true" "--quit-after-last-window-closed=false" "--initial-window=false" ]; }
           ];
           screenshot-path = "~/screenshots/%Y-%m-%d %H-%M-%S.png";
@@ -225,7 +285,8 @@ in {
             "Mod+N".action.spawn = [ "foot" "nvim" "note.md" ];
             # "Mod+N".action.spawn = [ "ghostty" "--gtk-single-instance=true" "-e" "nvim" "note.md" ];
             # "Mod+T".action.spawn = [ "kitten" "quick-access-terminal" ];
-            "Mod+Space".action.spawn = [ "fuzzel" ];
+            "Mod+Space".action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ];
+            "Mod+Shift+E".action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
             "Mod+E".action.spawn = [ "dolphin" ];
             # "Super+Alt+L".action.spawn = [ "swaylock" ];
 
@@ -383,8 +444,6 @@ in {
             # allow-inhibiting=false on Mod+Escape in your KDL
             # "Mod+Escape".action.toggle-keyboard-shortcuts-inhibit.enable = true;
 
-            # Quit / power off monitors
-            "Mod+Shift+E".action.quit = {};
             "Mod+Shift+P".action.power-off-monitors = {};
 
             # Disable the keys I only ever hit on accident
@@ -392,416 +451,6 @@ in {
             "End".action.spawn = [];
             "Page_Up".action.spawn = [];
             "Page_Down".action.spawn = [];
-          };
-        };
-      };
-      waybar = {
-        enable = true;
-        settings = {
-          main = {
-            layer = "top"; # Waybar at top layer
-            # position = "bottom"; # Waybar position (top|bottom|left|right)
-            height = 24; # Waybar height (to be removed for auto height)
-            # spacing = 4; # Gaps between modules (4px)
-            # Choose the order of the modules
-            modules-left = ["niri/workspaces" ] ++ lib.optionals cfg.touch_options [ "custom/overview" "custom/launcher" "custom/osk" ] ++ [ "cpu" "memory" "temperature"];
-            modules-center = ["niri/window"];
-            modules-right = ["tray" "mpd" "backlight" "pulseaudio" "network" "battery" "battery#bat2" "clock"];
-            # Modules configuration
-            "niri/workspaces" = {
-              disable-scroll = true;
-              all-outputs = true;
-              warp-on-scroll = false;
-            };
-            keyboard-state = {
-              numlock = true;
-              capslock = true;
-              format = "{name} {icon}";
-              format-icons = {
-                locked = "";
-                unlocked = "";
-              };
-            };
-            mpd = {
-              format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
-              format-disconnected = "Disconnected ";
-              format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
-              unknown-tag = "N/A";
-              interval = 5;
-              consume-icons.on = " ";
-              random-icons = {
-                off = "<span color=\"#f53c3c\"></span> ";
-                on = " ";
-              };
-              repeat-icons.on = " ";
-              single-icons.on = "1 ";
-              state-icons = {
-                paused = "";
-                playing = "";
-              };
-              tooltip-format = "MPD (connected)";
-              tooltip-format-disconnected = "MPD (disconnected)";
-            };
-            idle_inhibitor = {
-              format = "{icon}";
-              format-icons = {
-                "activated" = "";
-                "deactivated" = "";
-              };
-            };
-            tray = {
-              # icon-size = 21;
-              spacing = 10;
-            };
-            clock = {
-              timezone = "US/Mountain";
-              format = "{:%a %b %d %I:%M %p}";
-              tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-              format-alt = "{:%Y-%m-%d}";
-            };
-            cpu = let
-              cores = cfg.cpu_cores;
-              icon_string = lib.concatStrings (builtins.genList (i: "{icon${toString i}}") cores);
-            in {
-              interval = 1;
-              format = " ${icon_string} {usage:>2}%"; # For 8-core cpu
-              format-icons = [
-                "<span color='#69ff94'>▁</span>" # green
-                "<span color='#2aa9ff'>▂</span>" # blue
-                "<span color='#f8f8f2'>▃</span>" # white
-                "<span color='#f8f8f2'>▄</span>" # white
-                "<span color='#ffffa5'>▅</span>" # yellow
-                "<span color='#ffffa5'>▆</span>" # yellow
-                "<span color='#ff9977'>▇</span>" # orange
-                "<span color='#dd532e'>█</span>"  # red
-              ];
-            };
-            memory.format = "  {used:0.1f}G";
-            temperature = {
-              # thermal-zone = 2;
-              # hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
-              critical-threshold = 80;
-              # format-critical = "{temperatureC}°C {icon}";
-              format = "{icon} {temperatureC}°C";
-              format-icons = ["" "" ""];
-            };
-            backlight = {
-              # device = "acpi_video1";
-              format = "{icon}  {percent}%";
-              format-icons = ["" "" "" "" "" "" "" "" ""];
-            };
-            battery = {
-              states = {
-                # good = 95;
-                warning = 30;
-                critical = 15;
-              };
-              format = "{icon} {capacity}%";
-              format-charging = "󰂄 {capacity}%";
-              format-plugged = " {capacity}%";
-              format-alt = "{icon} {time}";
-              #format-good = ""; # An empty format will hide the module
-              format-full = "󱟢";
-              format-icons = ["󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
-            };
-            "battery#bat2" = {
-              bat = "BAT1";
-              states = {
-                # good = 95;
-                warning = 30;
-                critical = 15;
-              };
-              format = "1{icon} {capacity}%";
-              format-charging = "1󰂄 {capacity}%";
-              format-plugged = "1 {capacity}%";
-              format-alt = "1{icon} {time}";
-              #format-good = ""; # An empty format will hide the module
-              format-full = "1󱟢";
-              format-icons = ["󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
-            };
-            bluetooth = {
-              format = " {status}";
-              format-connected = " {device_alias}";
-              format-connected-battery = " {device_alias} {device_battery_percentage}%";
-              # format-device-preference = [ "device1"; "device2" ]; # preference list deciding the displayed device
-              tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
-              tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
-              tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
-              tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
-            };
-            network = {
-              # interface = "wlp2*"; # (Optional) To force the use of this interface
-              format-wifi = if cfg.touch_options then "   {signalStrength}%" else "   {essid} ({signalStrength}%)";
-              format-ethernet = "{ipaddr}/{cidr} 󱂇";
-              tooltip-format = "{ifname} via {gwaddr}";
-              format-linked = "{ifname} (No IP) ";
-              format-disconnected = "Disconnected ⚠";
-              format-alt = "{ifname}: {ipaddr}/{cidr}";
-            };
-            pulseaudio = {
-              # scroll-step = 1; # %; can be a float
-              format = "{icon}   {volume}% {format_source}";
-              format-bluetooth = "{volume}% {icon} {format_source}";
-              format-bluetooth-muted = "󰝟 {icon} {format_source}";
-              format-muted = "󰝟  {format_source}";
-              format-source = "";
-              format-source-muted = "";
-              format-icons = {
-                headphone = "󰋋 ";
-                hands-free = "";
-                headset = "󰋋 ";
-                phone = "";
-                portable = "";
-                car = "";
-                default = ["" "" ""];
-              };
-              on-click = "pavucontrol";
-            };
-          }
-          // lib.optionalAttrs cfg.touch_options {
-            "custom/overview" = {
-              format = " 󰍹  ";
-              tooltip-format = "Toggle Overview";
-              on-click = "niri msg action toggle-overview";
-            };
-            "custom/launcher" = {
-              format = " 󱄅  ";
-              tooltip-format = "Open App Launcher";
-              on-click = "pgrep fuzzel >/dev/null && pkill fuzzel || exec fuzzel";
-            };
-            "custom/osk" = let osk = "wvkbd-deskintl"; in {
-              format = " 󰌌  ";
-              tooltip-format = "Toggle On-Screen Keyboard";
-              on-click = "pgrep ${osk} >/dev/null && pkill ${osk} || exec ${osk} -L 412";
-            };
-          };
-        };
-        style = ''
-          * {
-            /* `otf-font-awesome` is required to be installed for icons */
-            /* font-family: "JetBrainsMono Nerd Font", FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
-            font-size: 12px;
-          }
-
-          window#waybar {
-            background-color: rgba(17, 17, 17, 0.8);
-            color: #ffffff;
-            transition-property: background-color;
-            transition-duration: .5s;
-            margin: 5px;
-          }
-
-          window#waybar.hidden {
-            opacity: 0.2;
-          }
-
-          window#waybar.termite {
-            background-color: #3F3F3F;
-          }
-
-          window#waybar.chromium {
-            background-color: #000000;
-            border: none;
-          }
-
-          button {
-            /* Use box-shadow instead of border so the text isn't offset */
-            box-shadow: inset 0 -2px transparent;
-            /* Avoid rounded borders under each button name */
-            border: none;
-            border-radius: 0px;
-          }
-
-          #workspaces button {
-            padding: 0 5px;
-            background-color: transparent;
-            color: #ffffff;
-          }
-
-          #workspaces button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-            box-shadow: inherit;
-            text-shadow: inherit;
-          }
-
-          #workspaces button.active {
-            background-color: rgba(255, 255, 255, 0.15);
-          }
-
-          #workspaces button.urgent {
-            background-color: #eb4d4b;
-          }
-
-          #workspaces button.persistent {
-            color: #888888;
-          }
-
-          #mode {
-            background-color: #64727D;
-            border-bottom: 3px solid #ffffff;
-          }
-
-          #clock, #battery, #cpu, #memory, #disk, #temperature, #backlight, #network, #pulseaudio, #wireplumber, #custom-media, #tray, #mode, #idle_inhibitor, #scratchpad, #mpd {
-            padding: 0 10px;
-            color: #ffffff;
-          }
-
-          #window,
-          #workspaces {
-            margin: 0 4px;
-          }
-
-          /* If workspaces is the leftmost module, omit left margin */
-          .modules-left > widget:first-child > #workspaces {
-            margin-left: 0;
-          }
-
-          /* If workspaces is the rightmost module, omit right margin */
-          .modules-right > widget:last-child > #workspaces {
-            margin-right: 0;
-          }
-
-          #battery.charging, #battery.plugged {
-            background-color: #26A65B;
-          }
-
-          @keyframes blink {
-            to {
-              background-color: rgba(0,0,0,0);
-            }
-          }
-
-          #battery.critical:not(.charging) {
-            background-color: rgba(255, 0, 0, 0.6);
-            animation-name: blink;
-            animation-duration: 0.5s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-          }
-
-          label:focus {
-            background-color: #000000;
-          }
-
-          #network.disconnected {
-            background-color: #f53c3c;
-          }
-
-          #wireplumber {
-            background-color: #fff0f5;
-            color: #000000;
-          }
-
-          #wireplumber.muted {
-            background-color: #f53c3c;
-          }
-
-          #custom-media {
-            background-color: #66cc99;
-            color: #2a5c45;
-            min-width: 100px;
-          }
-
-          #custom-media.custom-spotify {
-            background-color: #66cc99;
-          }
-
-          #custom-media.custom-vlc {
-            background-color: #ffa000;
-          }
-
-          #temperature.critical {
-            background-color: #eb4d4b;
-          }
-
-          #tray {
-            background-color: #2980b9;
-          }
-
-          #tray > .passive {
-            -gtk-icon-effect: dim;
-          }
-
-          #tray > .needs-attention {
-            -gtk-icon-effect: highlight;
-            background-color: #eb4d4b;
-          }
-
-          #idle_inhibitor {
-            background-color: #2d3436;
-          }
-
-          #idle_inhibitor.activated {
-            background-color: #ecf0f1;
-            color: #2d3436;
-          }
-
-          #mpd {
-            background-color: #66cc99;
-            color: #2a5c45;
-          }
-
-          #mpd.disconnected {
-            background-color: #f53c3c;
-          }
-
-          #mpd.stopped {
-            background-color: #90b1b1;
-          }
-
-          #mpd.paused {
-            background-color: #51a37a;
-          }
-
-          #language {
-            background: #00b093;
-            color: #740864;
-            padding: 0 5px;
-            margin: 0 5px;
-            min-width: 16px;
-          }
-
-          #keyboard-state {
-            background: #97e1ad;
-            color: #000000;
-            padding: 0 0px;
-            margin: 0 5px;
-            min-width: 16px;
-          }
-
-          #keyboard-state > label {
-            padding: 0 5px;
-          }
-
-          #keyboard-state > label.locked {
-            background: rgba(0, 0, 0, 0.2);
-          }
-
-          #scratchpad {
-            background: rgba(0, 0, 0, 0.2);
-          }
-
-          #scratchpad.empty {
-            background-color: transparent;
-          }
-
-        '';
-      };
-      fuzzel = {
-        enable = true;
-        settings = {
-          main = {
-            terminal = "foot";
-            prompt = "🔍";
-            lines = 12;
-            width = 24;
-            horizontal-pad = 10;
-            vertical-pad = 4;
-          };
-          border = {
-            width = 0;
-            radius = 0;
           };
         };
       };
