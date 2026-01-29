@@ -65,10 +65,6 @@
       "rev": "f8e87b96cd6362ef8579be456afee3b38fd7e2a8",
       "src": "https://github.com/petertriho/nvim-scrollbar"
     },
-    "nvim-treesitter": {
-      "rev": "42fc28ba918343ebfd5565147a42a26580579482",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
-    },
     "nvim-web-devicons": {
       "rev": "8dcb311b0c92d460fac00eac706abd43d94d68af",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
