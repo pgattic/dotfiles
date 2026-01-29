@@ -15,14 +15,14 @@
     ungoogled-chromium
     qbittorrent
     bambu-studio
-    nicotine-plus # Soulseek client
+    # nicotine-plus # Soulseek client
     pinta
     antigravity-fhs
 
     luanti-client
     prismlauncher
     # antimicrox
-    calibre
+    # calibre
 
     vscode
     zoom-us
@@ -32,6 +32,11 @@
     signal-desktop
     openscad
   ];
+
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/sgnl" = "signal.desktop";
+    "x-scheme-handler/signalcaptcha" = "signal.desktop";
+  };
 
   programs = {
     helix.enable = true;

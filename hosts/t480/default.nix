@@ -97,9 +97,6 @@
       useNautilus = false; # Silly default options
     };
 
-    thunar.enable = true;
-    xfconf.enable = true; # XFCE configuration storage
-
     appimage.enable = true;
     appimage.binfmt = true;
 

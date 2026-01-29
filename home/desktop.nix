@@ -64,6 +64,31 @@ in {
       wvkbd-deskintl # On-Screen Keyboard (package provided by overlay)
     ];
 
+    xdg = {
+      # De-clutter desktop entries
+      # /etc/profiles/per-user/pgattic/share/applications/
+      desktopEntries = {
+        "foot-server" = {
+          name = "Foot Server";
+          noDisplay = true;
+        };
+        "footclient" = {
+          name = "Foot Client";
+          noDisplay = true;
+        };
+      };
+      mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "image/png" = "imv-dir.desktop";
+          "image/jpeg" = "imv-dir.desktop";
+          "video/x-matroska" = "mpv.desktop";
+          "video/vnd.avi" = "mpv.desktop";
+          "video/mp4" = "mpv.desktop";
+        };
+      };
+    };
+
     stylix = {
       targets = {
         waybar.enable = false;
@@ -96,6 +121,13 @@ in {
       # style.name = "adwaita";
     };
 
+    # Noctalia wallpaper
+    home.file.".cache/noctalia/wallpapers.json" = {
+      text = builtins.toJSON {
+        defaultWallpaper = "/home/pgattic/dotfiles/wallpaper/wedding_temple.jpg";
+      };
+    };
+
     programs = {
       foot = {
         enable = true;
@@ -117,6 +149,22 @@ in {
       };
       noctalia-shell = {
         enable = true;
+        plugins = {
+          sources = [
+            {
+              name = "Official Noctalia Plugins";
+              url = "https://github.com/noctalia-dev/noctalia-plugins";
+              enabled = true;
+            }
+          ];
+          states = {
+            clipper = {
+              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+              enabled = true;
+            };
+          };
+          version = 1;
+        };
         settings = {
           general = {
             enableShadows = false;
@@ -138,8 +186,7 @@ in {
                 { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec wvkbd-deskintl -L 412"; }
               ]
               ++ [
-                { id = "MediaMini"; }
-                { id = "AudioVisualizer"; hideWhenIdle = true; }
+                { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
               ];
               center = [
                 { id = "ActiveWindow"; maxWidth = 800; }
@@ -168,6 +215,14 @@ in {
               { action = "hibernate"; enabled = false; }
             ];
           };
+          systemMonitor.externalMonitor = "foot btop";
+          audio.volumeOverdrive = true;
+          osd.location = "bottom";
+          appLauncher = {
+            terminalCommand = "foot";
+            viewMode = if cfg.touch_options then "grid" else "list";
+            # screenshotAnnotationTool = "";
+          };
           location = {
             name = "Provo, United States";
             use12hourFormat = true;
@@ -175,9 +230,11 @@ in {
           };
           wallpaper = {
             directory = "/home/pgattic/dotfiles/config/wallpaper";
+            transitionType = "stripes";
           };
         };
       };
+
       niri = {
         # enable = true;
         package = pkgs.niri;
