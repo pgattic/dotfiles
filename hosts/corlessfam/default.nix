@@ -152,6 +152,14 @@
 
     audiobookshelf.enable = true;
 
+    karakeep = {
+      enable = true;
+      extraEnvironment = {
+        PORT = "4296";
+        DISABLE_SIGNUPS = "true";
+      };
+    };
+
     immich = {
       enable = true;
       host = "127.0.0.1";
@@ -235,6 +243,14 @@
           forceSSL = true;
           locations."/" = {
             proxyPass = "http://127.0.0.1:3456";
+            proxyWebsockets = true;
+          };
+        };
+        "keep.corlessfamily.net" = {
+          enableACME = true;
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:4296";
             proxyWebsockets = true;
           };
         };
