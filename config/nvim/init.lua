@@ -66,7 +66,6 @@ local plugins = {
 
   { src = "https://github.com/Mofiqul/vscode.nvim", name = "vscode" },
   { src = "https://github.com/nvim-lualine/lualine.nvim" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter" }, -- :InspectTree to see the tree being sat on
   { src = "https://github.com/mbbill/undotree" },
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
   { src = "https://github.com/neovim/nvim-lspconfig" }, -- Default lsp config options
@@ -112,12 +111,6 @@ vim.cmd.colorscheme("vscode")
 -- Fancy-looking bar on the bottom of the screen
 require("lualine").setup()
 
--- Basic code highlighting, used by many other plugins for code analysis
-require("nvim-treesitter.configs").setup({
-  auto_install = true,
-  highlight = { enable = true },
-})
-
 -- Undo tree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 vim.g.undotree_WindowLayout = 3
@@ -158,7 +151,7 @@ local lsp_servers = {
   rust_analyzer = {},
   clangd = {},
   openscad_lsp = {},
-  nil_ls = {},
+  nil_ls = {}, -- Nix language server
   hls = {}, -- Haskell Language Server
 }
 for server, config in pairs(lsp_servers) do

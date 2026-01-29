@@ -13,7 +13,6 @@ in {
   home.packages = with pkgs; [
     (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
     openssh_hpn # SSH but faster
-    gcc # Neovim's tree-sitter requires a C compiler
     usbutils
     ripgrep
     bat
