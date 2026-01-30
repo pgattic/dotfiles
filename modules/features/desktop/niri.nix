@@ -1,248 +1,51 @@
-{ config, lib, pkgs, inputs, ... }: let
-  cfg = config.my.desktop;
-  corner_radius = 8.0;
+{ config, lib, inputs, ... }:
+let
+  cfg = config.my.desktop.niri;
 in {
-  imports = [
-    inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
-    inputs.noctalia.homeModules.default
-  ];
+  options = {
+    my.desktop.niri = {
+      enable = lib.mkEnableOption "Niri compositor options";
 
-  options.my.desktop = with lib; {
-    enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Whether to enable the desktop configurations and packages";
-    };
+      outputs = lib.mkOption {
+        type = lib.types.attrsOf lib.types.attrs;
+        default = {};
+        description = "Display config to be forwarded to niri options";
+      };
 
-    mod_key = mkOption {
-      type = types.enum [ "Super" "Alt" ];
-      default = "Super";
-      description = "Mod key to use for main desktop navigation (used by Niri module)";
-    };
-
-    touch_options = mkOption {
-      # type = types.enum [ "off" "full" "supplementary" ];
-      type = types.bool;
-      default = false;
-      description = "Adds client-side decorations and other stuff";
-    };
-
-    display_config = mkOption {
-      type = types.attrsOf types.attrs;
-      default = {};
-      description = "Display config to be forwarded to niri options";
+      mod_key = lib.mkOption {
+        type = lib.types.enum [ "Super" "Alt" ];
+        default = "Super";
+        description = "Mod key to use for main desktop navigation (used by Niri module)";
+      };
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.sessionVariables = {
-      XDG_CURRENT_DESKTOP = "niri";
-      XDG_SESSION_DESKTOP = "niri";
-    };
-    home.packages = with pkgs; [
-      wl-clipboard-rs
-      wf-recorder
-      wl-mirror
-      pavucontrol
-      brightnessctl
-      imv
-      mpv-unwrapped
-      libnotify
-      zathura
-      xarchiver
-      xwayland-satellite
-      papirus-icon-theme
-      kdePackages.dolphin
-      adwaita-qt
-      adwaita-qt6
-      cliphist # Clipboard history backend for Noctalia's Clipper plugin
-      # (pkgs.writeShellScriptBin "my-hello" ''
-      #   echo "Hello, ${config.home.username}!"
-      # '')
-    ]
-    ++ lib.optionals cfg.touch_options [
-      wvkbd-deskintl # On-Screen Keyboard (package provided by overlay)
-    ];
-
-    xdg = {
-      # De-clutter desktop entries
-      # /etc/profiles/per-user/pgattic/share/applications/
-      desktopEntries = {
-        "foot-server" = {
-          name = "Foot Server";
-          noDisplay = true;
-        };
-        "footclient" = {
-          name = "Foot Client";
-          noDisplay = true;
-        };
-      };
-      mimeApps = {
+    flake.modules.nixos.niri = { pkgs, ... }: {
+      programs.niri = {
         enable = true;
-        defaultApplications = {
-          "image/png" = "imv-dir.desktop";
-          "image/jpeg" = "imv-dir.desktop";
-          "video/x-matroska" = "mpv.desktop";
-          "video/vnd.avi" = "mpv.desktop";
-          "video/mp4" = "mpv.desktop";
-        };
+        useNautilus = false; # Silly default options
+      };
+      environment.sessionVariables = {
+        XDG_CURRENT_DESKTOP = "niri";
+        XDG_SESSION_DESKTOP = "niri";
       };
     };
+    flake.modules.homeManager.niri = { pkgs, ... }: {
+      imports = [
+        inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
+      ];
 
-    stylix = {
-      targets = {
-        waybar.enable = false;
-        qt.platform = "qtct";
-      };
-      cursor = {
-        package = pkgs.bibata-cursors;
-        name = "Bibata-Modern-Classic";
-        size = 24;
-      };
-      fonts = {
-        monospace = {
-          package = pkgs.nerd-fonts.jetbrains-mono;
-          name = "JetBrainsMono Nerd Font";
-        };
-        sizes.terminal = 10;
-      };
-      icons = {
-        enable = true;
-        package = pkgs.papirus-icon-theme;
-        dark = "Papirus-Dark";
-        light = "Papirus-Light";
-      };
-      polarity = "dark";
-    };
+      home.packages = with pkgs; [
+        xwayland-satellite
+      ];
 
-    qt = {
-      enable = true;
-      platformTheme.name = "qtct";
-      # style.name = "adwaita";
-    };
-
-    # Noctalia wallpaper
-    home.file.".cache/noctalia/wallpapers.json" = {
-      text = builtins.toJSON {
-        defaultWallpaper = "/home/pgattic/dotfiles/wallpaper/wedding_temple.jpg";
-      };
-    };
-
-    programs = {
-      foot = {
-        enable = true;
-        settings = {
-          main = {
-            term = "xterm-256color";
-            resize-delay-ms = 0;
-          };
-          cursor = {
-            style = "beam";
-            blink = true;
-          };
-          csd = {
-            font = "Sans:size=10";
-            color = "333333";
-            button-color = "ffffff";
-          };
-        };
-      };
-      noctalia-shell = {
-        enable = true;
-        plugins = {
-          sources = [
-            {
-              name = "Official Noctalia Plugins";
-              url = "https://github.com/noctalia-dev/noctalia-plugins";
-              enabled = true;
-            }
-          ];
-          states = {
-            clipper = {
-              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-              enabled = true;
-            };
-          };
-          version = 1;
-        };
-        settings = {
-          general = {
-            enableShadows = false;
-            radiusRatio = corner_radius / 20.0;
-          };
-          dock.enabled = false;
-          bar = {
-            density = if cfg.touch_options then "default" else "compact";
-            showCapsule = false;
-            outerCorners = false;
-            widgets = {
-              left = [
-                { id = "Workspace"; labelMode = "none"; }
-                { id = "SystemMonitor"; }
-              ]
-              ++ lib.optionals cfg.touch_options [
-                { id = "Launcher"; }
-                { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
-                { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec wvkbd-deskintl -L 412"; }
-              ]
-              ++ [
-                { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
-              ];
-              center = [
-                { id = "ActiveWindow"; maxWidth = 800; }
-              ];
-              right = [
-                { id = "Tray"; drawerEnabled = false; }
-                { id = "plugin:clipper"; }
-                { id = "NotificationHistory"; }
-                { id = "Brightness"; }
-                { id = "Volume"; }
-                { id = "Network"; }
-                { id = "Battery"; }
-                { id = "Clock"; formatHorizontal = "ddd MMM dd h:mm AP"; tooltipFormat = "h:mm:ss AP"; }
-                { id = "ControlCenter"; useDistroLogo = true; enableColorization = true; colorizeSystemIcon = "primary"; }
-              ];
-            };
-          };
-          sessionMenu = {
-            showHeader = false;
-            powerOptions = [
-              { action = "lock"; enabled = true; countdownEnabled = false; }
-              { action = "logout"; enabled = true; countdownEnabled = false; }
-              { action = "reboot"; enabled = true; }
-              { action = "shutdown"; enabled = true; }
-              { action = "suspend"; enabled = false; }
-              { action = "hibernate"; enabled = false; }
-            ];
-          };
-          systemMonitor.externalMonitor = "foot btop";
-          audio.volumeOverdrive = true;
-          osd.location = "bottom";
-          appLauncher = {
-            terminalCommand = "foot";
-            viewMode = if cfg.touch_options then "grid" else "list";
-            # screenshotAnnotationTool = "";
-          };
-          location = {
-            name = "Provo, United States";
-            use12hourFormat = true;
-            useFahrenheit = true;
-          };
-          wallpaper = {
-            directory = "/home/pgattic/dotfiles/config/wallpaper";
-            transitionType = "stripes";
-          };
-        };
-      };
-
-      niri = {
-        # enable = true;
+      programs.niri = {
         package = pkgs.niri;
         settings = { # https://github.com/sodiboo/niri-flake/blob/main/docs.md
-          spawn-at-startup = [
-            { argv = [ "noctalia-shell" ]; }
-            # { argv = [ "ghostty" "--gtk-single-instance=true" "--quit-after-last-window-closed=false" "--initial-window=false" ]; }
-          ];
+          # spawn-at-startup = [
+          #   { argv = [ "ghostty" "--gtk-single-instance=true" "--quit-after-last-window-closed=false" "--initial-window=false" ]; }
+          # ];
           screenshot-path = "~/screenshots/%Y-%m-%d %H-%M-%S.png";
           environment = {
             ELECTRON_OZONE_PLATFORM_HINT = "auto"; # Prefer Wayland for electron apps (doesn't always work)
@@ -271,7 +74,7 @@ in {
           };
           gestures.hot-corners.enable = false;
           # recent-windows.enable = false; # This option doesn't exist in the flake yet for some reason
-          outputs = cfg.display_config; # `niri msg outputs`
+          outputs = cfg.outputs; # `niri msg outputs`
           layout = {
             gaps = 8;
             always-center-single-column = true;
@@ -295,21 +98,21 @@ in {
               position = "left";
               place-within-column = true;
               gaps-between-tabs = 8;
-              corner-radius = corner_radius;
+              corner-radius = config.my.desktop.corner_radius;
             };
           };
           cursor = {
             hide-when-typing = true;
             hide-after-inactive-ms = 1000;
           };
-          prefer-no-csd = !cfg.touch_options;
+          prefer-no-csd = !config.my.desktop.touch_options;
           window-rules = [
             { # General rules
               geometry-corner-radius = {
-                bottom-left = corner_radius;
-                bottom-right = corner_radius;
-                top-left = corner_radius;
-                top-right = corner_radius;
+                bottom-left = config.my.desktop.corner_radius;
+                bottom-right = config.my.desktop.corner_radius;
+                top-left = config.my.desktop.corner_radius;
+                top-right = config.my.desktop.corner_radius;
               };
               clip-to-geometry = true;
             }
@@ -338,8 +141,6 @@ in {
             "Mod+N".action.spawn = [ "foot" "nvim" "note.md" ];
             # "Mod+N".action.spawn = [ "ghostty" "--gtk-single-instance=true" "-e" "nvim" "note.md" ];
             # "Mod+T".action.spawn = [ "kitten" "quick-access-terminal" ];
-            "Mod+Space".action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ];
-            "Mod+Shift+E".action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
             "Mod+E".action.spawn = [ "dolphin" ];
             # "Super+Alt+L".action.spawn = [ "swaylock" ];
 
@@ -403,7 +204,7 @@ in {
             "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = {};
             "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = {};
             "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = {};
-            "Mod+Shift+Ctrl+Right".action .move-column-to-monitor-right = {};
+            "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = {};
             "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = {};
             "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = {};
             "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = {};
