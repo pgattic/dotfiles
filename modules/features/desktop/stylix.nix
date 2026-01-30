@@ -1,14 +1,5 @@
-{ config, lib, inputs, ... }:
-let
-  cfg = config.my.desktop.stylix;
-in {
-  options = {
-    my.desktop.stylix = {
-      enable = lib.mkEnableOption "Stylix options";
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
+{ config, lib, inputs, ... }: {
+  config = {
     flake.modules.nixos.stylix = { ... }: {
       imports = [
         inputs.stylix.nixosModules.stylix

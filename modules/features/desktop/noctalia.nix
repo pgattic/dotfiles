@@ -1,14 +1,6 @@
-{ config, lib, inputs, ... }:
-let
-  cfg = config.my.desktop.noctalia;
-in {
-  options = {
-    my.desktop.noctalia = {
-      enable = lib.mkEnableOption "Noctalia shell options";
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
+{ config, lib, inputs, ... }: {
+  config = {
+    flake.modules.nixos.noctalia = { pkgs, ... }: {};
     flake.modules.homeManager.noctalia = { pkgs, ... }: {
       imports = [
         inputs.noctalia.homeModules.default
@@ -57,7 +49,7 @@ in {
           };
           dock.enabled = false;
           bar = {
-            density = if config.my.desktop.touch_options then "default" else "compact";
+            # density = if touch_options then "default" else "compact";
             showCapsule = false;
             outerCorners = false;
             widgets = {
@@ -65,11 +57,11 @@ in {
                 { id = "Workspace"; labelMode = "none"; }
                 { id = "SystemMonitor"; }
               ]
-              ++ lib.optionals config.my.desktop.touch_options [
-                { id = "Launcher"; }
-                { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
-                { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec wvkbd-deskintl -L 412"; }
-              ]
+              # ++ lib.optionals touch_options [
+              #   { id = "Launcher"; }
+              #   { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
+              #   { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec wvkbd-deskintl -L 412"; }
+              # ]
               ++ [
                 { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
               ];
@@ -105,8 +97,7 @@ in {
           osd.location = "bottom";
           appLauncher = {
             terminalCommand = "foot";
-            viewMode = if config.my.desktop.touch_options then "grid" else "list";
-            # screenshotAnnotationTool = "";
+            # viewMode = if touch_options then "grid" else "list";
           };
           location = {
             name = "Provo, United States";

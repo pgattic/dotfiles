@@ -1,20 +1,5 @@
-{ config, lib, ... }:
-let
-  cfg = config.my.desktop;
-in {
-  options = {
-    my.desktop = {
-      enable = lib.mkEnableOption "Desktop options";
-      touch_options = lib.mkEnableOption "Desktop options";
-      corner_radius = lib.mkOption {
-        type = lib.types.float;
-        default = 8.0;
-        description = "Corner radius of UI elements";
-      };
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
+{ config, lib, ... }: {
+  config = {
     flake.modules.nixos.desktop = { pkgs, ... }: {
       boot.plymouth.enable = true;
       services.xserver.xkb = {

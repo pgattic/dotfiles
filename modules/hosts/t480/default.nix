@@ -1,16 +1,5 @@
 { config, lib, inputs, ... }: {
   config = {
-    my.desktop = {
-      enable = true;
-      niri = {
-        enable = true;
-        outputs."eDP-1".scale = 1.0;
-      };
-      noctalia.enable = true;
-      portals.enable = true;
-      stylix.enable = true;
-    };
-
     flake.nixosConfigurations.t480 = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -135,14 +124,14 @@
         })
 
         config.flake.modules.nixos.base
-        # config.flake.modules.nixos.git
+        config.flake.modules.nixos.git
         config.flake.modules.nixos.neovim
         config.flake.modules.nixos.nushell
         config.flake.modules.nixos.user
 
         config.flake.modules.nixos.desktop
         config.flake.modules.nixos.niri
-        # config.flake.modules.nixos.noctalia
+        config.flake.modules.nixos.noctalia
         config.flake.modules.nixos.portals
         config.flake.modules.nixos.stylix
 
@@ -153,11 +142,12 @@
             extraSpecialArgs = { inherit inputs; };
             users.${config.my.user.name} = {
               imports = [
-                config.flake.modules.homeManager.user
                 config.flake.modules.homeManager.base
                 config.flake.modules.homeManager.git
                 config.flake.modules.homeManager.neovim
                 config.flake.modules.homeManager.nushell
+                config.flake.modules.homeManager.user
+
                 config.flake.modules.homeManager.desktop
                 config.flake.modules.homeManager.niri
                 config.flake.modules.homeManager.noctalia
@@ -197,6 +187,8 @@
                   };
 
                   programs.helix.enable = true;
+                  programs.niri.settings.outputs."eDP-1".scale = 1.0;
+
                 })
               ];
             };

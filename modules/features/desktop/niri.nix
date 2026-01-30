@@ -1,26 +1,5 @@
-{ config, lib, inputs, ... }:
-let
-  cfg = config.my.desktop.niri;
-in {
-  options = {
-    my.desktop.niri = {
-      enable = lib.mkEnableOption "Niri compositor options";
-
-      outputs = lib.mkOption {
-        type = lib.types.attrsOf lib.types.attrs;
-        default = {};
-        description = "Display config to be forwarded to niri options";
-      };
-
-      mod_key = lib.mkOption {
-        type = lib.types.enum [ "Super" "Alt" ];
-        default = "Super";
-        description = "Mod key to use for main desktop navigation (used by Niri module)";
-      };
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
+{ config, lib, inputs, ... }: {
+  config = {
     flake.modules.nixos.niri = { pkgs, ... }: {
       programs.niri = {
         enable = true;
@@ -50,10 +29,8 @@ in {
           environment = {
             ELECTRON_OZONE_PLATFORM_HINT = "auto"; # Prefer Wayland for electron apps (doesn't always work)
             DISPLAY = ":0"; # required for X11 apps to connect to xwayland-satellite properly
-            WAYBAR_DISABLE_PORTAL = "1";
           };
           input = {
-            mod-key = cfg.mod_key;
             keyboard.xkb.options = "caps:escape";
             touchpad = {
               tap = true;
@@ -74,7 +51,6 @@ in {
           };
           gestures.hot-corners.enable = false;
           # recent-windows.enable = false; # This option doesn't exist in the flake yet for some reason
-          outputs = cfg.outputs; # `niri msg outputs`
           layout = {
             gaps = 8;
             always-center-single-column = true;

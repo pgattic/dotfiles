@@ -1,14 +1,5 @@
-{ config, lib, inputs, ... }:
-let
-  cfg = config.my.desktop.portals;
-in {
-  options = {
-    my.desktop.portals = {
-      enable = lib.mkEnableOption "XDG Desktop portals";
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
+{ config, lib, inputs, ... }: {
+  config = {
     flake.modules.nixos.portals = { pkgs, ... }: {
       xdg.portal = {
         enable = true;
