@@ -1,6 +1,6 @@
-{ config, lib, inputs, ... }: {
-  config = {
-    flake.modules.nixos.niri = { pkgs, ... }: {
+{ config, inputs, ... }: {
+  flake = {
+    nixosModules.niri = { pkgs, ... }: {
       programs.niri = {
         enable = true;
         useNautilus = false; # Silly default options
@@ -10,7 +10,7 @@
         XDG_SESSION_DESKTOP = "niri";
       };
     };
-    flake.modules.homeManager.niri = { pkgs, ... }: {
+    homeModules.niri = { pkgs, ... }: {
       imports = [
         inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
       ];
@@ -81,7 +81,8 @@
             hide-when-typing = true;
             hide-after-inactive-ms = 1000;
           };
-          prefer-no-csd = !config.my.desktop.touch_options;
+          # prefer-no-csd = !config.my.desktop.touch_options;
+          prefer-no-csd = true;
           window-rules = [
             { # General rules
               geometry-corner-radius = {

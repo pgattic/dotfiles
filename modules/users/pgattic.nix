@@ -18,7 +18,7 @@ in {
     my.user.name = username;
     my.user.home_dir = "/home/${username}";
 
-    flake.modules.nixos.user = { pkgs, ... }: {
+    flake.nixosModules.user = { pkgs, ... }: {
       users.users.${config.my.user.name} = {
         isNormalUser = true;
         extraGroups = [ "networkmanager" "wheel" ];
@@ -27,7 +27,7 @@ in {
       };
     };
 
-    flake.modules.homeManager.user = { ... }: {
+    flake.homeModules.user = { ... }: {
       home.username = lib.mkDefault config.my.user.name;
       home.homeDirectory = lib.mkDefault config.my.user.home_dir;
       home.stateVersion = lib.mkDefault "25.05";

@@ -1,7 +1,7 @@
-{ config, lib, ... }: {
-  config = {
-    flake.modules.nixos.git = { pkgs, ... }: {};
-    flake.modules.homeManager.git = { pkgs, ... }: {
+{ config, ... }: {
+  flake = {
+    nixosModules.git = { pkgs, ... }: {};
+    homeModules.git = { pkgs, ... }: {
       home.packages = with pkgs; [
         lazygit
       ];

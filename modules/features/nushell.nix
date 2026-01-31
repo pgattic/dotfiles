@@ -1,12 +1,12 @@
-{ config, lib, ... }: {
-  config = {
-    flake.modules.nixos.nushell = { pkgs, ... }: {
+{ config, ... }: {
+  flake = {
+    nixosModules.nushell = { pkgs, ... }: {
       environment.sessionVariables = {
         SHELL = "nu";
       };
     };
 
-    flake.modules.homeManager.nushell = { pkgs, ... }: {
+    homeModules.nushell = { pkgs, ... }: {
       programs.nushell = {
         enable = true;
         settings = {

@@ -1,6 +1,6 @@
-{ config, lib, inputs, ... }: {
-  config = {
-    flake.modules.nixos.portals = { pkgs, ... }: {
+{
+  flake = {
+    nixosModules.portals = { pkgs, ... }: {
       xdg.portal = {
         enable = true;
         extraPortals = [
@@ -20,8 +20,7 @@
         GTK_USE_PORTAL = "1";
       };
     };
-    flake.modules.homeManager.portals = { ... }: {
-    };
+    homeModules.portals = { ... }: {};
   };
 }
 

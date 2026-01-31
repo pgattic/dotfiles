@@ -1,6 +1,6 @@
-{ config, lib, inputs, ... }: {
-  config = {
-    flake.modules.nixos.stylix = { ... }: {
+{ inputs, ... }: {
+  flake = {
+    nixosModules.stylix = { ... }: {
       imports = [
         inputs.stylix.nixosModules.stylix
       ];
@@ -30,7 +30,7 @@
         targets.plymouth.enable = false;
       };
     };
-    flake.modules.homeManager.stylix = { pkgs, ... }: {
+    homeModules.stylix = { pkgs, ... }: {
       home.packages = with pkgs; [
         adwaita-qt
         adwaita-qt6

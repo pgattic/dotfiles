@@ -1,7 +1,7 @@
-{ config, lib, inputs, ... }: {
-  config = {
-    flake.modules.nixos.noctalia = { pkgs, ... }: {};
-    flake.modules.homeManager.noctalia = { pkgs, ... }: {
+{ config, inputs, ... }: {
+  flake = {
+    nixosModules.noctalia = { pkgs, ... }: {};
+    homeModules.noctalia = { pkgs, ... }: {
       imports = [
         inputs.noctalia.homeModules.default
       ];
@@ -18,10 +18,8 @@
         "Mod+Shift+E".action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
       };
 
-      home.file.".cache/noctalia/wallpapers.json" = {
-        text = builtins.toJSON {
-          defaultWallpaper = "/home/pgattic/dotfiles/wallpaper/wedding_temple.jpg";
-        };
+      home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
+        defaultWallpaper = "${config.my.user.home_dir}/dotfiles/wallpaper/wedding_temple.jpg";
       };
 
       programs.noctalia-shell = {
@@ -50,6 +48,7 @@
           dock.enabled = false;
           bar = {
             # density = if touch_options then "default" else "compact";
+            density = "compact";
             showCapsule = false;
             outerCorners = false;
             widgets = {
@@ -105,7 +104,7 @@
             useFahrenheit = true;
           };
           wallpaper = {
-            directory = "/home/pgattic/dotfiles/config/wallpaper";
+            directory = "${config.my.user.home_dir}/dotfiles/config/wallpaper";
             transitionType = "stripes";
           };
         };
