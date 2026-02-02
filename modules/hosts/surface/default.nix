@@ -1,4 +1,4 @@
-{ config, lib, inputs, ... }: {
+{ config, inputs, ... }: {
   flake.nixosConfigurations.surface = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
@@ -24,8 +24,8 @@
         system.stateVersion = "25.05";
       })
 
-      config.flake.nixosModules.base
-      config.flake.nixosModules.desktop
+      config.flake.nixosModules.default
+      config.flake.nixosModules.desktop-default
 
       {
         home-manager = {
@@ -34,8 +34,8 @@
           extraSpecialArgs = { inherit inputs; };
           users.${config.my.user.name} = {
             imports = [
-              config.flake.modules.homeManager.base
-              config.flake.modules.homeManager.desktop
+              config.flake.modules.homeManager.default
+              config.flake.modules.homeManager.desktop-default
 
               ({ pkgs, ... }: {
                 home.packages = with pkgs; [

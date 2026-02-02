@@ -14,13 +14,13 @@
         { argv = [ "noctalia-shell" ]; }
       ];
       programs.niri.settings.binds = {
-        "Mod+Space".action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ];
-        "Mod+Shift+E".action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
+        "Mod+Space" = { hotkey-overlay.title = "Open Lanucher"; action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ]; };
+        "Mod+Shift+E" = { hotkey-overlay.title = "Quit niri"; action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ]; };
       };
 
-      home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
-        defaultWallpaper = "${config.my.user.home_dir}/dotfiles/wallpaper/wedding_temple.jpg";
-      };
+      # home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
+      #   defaultWallpaper = "${config.my.user.home_dir}/dotfiles/wallpaper/wedding_temple.jpg";
+      # }; # {"defaultWallpaper":"/home/pgattic/dotfiles/wallpaper/wedding_temple.jpg"}
 
       programs.noctalia-shell = {
         enable = true;

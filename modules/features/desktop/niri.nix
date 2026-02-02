@@ -1,6 +1,6 @@
-{ config, inputs, ... }: {
+{ config, ... }: {
   flake = {
-    nixosModules.niri = { pkgs, ... }: {
+    nixosModules.niri = { ... }: {
       programs.niri = {
         enable = true;
         useNautilus = false; # Silly default options
@@ -10,7 +10,7 @@
         XDG_SESSION_DESKTOP = "niri";
       };
     };
-    homeModules.niri = { pkgs, ... }: {
+    homeModules.niri = { inputs, pkgs, ... }: {
       imports = [
         inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
       ];
@@ -30,6 +30,8 @@
             ELECTRON_OZONE_PLATFORM_HINT = "auto"; # Prefer Wayland for electron apps (doesn't always work)
             DISPLAY = ":0"; # required for X11 apps to connect to xwayland-satellite properly
           };
+          hotkey-overlay.skip-at-startup = true;
+          hotkey-overlay.hide-not-bound = true;
           input = {
             keyboard.xkb.options = "caps:escape";
             touchpad = {
@@ -113,12 +115,12 @@
           binds = {
             "Mod+Shift+Slash".action.show-hotkey-overlay = {};
 
-            "Mod+Return".action.spawn = [ "foot" ];
+            "Mod+Return" = { hotkey-overlay.title = "Spawn terminal"; action.spawn = [ "foot" ]; };
             # "Mod+Return".action.spawn = [ "ghostty" "--gtk-single-instance=true" ];
-            "Mod+N".action.spawn = [ "foot" "nvim" "note.md" ];
+            "Mod+N" = { hotkey-overlay.title = "Quick note"; action.spawn = [ "foot" "nvim" "note.md" ]; };
             # "Mod+N".action.spawn = [ "ghostty" "--gtk-single-instance=true" "-e" "nvim" "note.md" ];
             # "Mod+T".action.spawn = [ "kitten" "quick-access-terminal" ];
-            "Mod+E".action.spawn = [ "dolphin" ];
+            "Mod+E" = { hotkey-overlay.title = "File Manager"; action.spawn = [ "dolphin" ]; };
             # "Super+Alt+L".action.spawn = [ "swaylock" ];
 
             # The allow-when-locked=true property makes them work even when the session is locked.

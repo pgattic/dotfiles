@@ -1,6 +1,6 @@
 {
   flake = {
-    nixosModules.networking = { pkgs, ... }: {
+    nixosModules.networking = { ... }: {
       hardware.bluetooth = {
         enable = true;
         powerOnBoot = false;
@@ -8,7 +8,7 @@
       };
       networking.networkmanager.enable = true;
     };
-    homeModules.networking = { pkgs, ... }: {};
+    homeModules.networking = { ... }: {};
   };
 }
 

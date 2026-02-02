@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ lib, ... }: {
   options = {
     my.desktop.corner_radius = lib.mkOption {
       type = lib.types.float;
@@ -11,14 +11,7 @@
     my.desktop.corner_radius = 8.0;
 
     flake = {
-      nixosModules.desktop = { pkgs, ... }: {
-        imports = [
-          config.flake.nixosModules.niri
-          config.flake.nixosModules.noctalia
-          config.flake.nixosModules.portals
-          config.flake.nixosModules.stylix
-        ];
-
+      nixosModules.desktop-base = { pkgs, ... }: {
         boot.plymouth.enable = true;
         services.xserver.xkb = {
           layout = "us";
@@ -45,13 +38,7 @@
           gvfs.enable = true; # Automatic drive mounting, network shares, recycle bin
         };
       };
-      homeModules.desktop = { pkgs, ... }: {
-        imports = [
-          config.flake.homeModules.niri
-          config.flake.homeModules.noctalia
-          config.flake.homeModules.portals
-          config.flake.homeModules.stylix
-        ];
+      homeModules.desktop-base = { pkgs, ... }: {
         home.packages = with pkgs; [
           wl-clipboard-rs
           wf-recorder

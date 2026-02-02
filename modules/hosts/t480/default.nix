@@ -9,7 +9,6 @@
       ({ pkgs, ... }: {
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
-        boot.kernelModules = [ "uinput" ];
 
         networking.hostName = "t480";
 
@@ -100,8 +99,8 @@
         system.stateVersion = "25.05";
       })
 
-      config.flake.nixosModules.base
-      config.flake.nixosModules.desktop
+      config.flake.nixosModules.default
+      config.flake.nixosModules.desktop-default
       config.flake.nixosModules.work
 
       {
@@ -111,8 +110,8 @@
           extraSpecialArgs = { inherit inputs; };
           users.${config.my.user.name} = {
             imports = [
-              config.flake.homeModules.base
-              config.flake.homeModules.desktop
+              config.flake.homeModules.default
+              config.flake.homeModules.desktop-default
               config.flake.homeModules.work
 
               ({ pkgs, ... }: {

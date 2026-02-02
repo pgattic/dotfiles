@@ -3,14 +3,6 @@
     nixosModules.base = { pkgs, ... }: {
       nixpkgs.overlays = import ../../overlays;
 
-      imports = [
-        config.flake.nixosModules.git
-        config.flake.nixosModules.neovim
-        config.flake.nixosModules.networking
-        config.flake.nixosModules.nushell
-        config.flake.nixosModules.user
-      ];
-
       time.timeZone = "America/Boise";
       i18n.defaultLocale = "en_US.UTF-8";
       i18n.extraLocaleSettings = {
@@ -49,13 +41,6 @@
     };
 
     homeModules.base = { pkgs, ... }: {
-      imports = [
-        config.flake.homeModules.git
-        config.flake.homeModules.neovim
-        config.flake.homeModules.networking
-        config.flake.homeModules.nushell
-        config.flake.homeModules.user
-      ];
       home.packages = with pkgs; [
         (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
         openssh_hpn # SSH but faster

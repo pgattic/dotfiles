@@ -1,12 +1,12 @@
 {
   flake = {
-    nixosModules.neovim = { pkgs, ... }: {
+    nixosModules.neovim = { ... }: {
       environment.sessionVariables = {
         EDITOR = "nvim";
       };
     };
 
-    homeModules.neovim = { pkgs, ... }: {
+    homeModules.neovim = { ... }: {
       programs = {
         neovim = {
           enable = true;
