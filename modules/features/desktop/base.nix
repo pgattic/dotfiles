@@ -40,7 +40,7 @@
       };
       homeModules.desktop-base = { pkgs, ... }: {
         home.packages = with pkgs; [
-          wl-clipboard-rs
+          wl-clipboard
           wf-recorder
           wl-mirror
           pavucontrol
@@ -50,7 +50,6 @@
           libnotify
           zathura
           xarchiver
-          papirus-icon-theme
           kdePackages.dolphin
         ];
 

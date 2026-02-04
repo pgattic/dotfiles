@@ -64,7 +64,7 @@
             default-column-width.proportion = 1. / 2.;
             focus-ring = {
               width = 2;
-              active.color = "#7fc8ff";
+              active.color = "#58a6ff";
               inactive.color = "#505050";
               urgent.color = "#9b0000";
             };

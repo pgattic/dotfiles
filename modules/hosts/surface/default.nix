@@ -26,6 +26,7 @@
 
       config.flake.nixosModules.default
       config.flake.nixosModules.desktop-default
+      config.flake.nixosModules.zeditor
 
       {
         home-manager = {
@@ -36,10 +37,10 @@
             imports = [
               config.flake.modules.homeManager.default
               config.flake.modules.homeManager.desktop-default
+              config.flake.modules.homeManager.zeditor
 
               ({ pkgs, ... }: {
                 home.packages = with pkgs; [
-                  zed-editor
                   ungoogled-chromium
                   luanti-client
                 ];

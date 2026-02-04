@@ -104,7 +104,7 @@ end
 
 -- Color Theme
 require('vscode').setup({
-    -- transparent = true, -- Transparent background
+    transparent = true, -- Transparent background
 })
 vim.cmd.colorscheme("vscode")
 

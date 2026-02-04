@@ -102,6 +102,7 @@
       config.flake.nixosModules.default
       config.flake.nixosModules.desktop-default
       config.flake.nixosModules.work
+      config.flake.nixosModules.zeditor
 
       {
         home-manager = {
@@ -113,12 +114,11 @@
               config.flake.homeModules.default
               config.flake.homeModules.desktop-default
               config.flake.homeModules.work
+              config.flake.homeModules.zeditor
 
               ({ pkgs, ... }: {
                 home.packages = with pkgs; [
-                  zed-editor
                   mcpelauncher-ui-qt
-                  discord
                   obsidian
                   ungoogled-chromium
                   qbittorrent
@@ -146,6 +146,7 @@
                   "x-scheme-handler/signalcaptcha" = "signal.desktop";
                 };
 
+                programs.vesktop.enable = true;
                 programs.helix.enable = true;
                 programs.niri.settings.outputs."eDP-1".scale = 1.0;
               })

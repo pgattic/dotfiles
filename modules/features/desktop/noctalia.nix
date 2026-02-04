@@ -1,4 +1,4 @@
-{ config, inputs, ... }: {
+{ config, inputs, ... }: let opacity = 0.85; in {
   flake = {
     nixosModules.noctalia = { pkgs, ... }: {};
     homeModules.noctalia = { pkgs, ... }: {
@@ -18,9 +18,10 @@
         "Mod+Shift+E" = { hotkey-overlay.title = "Quit niri"; action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ]; };
       };
 
-      # home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
-      #   defaultWallpaper = "${config.my.user.home_dir}/dotfiles/wallpaper/wedding_temple.jpg";
-      # }; # {"defaultWallpaper":"/home/pgattic/dotfiles/wallpaper/wedding_temple.jpg"}
+      home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
+        defaultWallpaper = "${config.my.user.home_dir}/dotfiles/assets/wallpapers/wedding_temple.jpg";
+      };
+      stylix.targets.noctalia-shell.enable = false; # I do more precise coloring
 
       programs.noctalia-shell = {
         enable = true;
@@ -40,11 +41,35 @@
           };
           version = 1;
         };
+        colors = { # Copied from the GitHub Dark theme
+          mError = "#f85149";
+          mHover = "#21262d";
+          mOnError = "#010409";
+          mOnHover = "#c9d1d9";
+          mOnPrimary = "#010409";
+          mOnSecondary = "#010409";
+          mOnSurface = "#c9d1d9";
+          mOnSurfaceVariant = "#8b949e";
+          mOnTertiary = "#010409";
+          mOutline = "#30363d";
+          mPrimary = "#58a6ff";
+          mSecondary = "#add3ff"; # was "#bc8cff"
+          mShadow = "#010409";
+          mSurface = "#010409";
+          mSurfaceVariant = "#161b22";
+          mTertiary = "#bc8cff";
+        };
         settings = {
           general = {
             enableShadows = false;
             radiusRatio = config.my.desktop.corner_radius / 20.0;
+            avatarImage = "${config.my.user.home_dir}/dotfiles/assets/profile.jpg";
           };
+          ui = {
+            panelBackgroundOpacity = opacity;
+            settingsPanelMode = "window";
+          };
+          notifications.backgroundOpacity = opacity;
           dock.enabled = false;
           bar = {
             # density = if touch_options then "default" else "compact";
@@ -53,7 +78,13 @@
             outerCorners = false;
             widgets = {
               left = [
-                { id = "Workspace"; labelMode = "none"; }
+                {
+                  id = "Workspace";
+                  labelMode = "none";
+                  focusedColor = "primary";
+                  occupiedColor = "onSurface";
+                  emptyColor = "onSurface";
+                }
                 { id = "SystemMonitor"; }
               ]
               # ++ lib.optionals touch_options [
@@ -95,7 +126,9 @@
           audio.volumeOverdrive = true;
           osd.location = "bottom";
           appLauncher = {
+            enableClipboardHistory = true; # Required for clipboard manager plugin to work
             terminalCommand = "foot";
+            enableSettingsSearch = false;
             # viewMode = if touch_options then "grid" else "list";
           };
           location = {
@@ -104,7 +137,7 @@
             useFahrenheit = true;
           };
           wallpaper = {
-            directory = "${config.my.user.home_dir}/dotfiles/config/wallpaper";
+            directory = "${config.my.user.home_dir}/dotfiles/assets/wallpapers";
             transitionType = "stripes";
           };
         };
