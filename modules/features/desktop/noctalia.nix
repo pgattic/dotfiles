@@ -57,7 +57,7 @@
           mShadow = "#010409";
           mSurface = "#010409";
           mSurfaceVariant = "#161b22";
-          mTertiary = "#bc8cff";
+          mTertiary = "#add3ff"; # was "#bc8cff"
         };
         settings = {
           general = {

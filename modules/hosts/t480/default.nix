@@ -24,63 +24,6 @@
 
           appimage.enable = true;
           appimage.binfmt = true;
-
-          firefox = {
-            enable = true;
-            # policies = {
-            #   ExtensionSettings = {
-            #
-            #   }
-            # };
-            preferences = {
-              "browser.gesture.swipe.left" = "cmd_scrollLeft";
-              "browser.gesture.swipe.right" = "cmd_scrollRight";
-              "browser.uiCustomization.state" = ''
-                {
-                  "placements": {
-                    "widget-overflow-fixed-list": [],
-                    "unified-extensions-area": [],
-                    "nav-bar": [
-                      "back-button",
-                      "forward-button",
-                      "stop-reload-button",
-                      "customizableui-special-spring1",
-                      "vertical-spacer",
-                      "urlbar-container",
-                      "customizableui-special-spring2",
-                      "downloads-button",
-                      "unified-extensions-button"
-                    ],
-                    "toolbar-menubar": [
-                      "menubar-items"
-                    ],
-                    "TabsToolbar": [
-                      "tabbrowser-tabs",
-                      "new-tab-button"
-                    ],
-                    "vertical-tabs": [],
-                    "PersonalToolbar": [
-                      "import-button",
-                      "personal-bookmarks"
-                    ]
-                  },
-                  "seen": [
-                    "developer-button",
-                    "screenshot-button"
-                  ],
-                  "dirtyAreaCache": [
-                    "nav-bar",
-                    "vertical-tabs",
-                    "toolbar-menubar",
-                    "TabsToolbar",
-                    "PersonalToolbar"
-                  ],
-                  "currentVersion": 23,
-                  "newElementCount": 4
-                }
-              '';
-            };
-          };
         };
 
         virtualisation.docker.enable = true;
@@ -103,6 +46,7 @@
       config.flake.nixosModules.desktop-default
       config.flake.nixosModules.work
       config.flake.nixosModules.zeditor
+      config.flake.nixosModules.browser
 
       {
         home-manager = {
@@ -115,6 +59,7 @@
               config.flake.homeModules.desktop-default
               config.flake.homeModules.work
               config.flake.homeModules.zeditor
+              config.flake.homeModules.browser
 
               ({ pkgs, ... }: {
                 home.packages = with pkgs; [
@@ -146,9 +91,11 @@
                   "x-scheme-handler/signalcaptcha" = "signal.desktop";
                 };
 
-                programs.vesktop.enable = true;
-                programs.helix.enable = true;
-                programs.niri.settings.outputs."eDP-1".scale = 1.0;
+                programs = {
+                  vesktop.enable = true;
+                  helix.enable = true;
+                  niri.settings.outputs."eDP-1".scale = 1.0;
+                };
               })
             ];
           };

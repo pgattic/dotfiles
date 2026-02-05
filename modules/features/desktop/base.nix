@@ -30,7 +30,7 @@
                 ${pkgs.tuigreet}/bin/tuigreet --remember --asterisks --time \
                 --time-format "%a %b %d %I:%M %p" \
                 --window-padding 2 \
-                --theme "border=cyan;action=cyan;time=cyan;button=gray"
+                --theme "border=blue;action=blue;time=blue;button=gray"
               '';
               user = "greeter";
             };
