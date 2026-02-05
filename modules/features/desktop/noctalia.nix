@@ -104,6 +104,7 @@
                 { id = "NotificationHistory"; }
                 { id = "Brightness"; }
                 { id = "Volume"; }
+                { id = "Bluetooth"; }
                 { id = "Network"; }
                 { id = "Battery"; }
                 { id = "Clock"; formatHorizontal = "ddd MMM dd h:mm AP"; tooltipFormat = "h:mm:ss AP"; }

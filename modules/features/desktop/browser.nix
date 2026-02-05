@@ -42,7 +42,7 @@
                   "customizableui-special-spring2"
                   "downloads-button"
                   "fxa-toolbar-menu-button"
-                  "unified-extensions-button"
+                  # "unified-extensions-button"
                   "ublock0_raymondhill_net-browser-action"
                   # "alltabs-button"
                 ];

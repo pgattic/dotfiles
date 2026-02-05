@@ -47,6 +47,7 @@
       config.flake.nixosModules.work
       config.flake.nixosModules.zeditor
       config.flake.nixosModules.browser
+      config.flake.nixosModules.obsidian
 
       {
         home-manager = {
@@ -60,11 +61,11 @@
               config.flake.homeModules.work
               config.flake.homeModules.zeditor
               config.flake.homeModules.browser
+              config.flake.homeModules.obsidian
 
               ({ pkgs, ... }: {
                 home.packages = with pkgs; [
                   mcpelauncher-ui-qt
-                  obsidian
                   ungoogled-chromium
                   qbittorrent
                   bambu-studio
