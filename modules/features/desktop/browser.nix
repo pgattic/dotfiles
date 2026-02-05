@@ -1,10 +1,7 @@
 { config, ... }: {
   flake = {
     nixosModules.browser = { ... }: {};
-    homeModules.browser = { pkgs, ... }: {
-      home.packages = with pkgs; [
-        bitwarden-desktop
-      ];
+    homeModules.browser = { ... }: {
       programs.librewolf = {
         enable = true;
 
@@ -16,14 +13,59 @@
             { "name" = "Home Manager Options"; url = "https://home-manager-options.extranix.com"; tags = ["home" "nixos" "search"]; }
             { "name" = "pgattic.dev"; url = "https://pgattic.dev"; }
           ];
+          search.force = true;
+          search.default = "google";
+          search.engines = {
+            google = {
+              name = "Google";
+              urls = [{
+                template = "https://www.google.com/search";
+                params = [{ name = "q"; value = "{searchTerms}"; }];
+              }];
+
+              icon = "https://www.google.com/favicon.ico";
+              definedAliases = [ "@g" ];
+            };
+            nix-packages = {
+              name = "NixOS Packages";
+              urls = [{
+                template = "https://search.nixos.org/packages";
+                params = [
+                  { name = "channel"; value = "unstable"; }
+                  { name = "query"; value = "{searchTerms}"; }
+                ];
+              }];
+              icon = "https://search.nixos.org/favicon-96x96.png";
+              definedAliases = [ "@nix" ];
+            };
+            home-manager = {
+              name = "Home Manager Options";
+              urls = [{
+                template = "https://search.nixos.org/packages";
+                params = [
+                  { name = "query"; value = "{searchTerms}"; }
+                  { name = "release"; value = "master"; }
+                ];
+              }];
+              icon = "https://home-manager-options.extranix.com/images/favicon.png";
+              definedAliases = [ "@hm" ];
+            };
+          };
           settings = {
+            # Librewolf-specific stuff
+            "privacy.resistFingerprinting" = false; # Unfortunately required for muh dark mode to work
+            "privacy.clearOnShutdown.history" = false;
+            "privacy.clearOnShutdown.cookies" = false;
+            "network.cookie.lifetimePolicy" = 0;
+            "webgl.disabled" = false;
+
+            # Firefox stuff
             "browser.gesture.swipe.left" = "cmd_scrollLeft";
             "browser.gesture.swipe.right" = "cmd_scrollRight";
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UserChrome.css
-            "privacy.resistFingerprinting" = false; # (Librewolf-exclusive) unfortunately required for muh dark mode to work
             "sidebar.verticalTabs" = true;
-            "browser.toolbars.bookmarks.visibility" = "newtab";
-            "browser.tabs.inTitleBar" = 0; # How to hide client-side decorations
+            "browser.toolbars.bookmarks.visibility" = "never"; # "always", "never", "newtab"
+            "browser.tabs.inTitleBar" = 0; # Hide client-side decorations
             "browser.startup.page" = 3; # Reopen last session on start
             "browser.uiCustomization.state" = builtins.toJSON {
               placements = {
@@ -49,9 +91,7 @@
                 toolbar-menubar = [
                   "menubar-items"
                 ];
-                TabsToolbar = [
-
-                ];
+                TabsToolbar = [];
                 vertical-tabs = [
                   "tabbrowser-tabs"
                 ];

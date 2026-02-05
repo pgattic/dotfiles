@@ -81,6 +81,7 @@
         fastfetch = {
           enable = true;
           settings = {
+            "logo" = "NixOS";
             "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json";
             "modules" = [
               "title"
