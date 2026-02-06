@@ -96,6 +96,17 @@
                   vesktop.enable = true;
                   helix.enable = true;
                   niri.settings.outputs."eDP-1".scale = 1.0;
+                  noctalia-shell = {
+                    plugins.states.activate-linux = {
+                      sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+                      enabled = true;
+                    };
+                    pluginSettings.activate-linux = {
+                      customizeText = true;
+                      firstLine = "Activate Linux";
+                      secondLine = "Go to Settings to activate Linux.";
+                    };
+                  };
                 };
               })
             ];

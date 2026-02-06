@@ -1,7 +1,13 @@
-{ config, lib, ... }: {
+{ config, lib, inputs, ... }: {
   flake = {
     nixosModules.base = { pkgs, ... }: {
-      nixpkgs.overlays = import ../../overlays;
+      nixpkgs.overlays = [
+        inputs.nur.overlays.default # Nix User Repository
+        (import ../../overlays/bambu-studio.nix)
+        (import ../../overlays/luanti-client.nix)
+        (import ../../overlays/mineclonia-game.nix)
+        (import ../../overlays/wvkbd-deskintl.nix)
+      ];
 
       time.timeZone = "America/Boise";
       i18n.defaultLocale = "en_US.UTF-8";
