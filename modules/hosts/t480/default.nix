@@ -30,7 +30,6 @@
 
         services = {
           upower.enable = true;
-          flatpak.enable = true; # Only good source for Zen Browser
           syncthing = {
             enable = true;
             user = "pgattic";

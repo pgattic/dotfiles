@@ -126,6 +126,7 @@
           systemMonitor.externalMonitor = "foot btop";
           audio.volumeOverdrive = true;
           osd.location = "bottom";
+          nightLight.enabled = true;
           appLauncher = {
             enableClipboardHistory = true; # Required for clipboard manager plugin to work
             terminalCommand = "foot";

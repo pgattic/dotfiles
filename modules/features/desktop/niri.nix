@@ -45,7 +45,7 @@
             mouse = {
               accel-speed = -0.7;
             };
-            warp-mouse-to-focus.enable = true;
+            # warp-mouse-to-focus.enable = true;
             focus-follows-mouse = {
               enable = true;
               max-scroll-amount = "34%";
