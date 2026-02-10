@@ -3,7 +3,6 @@
     system = "x86_64-linux";
     modules = [
       ./_hardware.nix
-      inputs.home-manager.nixosModules.home-manager
 
       ({ pkgs, ... }: {
         boot.loader.systemd-boot.enable = true;
@@ -75,7 +74,10 @@
             };
           };
 
-          audiobookshelf.enable = true;
+          audiobookshelf = {
+            enable = true;
+            port = 3682;
+          };
 
           karakeep = {
             enable = true;
@@ -117,7 +119,7 @@
                 enableACME = true;
                 forceSSL = true;
                 locations."/" = {
-                  proxyPass = "http://127.0.0.1:${builtins.toString config.services.audiobookshelf.port}";
+                  proxyPass = "http://127.0.0.1:3682";
                   proxyWebsockets = true;
                   extraConfig = ''
                     proxy_redirect http:// $scheme://;
@@ -186,6 +188,18 @@
       config.flake.nixosModules.luanti-server
       config.flake.nixosModules.jellyfin
       # config.flake.nixosModules.minecraft-bedrock-server
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = { inherit inputs; };
+          users.${config.my.user.name} = {
+            imports = [
+              config.flake.homeModules.default
+            ];
+          };
+        };
+      }
     ];
   };
 }

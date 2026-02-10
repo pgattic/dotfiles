@@ -4,7 +4,6 @@
     modules = [
       ./_hardware.nix
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
-      inputs.home-manager.nixosModules.home-manager
 
       ({ pkgs, ... }: {
         boot.loader.systemd-boot.enable = true;

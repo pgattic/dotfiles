@@ -1,6 +1,10 @@
-{ config, lib, inputs, ... }: {
+{ config, inputs, ... }: {
   flake = {
     nixosModules.base = { pkgs, ... }: {
+      imports = [
+        inputs.stylix.nixosModules.stylix
+        inputs.home-manager.nixosModules.home-manager
+      ];
       nixpkgs.overlays = [
         inputs.nur.overlays.default # Nix User Repository
         (import ../../overlays/bambu-studio.nix)

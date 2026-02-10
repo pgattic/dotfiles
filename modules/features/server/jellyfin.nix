@@ -6,7 +6,7 @@
 
     services.jellyfin.enable = true;
 
-    nginx.virtualHosts."cinema.corlessfamily.net" = {
+    services.nginx.virtualHosts."cinema.corlessfamily.net" = {
       enableACME = true;
       forceSSL = true;
       locations."/" = {

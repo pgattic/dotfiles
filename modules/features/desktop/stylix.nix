@@ -1,9 +1,6 @@
-{ inputs, ... }: let opacity = 0.85; in {
+let opacity = 0.85; in {
   flake = {
     nixosModules.stylix = { pkgs, ... }: {
-      imports = [
-        inputs.stylix.nixosModules.stylix
-      ];
       stylix = {
         enable = true;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/github-dark.yaml";
@@ -62,6 +59,7 @@
           popups = opacity;
           terminal = opacity;
         };
+        targets.neovim.enable = false;
       };
 
       # qt = {

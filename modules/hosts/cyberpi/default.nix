@@ -4,7 +4,6 @@
     modules = [
       ./_hardware.nix
       inputs.nixos-hardware.nixosModules.raspberry-pi-4
-      inputs.home-manager.nixosModules.home-manager
 
       ({ pkgs, ... }: {
         boot.loader.grub.enable = false;
