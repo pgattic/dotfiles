@@ -41,6 +41,7 @@
               ({ pkgs, ... }: {
                 home.packages = with pkgs; [
                   luanti-client
+                  rnote
                 ];
               })
             ];

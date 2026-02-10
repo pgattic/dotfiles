@@ -80,7 +80,6 @@
                   zoom-us
                   ventoy
 
-                  waypipe
                   signal-desktop
                   openscad
                 ];
@@ -114,3 +113,4 @@
     ];
   };
 }
+

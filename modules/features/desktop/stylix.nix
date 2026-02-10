@@ -53,11 +53,14 @@
           light = "Papirus-Light";
         };
         polarity = "dark";
-        opacity = {
-          applications = osConfig.my.desktop.opacity;
-          desktop = osConfig.my.desktop.opacity;
-          popups = osConfig.my.desktop.opacity;
-          terminal = osConfig.my.desktop.opacity;
+        opacity = let
+          # Fix for Niri's window handling
+          opacity = if osConfig.my.desktop.touch_options then 1.0 else osConfig.my.desktop.opacity;
+        in {
+          applications = opacity;
+          desktop = opacity;
+          popups = opacity;
+          terminal = opacity;
         };
         targets.neovim.enable = false;
       };

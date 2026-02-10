@@ -23,8 +23,7 @@
 
         hardware.deviceTree.enable = true;
 
-        networking.hostName = "cyberpi"; # Define your hostname.
-        networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+        networking.hostName = "cyberpi";
 
         programs = {
           firefox.enable = true;
@@ -55,6 +54,7 @@
                 home.packages = with pkgs; [
                   luanti-client
                   ungoogled-chromium
+                  rnote
                 ];
                 programs.niri.settings.input.mod-key = "Alt";
               })

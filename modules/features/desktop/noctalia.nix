@@ -8,6 +8,8 @@
 
       home.packages = with pkgs; [
         cliphist # For the "clipper" plugin
+      ] ++ lib.optionals osConfig.my.desktop.touch_options [
+        wvkbd-deskintl
       ];
 
       programs.niri.settings.spawn-at-startup = [
