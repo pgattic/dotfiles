@@ -194,7 +194,7 @@
           useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = { inherit inputs; };
-          users.${config.my.user.name} = {
+          users.pgattic = {
             imports = [
               config.flake.homeModules.default
             ];

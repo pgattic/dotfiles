@@ -1,4 +1,4 @@
-{ inputs, ... }: let opacity = 0.85; in {
+{ inputs, ... }: {
   flake = {
     nixosModules.noctalia = { pkgs, ... }: {};
     homeModules.noctalia = { lib, pkgs, osConfig, ... }: {
@@ -66,10 +66,10 @@
             avatarImage = "${osConfig.my.user.home_dir}/dotfiles/assets/profile.jpg";
           };
           ui = {
-            panelBackgroundOpacity = opacity;
+            panelBackgroundOpacity = osConfig.my.desktop.opacity;
             settingsPanelMode = "window";
           };
-          notifications.backgroundOpacity = opacity;
+          notifications.backgroundOpacity = osConfig.my.desktop.opacity;
           dock.enabled = false;
           bar = {
             density = if osConfig.my.desktop.touch_options then "default" else "compact";
@@ -89,7 +89,7 @@
               ++ lib.optionals osConfig.my.desktop.touch_options [
                 { id = "Launcher"; }
                 { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
-                { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec wvkbd-deskintl -L 412"; }
+                { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec ${pkgs.wvkbd-deskintl}/bin/wvkbd-deskintl -L 412"; }
               ]
               ++ [
                 { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }

@@ -1,4 +1,4 @@
-{ ... }: {
+{
   flake = {
     nixosModules.git = { ... }: {};
     homeModules.git = { osConfig, pkgs, ... }: {

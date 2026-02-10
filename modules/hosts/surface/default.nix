@@ -31,12 +31,12 @@
           useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = { inherit inputs; };
-          users.${config.my.user.name} = {
+          users.pgattic = {
             imports = [
-              config.flake.modules.homeManager.default
-              config.flake.modules.homeManager.desktop-default
-              config.flake.modules.homeManager.zeditor
-              config.flake.modules.homeManager.browser
+              config.flake.homeModules.default
+              config.flake.homeModules.desktop-default
+              config.flake.homeModules.zeditor
+              config.flake.homeModules.browser
 
               ({ pkgs, ... }: {
                 home.packages = with pkgs; [

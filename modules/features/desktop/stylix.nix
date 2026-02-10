@@ -1,4 +1,4 @@
-let opacity = 0.85; in {
+{
   flake = {
     nixosModules.stylix = { pkgs, ... }: {
       stylix = {
@@ -28,7 +28,7 @@ let opacity = 0.85; in {
         targets.plymouth.enable = false;
       };
     };
-    homeModules.stylix = { pkgs, ... }: {
+    homeModules.stylix = { osConfig, pkgs, ... }: {
       home.packages = with pkgs; [
         adwaita-qt
         adwaita-qt6
@@ -54,10 +54,10 @@ let opacity = 0.85; in {
         };
         polarity = "dark";
         opacity = {
-          applications = opacity;
-          desktop = opacity;
-          popups = opacity;
-          terminal = opacity;
+          applications = osConfig.my.desktop.opacity;
+          desktop = osConfig.my.desktop.opacity;
+          popups = osConfig.my.desktop.opacity;
+          terminal = osConfig.my.desktop.opacity;
         };
         targets.neovim.enable = false;
       };

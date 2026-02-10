@@ -1,4 +1,4 @@
-{ ... }: {
+{
   flake.nixosModules.options = { lib, ... }: {
     options.my = with lib; {
       user = {
@@ -20,10 +20,15 @@
       };
       desktop = {
         touch_options = mkEnableOption "touch-related options like extra buttons, slightly bigger UI, etc.";
-        corner_radius = lib.mkOption {
-          type = lib.types.float;
+        corner_radius = mkOption {
+          type = types.float;
           default = 8.0;
           description = "Corner radius of Desktop elements";
+        };
+        opacity = mkOption {
+          type = types.float;
+          default = 0.85;
+          description = "Opacity of certain UI elements (terminals, statusbar)";
         };
       };
     };

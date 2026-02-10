@@ -38,18 +38,18 @@
         system.stateVersion = "25.05";
       })
 
-      config.flake.modules.nixos.default
-      config.flake.modules.nixos.desktop-default
+      config.flake.nixosModules.default
+      config.flake.nixosModules.desktop-default
 
       {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = { inherit inputs; };
-          users.${config.my.user.name} = {
+          users.pgattic = {
             imports = [
-              config.flake.modules.homeManager.default
-              config.flake.modules.homeManager.desktop-default
+              config.flake.homeModules.default
+              config.flake.homeModules.desktop-default
 
               ({ pkgs, ... }: {
                 home.packages = with pkgs; [

@@ -1,4 +1,4 @@
-{ config, ... }: {
+{
   flake = {
     nixosModules.niri = { ... }: {
       programs.niri = {

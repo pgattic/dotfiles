@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{
   flake.nixosModules.user = { config, pkgs, ... }: {
     users.users.${config.my.user.name} = {
       isNormalUser = true;
@@ -9,9 +9,8 @@
   };
 
   flake.homeModules.user = { osConfig, ... }: {
-    home.username = lib.mkDefault osConfig.my.user.name;
-    home.homeDirectory = lib.mkDefault osConfig.my.user.home_dir;
-    home.stateVersion = lib.mkDefault "25.05";
+    home.username = osConfig.my.user.name;
+    home.homeDirectory = osConfig.my.user.home_dir;
   };
 }
 
