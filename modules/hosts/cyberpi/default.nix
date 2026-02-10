@@ -40,28 +40,21 @@
       config.flake.nixosModules.default
       config.flake.nixosModules.desktop-default
 
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = { inherit inputs; };
-          users.pgattic = {
-            imports = [
-              config.flake.homeModules.default
-              config.flake.homeModules.desktop-default
+      (inputs: {
+        home-manager.users.${inputs.config.my.user.name}.imports = [
+          config.flake.homeModules.default
+          config.flake.homeModules.desktop-default
 
-              ({ pkgs, ... }: {
-                home.packages = with pkgs; [
-                  luanti-client
-                  ungoogled-chromium
-                  rnote
-                ];
-                programs.niri.settings.input.mod-key = "Alt";
-              })
+          ({ pkgs, ... }: {
+            home.packages = with pkgs; [
+              luanti-client
+              ungoogled-chromium
+              rnote
             ];
-          };
-        };
-      }
+            programs.niri.settings.input.mod-key = "Alt";
+          })
+        ];
+      })
     ];
   };
 }

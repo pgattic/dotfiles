@@ -11,7 +11,7 @@
           enable = true;
           settings = {
             user.name = osConfig.my.user.name;
-            user.email = "pgattic@gmail.com";
+            user.email = osConfig.my.user.email;
             color.ui = "auto";
             init.defaultBranch = "master";
           };

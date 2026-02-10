@@ -13,6 +13,12 @@
         (import ../../overlays/wvkbd-deskintl.nix)
       ];
 
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        extraSpecialArgs = { inherit inputs; };
+      };
+
       time.timeZone = "America/Boise";
       i18n.defaultLocale = "en_US.UTF-8";
       i18n.extraLocaleSettings = {

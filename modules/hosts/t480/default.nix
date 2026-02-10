@@ -47,69 +47,62 @@
       config.flake.nixosModules.browser
       config.flake.nixosModules.obsidian
 
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = { inherit inputs; };
-          users.pgattic = {
-            imports = [
-              config.flake.homeModules.default
-              config.flake.homeModules.desktop-default
-              config.flake.homeModules.work
-              config.flake.homeModules.zeditor
-              config.flake.homeModules.browser
-              config.flake.homeModules.obsidian
+      (inputs: {
+        home-manager.users.${inputs.config.my.user.name}.imports = [
+          config.flake.homeModules.default
+          config.flake.homeModules.desktop-default
+          config.flake.homeModules.work
+          config.flake.homeModules.zeditor
+          config.flake.homeModules.browser
+          config.flake.homeModules.obsidian
 
-              ({ pkgs, ... }: {
-                home.packages = with pkgs; [
-                  mcpelauncher-ui-qt
-                  ungoogled-chromium
-                  qbittorrent
-                  bambu-studio
-                  # nicotine-plus # Soulseek client
-                  pinta
-                  antigravity-fhs
+          ({ pkgs, ... }: {
+            home.packages = with pkgs; [
+              mcpelauncher-ui-qt
+              ungoogled-chromium
+              qbittorrent
+              bambu-studio
+              # nicotine-plus # Soulseek client
+              pinta
+              antigravity-fhs
 
-                  luanti-client
-                  prismlauncher
-                  # antimicrox
-                  # calibre
+              luanti-client
+              prismlauncher
+              # antimicrox
+              # calibre
 
-                  vscode
-                  zoom-us
-                  ventoy
+              vscode
+              zoom-us
+              ventoy
 
-                  signal-desktop
-                  openscad
-                ];
-
-                xdg.mimeApps.defaultApplications = {
-                  "x-scheme-handler/sgnl" = "signal.desktop";
-                  "x-scheme-handler/signalcaptcha" = "signal.desktop";
-                };
-
-                programs = {
-                  vesktop.enable = true;
-                  helix.enable = true;
-                  niri.settings.outputs."eDP-1".scale = 1.0;
-                  noctalia-shell = {
-                    plugins.states.activate-linux = {
-                      sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-                      enabled = true;
-                    };
-                    pluginSettings.activate-linux = {
-                      customizeText = true;
-                      firstLine = "Activate Linux";
-                      secondLine = "Go to Settings to activate Linux.";
-                    };
-                  };
-                };
-              })
+              signal-desktop
+              openscad
             ];
-          };
-        };
-      }
+
+            xdg.mimeApps.defaultApplications = {
+              "x-scheme-handler/sgnl" = "signal.desktop";
+              "x-scheme-handler/signalcaptcha" = "signal.desktop";
+            };
+
+            programs = {
+              vesktop.enable = true;
+              helix.enable = true;
+              niri.settings.outputs."eDP-1".scale = 1.0;
+              noctalia-shell = {
+                plugins.states.activate-linux = {
+                  sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+                  enabled = true;
+                };
+                pluginSettings.activate-linux = {
+                  customizeText = true;
+                  firstLine = "Activate Linux";
+                  secondLine = "Go to Settings to activate Linux.";
+                };
+              };
+            };
+          })
+        ];
+      })
     ];
   };
 }

@@ -1,6 +1,6 @@
 { inputs, ... }: {
   flake = {
-    nixosModules.noctalia = { pkgs, ... }: {};
+    nixosModules.noctalia = { ... }: {};
     homeModules.noctalia = { lib, pkgs, osConfig, ... }: {
       imports = [
         inputs.noctalia.homeModules.default
@@ -133,6 +133,7 @@
             terminalCommand = "foot";
             enableSettingsSearch = false;
             viewMode = if osConfig.my.desktop.touch_options then "grid" else "list";
+            overviewLayer = true;
           };
           location = {
             name = "Provo, United States";

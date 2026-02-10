@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.dynamic-dns = { pkgs, ... }:
+  flake.nixosModules.dynamic-dns = { config, pkgs, ... }:
   let
     ddnsScript = pkgs.writeShellScript "namecheap-ddns" ''
       set -euo pipefail
@@ -19,7 +19,7 @@
     # sudo journalctl -u acme-corlessfamily.net.service
     security.acme = {
       acceptTerms = true;
-      defaults.email = "pgattic@gmail.com";
+      defaults.email = config.my.user.email;
       # validMinDays = 999; # Uncomment for one rebuild to force immediate renewal
     };
 

@@ -15,9 +15,6 @@
 
         networking.hostName = "surface";
 
-        services = {
-          mullvad-vpn.enable = true;
-        };
         system.stateVersion = "25.05";
       }
 
@@ -26,28 +23,21 @@
       config.flake.nixosModules.zeditor
       config.flake.nixosModules.browser
 
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = { inherit inputs; };
-          users.pgattic = {
-            imports = [
-              config.flake.homeModules.default
-              config.flake.homeModules.desktop-default
-              config.flake.homeModules.zeditor
-              config.flake.homeModules.browser
+      (inputs: {
+        home-manager.users.${inputs.config.my.user.name}.imports = [
+          config.flake.homeModules.default
+          config.flake.homeModules.desktop-default
+          config.flake.homeModules.zeditor
+          config.flake.homeModules.browser
 
-              ({ pkgs, ... }: {
-                home.packages = with pkgs; [
-                  luanti-client
-                  rnote
-                ];
-              })
+          ({ pkgs, ... }: {
+            home.packages = with pkgs; [
+              luanti-client
+              rnote
             ];
-          };
-        };
-      }
+          })
+        ];
+      })
     ];
   };
 }

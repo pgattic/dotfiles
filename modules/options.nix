@@ -12,6 +12,11 @@
           default = "Preston Corless";
           description = "Primary user's full name";
         };
+        email = mkOption {
+          type = types.str;
+          default = "pgattic@gmail.com";
+          description = "Primary user's email";
+        };
         home_dir = mkOption {
           type = types.str;
           default = "/home/pgattic";

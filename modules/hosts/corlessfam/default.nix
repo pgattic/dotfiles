@@ -189,18 +189,11 @@
       config.flake.nixosModules.luanti-server
       config.flake.nixosModules.jellyfin
       # config.flake.nixosModules.minecraft-bedrock-server
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = { inherit inputs; };
-          users.pgattic = {
-            imports = [
-              config.flake.homeModules.default
-            ];
-          };
-        };
-      }
+      (inputs: {
+        home-manager.users.${inputs.config.my.user.name}.imports = [
+          config.flake.homeModules.default
+        ];
+      })
     ];
   };
 }
