@@ -3,7 +3,10 @@
     system = "aarch64-linux";
     modules = [
       ./_hardware.nix
+      config.flake.nixosModules.options
       inputs.nixos-hardware.nixosModules.raspberry-pi-4
+
+      { my.desktop.touch_options = true; }
 
       ({ pkgs, ... }: {
         boot.loader.grub.enable = false;

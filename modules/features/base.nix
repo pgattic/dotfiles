@@ -1,6 +1,6 @@
-{ config, inputs, ... }: {
+{ inputs, ... }: {
   flake = {
-    nixosModules.base = { pkgs, ... }: {
+    nixosModules.base = { config, pkgs, ... }: {
       imports = [
         inputs.stylix.nixosModules.stylix
         inputs.home-manager.nixosModules.home-manager

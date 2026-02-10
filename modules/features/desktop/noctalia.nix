@@ -1,7 +1,7 @@
-{ config, inputs, ... }: let opacity = 0.85; in {
+{ inputs, ... }: let opacity = 0.85; in {
   flake = {
     nixosModules.noctalia = { pkgs, ... }: {};
-    homeModules.noctalia = { pkgs, ... }: {
+    homeModules.noctalia = { lib, pkgs, osConfig, ... }: {
       imports = [
         inputs.noctalia.homeModules.default
       ];
@@ -19,7 +19,7 @@
       };
 
       home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
-        defaultWallpaper = "${config.my.user.home_dir}/dotfiles/assets/wallpapers/wedding_temple.jpg";
+        defaultWallpaper = "${osConfig.my.user.home_dir}/dotfiles/assets/wallpapers/wedding_temple.jpg";
       };
       stylix.targets.noctalia-shell.enable = false; # I do more precise coloring
 
@@ -62,8 +62,8 @@
         settings = {
           general = {
             enableShadows = false;
-            radiusRatio = config.my.desktop.corner_radius / 20.0;
-            avatarImage = "${config.my.user.home_dir}/dotfiles/assets/profile.jpg";
+            radiusRatio = osConfig.my.desktop.corner_radius / 20.0;
+            avatarImage = "${osConfig.my.user.home_dir}/dotfiles/assets/profile.jpg";
           };
           ui = {
             panelBackgroundOpacity = opacity;
@@ -72,8 +72,7 @@
           notifications.backgroundOpacity = opacity;
           dock.enabled = false;
           bar = {
-            # density = if touch_options then "default" else "compact";
-            density = "compact";
+            density = if osConfig.my.desktop.touch_options then "default" else "compact";
             showCapsule = false;
             outerCorners = false;
             widgets = {
@@ -87,11 +86,11 @@
                 }
                 { id = "SystemMonitor"; }
               ]
-              # ++ lib.optionals touch_options [
-              #   { id = "Launcher"; }
-              #   { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
-              #   { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec wvkbd-deskintl -L 412"; }
-              # ]
+              ++ lib.optionals osConfig.my.desktop.touch_options [
+                { id = "Launcher"; }
+                { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
+                { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec wvkbd-deskintl -L 412"; }
+              ]
               ++ [
                 { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
               ];
@@ -131,7 +130,7 @@
             enableClipboardHistory = true; # Required for clipboard manager plugin to work
             terminalCommand = "foot";
             enableSettingsSearch = false;
-            # viewMode = if touch_options then "grid" else "list";
+            viewMode = if osConfig.my.desktop.touch_options then "grid" else "list";
           };
           location = {
             name = "Provo, United States";
@@ -139,7 +138,7 @@
             useFahrenheit = true;
           };
           wallpaper = {
-            directory = "${config.my.user.home_dir}/dotfiles/assets/wallpapers";
+            directory = "${osConfig.my.user.home_dir}/dotfiles/assets/wallpapers";
             transitionType = "stripes";
           };
         };

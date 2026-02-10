@@ -1,7 +1,7 @@
-{ config, ... }: {
+{ ... }: {
   flake = {
     nixosModules.git = { ... }: {};
-    homeModules.git = { pkgs, ... }: {
+    homeModules.git = { osConfig, pkgs, ... }: {
       home.packages = with pkgs; [
         lazygit
       ];
@@ -10,7 +10,7 @@
         git = {
           enable = true;
           settings = {
-            user.name = config.my.user.name;
+            user.name = osConfig.my.user.name;
             user.email = "pgattic@gmail.com";
             color.ui = "auto";
             init.defaultBranch = "master";

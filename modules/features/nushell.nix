@@ -1,4 +1,4 @@
-{ config, ... }: {
+{
   flake = {
     nixosModules.nushell = { pkgs, ... }: {
       environment.sessionVariables = {
@@ -6,7 +6,7 @@
       };
     };
 
-    homeModules.nushell = { pkgs, ... }: {
+    homeModules.nushell = { osConfig, pkgs, ... }: {
       programs.nushell = {
         enable = true;
         settings = {
@@ -31,12 +31,12 @@
         extraEnv = ''
           # Won't hurt if these paths don't exist on the current system
           $env.path ++= [
-            "${config.my.user.home_dir}/bin", # User binaries
+            "${osConfig.my.user.home_dir}/bin", # User binaries
           ]
         '';
         extraConfig = ''
           # Startup commands
-          open --raw "${config.my.user.home_dir}/dotfiles/config/nushell/torterra.txt" | print
+          open --raw "${osConfig.my.user.home_dir}/dotfiles/config/nushell/torterra.txt" | print
           $"Uptime: (ansi green_bold)((sys host).uptime)(ansi reset)" | print
           $"Memory used: (ansi green_bold)(sys mem | get used)(ansi reset)/(ansi green_bold)(sys mem | get total)(ansi reset)" | print
           "\"You are nothing but an unreliable wizard\" - Bruce Webster" | print

@@ -1,11 +1,11 @@
-{ config, ... }: {
+{
   flake = {
     nixosModules.browser = { ... }: {};
-    homeModules.browser = { pkgs, ... }: {
+    homeModules.browser = { osConfig, pkgs, ... }: {
       programs.librewolf = {
         enable = true;
 
-        profiles."${config.my.user.name}" = {
+        profiles."${osConfig.my.user.name}" = {
           extensions = {
             force = true;
             packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -150,7 +150,7 @@
       };
 
       stylix.targets.librewolf = {
-        profileNames = [ config.my.user.name ];
+        profileNames = [ osConfig.my.user.name ];
         colorTheme.enable = true;
       };
     };

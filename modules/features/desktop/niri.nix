@@ -10,7 +10,7 @@
         XDG_SESSION_DESKTOP = "niri";
       };
     };
-    homeModules.niri = { inputs, pkgs, ... }: {
+    homeModules.niri = { inputs, osConfig, pkgs, ... }: {
       imports = [
         inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
       ];
@@ -76,22 +76,21 @@
               position = "left";
               place-within-column = true;
               gaps-between-tabs = 8;
-              corner-radius = config.my.desktop.corner_radius;
+              corner-radius = osConfig.my.desktop.corner_radius;
             };
           };
           cursor = {
             hide-when-typing = true;
             hide-after-inactive-ms = 1000;
           };
-          # prefer-no-csd = !config.my.desktop.touch_options;
-          prefer-no-csd = true;
+          prefer-no-csd = !osConfig.my.desktop.touch_options;
           window-rules = [
             { # General rules
               geometry-corner-radius = {
-                bottom-left = config.my.desktop.corner_radius;
-                bottom-right = config.my.desktop.corner_radius;
-                top-left = config.my.desktop.corner_radius;
-                top-right = config.my.desktop.corner_radius;
+                bottom-left = osConfig.my.desktop.corner_radius;
+                bottom-right = osConfig.my.desktop.corner_radius;
+                top-left = osConfig.my.desktop.corner_radius;
+                top-right = osConfig.my.desktop.corner_radius;
               };
               clip-to-geometry = true;
             }

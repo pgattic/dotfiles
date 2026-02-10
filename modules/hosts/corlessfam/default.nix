@@ -3,6 +3,7 @@
     system = "x86_64-linux";
     modules = [
       ./_hardware.nix
+      config.flake.nixosModules.options
 
       ({ pkgs, ... }: {
         boot.loader.systemd-boot.enable = true;

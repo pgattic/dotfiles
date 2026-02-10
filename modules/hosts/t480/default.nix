@@ -1,11 +1,12 @@
-{ config, lib, inputs, ... }: {
+{ config, inputs, ... }: {
   flake.nixosConfigurations.t480 = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
       ./_hardware.nix
+      config.flake.nixosModules.options
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
 
-      ({ pkgs, ... }: {
+      ({ config, lib, ... }: {
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
 
@@ -28,10 +29,9 @@
         virtualisation.docker.enable = true;
 
         services = {
-          upower.enable = true;
           syncthing = {
             enable = true;
-            user = "pgattic";
+            user = config.my.user.name;
             openDefaultPorts = true;
             dataDir = config.my.user.home_dir;
           };
@@ -52,7 +52,7 @@
           useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = { inherit inputs; };
-          users.${config.my.user.name} = {
+          users.pgattic = {
             imports = [
               config.flake.homeModules.default
               config.flake.homeModules.desktop-default
