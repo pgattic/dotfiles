@@ -8,7 +8,10 @@
       ({ pkgs, ... }: {
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
+        boot.supportedFilesystems = [ "zfs" ];
+        services.zfs.autoScrub.enable = true;
 
+        networking.hostId = "6e005e0f"; # head -c 8 /etc/machine-id
         networking.hostName = "corlessfam";
 
         # Used for any directories or services that Transmission would want to download files into
@@ -88,13 +91,6 @@
             };
           };
 
-          immich = {
-            enable = true;
-            host = "127.0.0.1";
-            accelerationDevices = null;
-            port = 2283;
-          };
-
           microbin = {
             enable = true;
             settings = {
@@ -110,7 +106,7 @@
                 enableACME = true;
                 forceSSL = true;
                 serverAliases = [ "www.corlessfamily.net" ];
-                root = "/srv/home/public";
+                root = "/tank/media/home/public";
               };
               "finances.corlessfamily.net" = {
                 enableACME = true;
@@ -124,21 +120,6 @@
                   proxyWebsockets = true;
                   extraConfig = ''
                     proxy_redirect http:// $scheme://;
-                  '';
-                };
-              };
-              "photos.corlessfamily.net" = {
-                enableACME = true;
-                forceSSL = true;
-                locations."/" = {
-                  proxyPass = "http://127.0.0.1:2283";
-                  proxyWebsockets = true;
-                  recommendedProxySettings = true;
-                  extraConfig = ''
-                    client_max_body_size 50000M;
-                    proxy_read_timeout   600s;
-                    proxy_send_timeout   600s;
-                    send_timeout         600s;
                   '';
                 };
               };
@@ -188,6 +169,7 @@
       config.flake.nixosModules.nginx
       config.flake.nixosModules.luanti-server
       config.flake.nixosModules.jellyfin
+      config.flake.nixosModules.immich
       # config.flake.nixosModules.minecraft-bedrock-server
       (inputs: {
         home-manager.users.${inputs.config.my.user.name}.imports = [
