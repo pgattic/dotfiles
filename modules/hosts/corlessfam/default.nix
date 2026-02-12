@@ -59,6 +59,7 @@
       config.flake.nixosModules.immich
       config.flake.nixosModules.firefly
       config.flake.nixosModules.audiobookshelf
+      config.flake.nixosModules.copyparty
       config.flake.nixosModules.qbittorrent
       (inputs: {
         home-manager.users.${inputs.config.my.user.name}.imports = [
