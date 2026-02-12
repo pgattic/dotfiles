@@ -1,20 +1,20 @@
-{
-  flake.nixosModules.immich = { pkgs, ... }: {
+let port = 2283; in {
+  flake.nixosModules.immich = { config, ... }: {
     services.immich = {
       enable = true;
       host = "127.0.0.1";
       accelerationDevices = null;
-      port = 2283;
+      port = port;
       settings = {
         newVersionCheck.enabled = false;
       };
       # mediaLocation = "/tank/store/immich";
     };
-    services.nginx.virtualHosts."photos.corlessfamily.net" = {
+    services.nginx.virtualHosts."photos.${config.my.server.domain}" = {
       enableACME = true;
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:2283";
+        proxyPass = "http://127.0.0.1:${builtins.toString port}";
         proxyWebsockets = true;
         recommendedProxySettings = true;
         extraConfig = ''

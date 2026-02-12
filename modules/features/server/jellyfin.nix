@@ -1,16 +1,16 @@
-{
-  flake.nixosModules.jellyfin = { pkgs, ... }: {
+let port = 8096; in {
+  flake.nixosModules.jellyfin = { config, pkgs, ... }: {
     # Help transcode movies faster
     hardware.graphics.enable = true;
     hardware.graphics.extraPackages = with pkgs; [ intel-media-driver ]; # for newer Intel
 
     services.jellyfin.enable = true;
 
-    services.nginx.virtualHosts."cinema.corlessfamily.net" = {
+    services.nginx.virtualHosts."cinema.${config.my.server.domain}" = {
       enableACME = true;
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8096";
+        proxyPass = "http://127.0.0.1:${builtins.toString port}";
         proxyWebsockets = true;
         # Jellyfin-friendly extras (help streaming, seeks, large payloads)
         extraConfig = ''
