@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.firefly = { config, ... }: {
+  flake.nixosModules.firefly = { config, ... }: let cfg = config.my.server; in {
     services.postgresql = {
       enable = true;
       ensureDatabases = [ "firefly-iii" ];
@@ -11,7 +11,7 @@
     services.firefly-iii = {
       enable = true;
       enableNginx = true;
-      virtualHost = "finances.${config.my.server.domain}";
+      virtualHost = "finances.${cfg.domain}";
 
       settings = {
         APP_ENV = "production";
@@ -28,7 +28,7 @@
         # TRUSTED_PROXIES = "**";
       };
     };
-    services.nginx.virtualHosts."finances.${config.my.server.domain}" = {
+    services.nginx.virtualHosts."finances.${cfg.domain}" = {
       enableACME = true;
       forceSSL = true;
     };

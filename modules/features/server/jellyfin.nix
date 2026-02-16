@@ -1,12 +1,12 @@
 let port = 8096; in {
-  flake.nixosModules.jellyfin = { config, pkgs, ... }: {
+  flake.nixosModules.jellyfin = { config, pkgs, ... }: let cfg = config.my.server; in {
     # Help transcode movies faster
     hardware.graphics.enable = true;
     hardware.graphics.extraPackages = with pkgs; [ intel-media-driver ]; # for newer Intel
 
     services.jellyfin.enable = true;
 
-    services.nginx.virtualHosts."cinema.${config.my.server.domain}" = {
+    services.nginx.virtualHosts."cinema.${cfg.domain}" = {
       enableACME = true;
       forceSSL = true;
       locations."/" = {

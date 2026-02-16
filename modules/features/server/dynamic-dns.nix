@@ -1,11 +1,12 @@
 {
   flake.nixosModules.dynamic-dns = { config, pkgs, ... }:
   let
+    cfg = config.my.server;
     ddnsScript = pkgs.writeShellScript "namecheap-ddns" ''
       set -euo pipefail
 
       HOSTS=("@" "www" "cinema" "files" "finances" "keep" "library" "photos")
-      DOMAIN="${config.my.server.domain}"
+      DOMAIN="${cfg.domain}"
 
       : "''${NAMECHEAP_DDNS_PASSWORD:?missing NAMECHEAP_DDNS_PASSWORD}"
 
@@ -29,7 +30,7 @@
         Type = "oneshot";
         # put this file outside the store, e.g. /etc/secrets/namecheap-ddns.env (mode 0400)
         # Contents of file: `NAMECHEAP_DDNS_PASSWORD='XXXX'`
-        EnvironmentFile = "/tank/secrets/namecheap-ddns.env";
+        EnvironmentFile = "${cfg.paths.secrets}/namecheap-ddns.env";
         ExecStart = ddnsScript;
         User = "root";
         # basic hardening for a network-only oneshot

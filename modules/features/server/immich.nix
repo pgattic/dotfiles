@@ -1,5 +1,5 @@
 let port = 2283; in {
-  flake.nixosModules.immich = { config, ... }: {
+  flake.nixosModules.immich = { config, ... }: let cfg = config.my.server; in {
     services.immich = {
       enable = true;
       host = "127.0.0.1";
@@ -10,7 +10,7 @@ let port = 2283; in {
       };
       # mediaLocation = "/tank/store/immich";
     };
-    services.nginx.virtualHosts."photos.${config.my.server.domain}" = {
+    services.nginx.virtualHosts."photos.${cfg.domain}" = {
       enableACME = true;
       forceSSL = true;
       locations."/" = {
