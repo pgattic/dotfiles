@@ -1,6 +1,9 @@
-{
+inputs: {
   flake = {
-    nixosModules.niri = { ... }: {
+    nixosModules.niri = { config, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.niri
+      ];
       programs.niri = {
         enable = true;
         useNautilus = false; # Silly default options
@@ -10,6 +13,7 @@
         XDG_SESSION_DESKTOP = "niri";
       };
     };
+
     homeModules.niri = { inputs, osConfig, pkgs, ... }: {
       imports = [
         inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake

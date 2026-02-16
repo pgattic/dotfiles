@@ -20,7 +20,6 @@
         GTK_USE_PORTAL = "1";
       };
     };
-    homeModules.portals = { ... }: {};
   };
 }
 

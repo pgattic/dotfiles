@@ -9,15 +9,6 @@
         config.flake.nixosModules.stylix
       ];
     };
-    homeModules.desktop-default = {
-      imports = [
-        config.flake.homeModules.desktop-base
-        config.flake.homeModules.niri
-        config.flake.homeModules.noctalia
-        config.flake.homeModules.portals
-        config.flake.homeModules.stylix
-      ];
-    };
   };
 }
 

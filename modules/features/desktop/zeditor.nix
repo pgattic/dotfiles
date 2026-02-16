@@ -1,6 +1,11 @@
-{
+inputs: {
   flake = {
-    nixosModules.zeditor = { ... }: {};
+    nixosModules.zeditor = { config, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.zeditor
+      ];
+    };
+
     homeModules.zeditor = { ... }: {
       programs.zed-editor = {
         enable = true;

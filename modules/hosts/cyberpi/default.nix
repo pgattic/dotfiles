@@ -3,12 +3,13 @@
     system = "aarch64-linux";
     modules = [
       ./_hardware.nix
-      config.flake.nixosModules.options
       inputs.nixos-hardware.nixosModules.raspberry-pi-4
 
-      { my.desktop.touch_options = true; }
+      config.flake.nixosModules.options
+      config.flake.nixosModules.default
+      config.flake.nixosModules.desktop-default
 
-      ({ pkgs, ... }: {
+      ({ config, pkgs, ... }: {
         boot.loader.grub.enable = false;
         boot.loader.generic-extlinux-compatible.enable = true;
 
@@ -35,16 +36,10 @@
           mullvad-vpn.enable = true;
         };
         system.stateVersion = "25.05";
-      })
 
-      config.flake.nixosModules.default
-      config.flake.nixosModules.desktop-default
+        my.desktop.touch_options = true;
 
-      (inputs: {
-        home-manager.users.${inputs.config.my.user.name}.imports = [
-          config.flake.homeModules.default
-          config.flake.homeModules.desktop-default
-
+        home-manager.users.${config.my.user.name}.imports = [
           ({ pkgs, ... }: {
             home.packages = with pkgs; [
               luanti-client

@@ -1,6 +1,9 @@
-{
+inputs: {
   flake = {
-    nixosModules.stylix = { pkgs, ... }: {
+    nixosModules.stylix = { config, pkgs, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.stylix
+      ];
       stylix = {
         enable = true;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/github-dark.yaml";

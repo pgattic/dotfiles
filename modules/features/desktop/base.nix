@@ -1,6 +1,9 @@
-{
+inputs: {
   flake = {
-    nixosModules.desktop-base = { pkgs, ... }: {
+    nixosModules.desktop-base = { config, pkgs, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.desktop-base
+      ];
       boot.plymouth.enable = true;
       services.xserver.xkb = {
         layout = "us";
@@ -28,6 +31,7 @@
         gvfs.enable = true; # Automatic drive mounting, network shares, recycle bin
       };
     };
+
     homeModules.desktop-base = { pkgs, ... }: {
       home.packages = with pkgs; [
         wl-clipboard

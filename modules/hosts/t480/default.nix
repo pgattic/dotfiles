@@ -3,8 +3,15 @@
     system = "x86_64-linux";
     modules = [
       ./_hardware.nix
-      config.flake.nixosModules.options
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+
+      config.flake.nixosModules.options
+      config.flake.nixosModules.default
+      config.flake.nixosModules.desktop-default
+      config.flake.nixosModules.work
+      config.flake.nixosModules.zeditor
+      config.flake.nixosModules.browser
+      config.flake.nixosModules.obsidian
 
       ({ config, lib, ... }: {
         boot.loader.systemd-boot.enable = true;
@@ -21,6 +28,7 @@
 
         programs = {
           kdeconnect.enable = true;
+          localsend.enable = true;
 
           appimage.enable = true;
           appimage.binfmt = true;
@@ -38,24 +46,8 @@
           mullvad-vpn.enable = true;
         };
         system.stateVersion = "25.05";
-      })
 
-      config.flake.nixosModules.default
-      config.flake.nixosModules.desktop-default
-      config.flake.nixosModules.work
-      config.flake.nixosModules.zeditor
-      config.flake.nixosModules.browser
-      config.flake.nixosModules.obsidian
-
-      (inputs: {
-        home-manager.users.${inputs.config.my.user.name}.imports = [
-          config.flake.homeModules.default
-          config.flake.homeModules.desktop-default
-          config.flake.homeModules.work
-          config.flake.homeModules.zeditor
-          config.flake.homeModules.browser
-          config.flake.homeModules.obsidian
-
+        home-manager.users.${config.my.user.name}.imports = [
           ({ pkgs, ... }: {
             home.packages = with pkgs; [
               mcpelauncher-ui-qt
@@ -86,6 +78,7 @@
 
             programs = {
               vesktop.enable = true;
+              element-desktop.enable = true;
               helix.enable = true;
               niri.settings.outputs."eDP-1".scale = 1.0;
               noctalia-shell = {

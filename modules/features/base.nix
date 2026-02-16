@@ -1,12 +1,12 @@
-{ inputs, ... }: {
+inputs: {
   flake = {
     nixosModules.base = { config, pkgs, ... }: {
       imports = [
-        inputs.stylix.nixosModules.stylix
-        inputs.home-manager.nixosModules.home-manager
+        inputs.inputs.stylix.nixosModules.stylix
+        inputs.inputs.home-manager.nixosModules.home-manager
       ];
       nixpkgs.overlays = [
-        inputs.nur.overlays.default # Nix User Repository
+        inputs.inputs.nur.overlays.default # Nix User Repository
         (import ../../overlays/bambu-studio.nix)
         (import ../../overlays/luanti-client.nix)
         (import ../../overlays/mineclonia-game.nix)
@@ -16,7 +16,10 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        extraSpecialArgs = { inherit inputs; };
+        extraSpecialArgs = { inputs = inputs.inputs; };
+        users.${config.my.user.name}.imports = [
+          inputs.config.flake.homeModules.base
+        ];
       };
 
       time.timeZone = "America/Boise";
@@ -46,7 +49,10 @@
 
       programs.nano.enable = false;
 
-      services.fwupd.enable = true;
+      services = {
+        fwupd.enable = true;
+        openssh.package = pkgs.openssh_hpn;
+      };
 
       environment.sessionVariables = {
         NH_OS_FLAKE = "${config.my.user.home_dir}/dotfiles";

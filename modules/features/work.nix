@@ -1,6 +1,9 @@
-{ # Stuff I need installed on my system for work
+inputs: { # Stuff I need installed on my system for work
   flake = {
     nixosModules.work = { config, lib, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.work
+      ];
       # Some stuff for doing terminals through USB
       boot.kernelModules = [ "uinput" ];
       users.users.${config.my.user.name}.extraGroups = lib.mkAfter [

@@ -1,6 +1,9 @@
-{
+inputs: {
   flake = {
-    nixosModules.networking = { ... }: {
+    nixosModules.networking = { config, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.networking
+      ];
       hardware.bluetooth = {
         enable = true;
         powerOnBoot = false;

@@ -1,9 +1,14 @@
-{ inputs, ... }: {
+inputs: {
   flake = {
-    nixosModules.noctalia = { ... }: {};
+    nixosModules.noctalia = { config, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.noctalia
+      ];
+    };
+
     homeModules.noctalia = { lib, pkgs, osConfig, ... }: {
       imports = [
-        inputs.noctalia.homeModules.default
+        inputs.inputs.noctalia.homeModules.default
       ];
 
       home.packages = with pkgs; [

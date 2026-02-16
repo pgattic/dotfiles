@@ -5,8 +5,18 @@
       ./_hardware.nix
       config.flake.nixosModules.options
       config.flake.nixosModules.server-options
+      config.flake.nixosModules.default
+      config.flake.nixosModules.dynamic-dns
+      config.flake.nixosModules.nginx
+      config.flake.nixosModules.luanti-server
+      config.flake.nixosModules.jellyfin
+      config.flake.nixosModules.immich
+      config.flake.nixosModules.firefly
+      config.flake.nixosModules.audiobookshelf
+      config.flake.nixosModules.copyparty
+      # config.flake.nixosModules.qbittorrent
 
-      ({ pkgs, ... }: {
+      {
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
         boot.supportedFilesystems = [ "zfs" ];
@@ -16,10 +26,7 @@
         networking.hostName = "corlessfam";
 
         services = {
-          openssh = {
-            enable = true;
-            package = pkgs.openssh_hpn;
-          };
+          openssh.enable = true;
 
           karakeep = {
             enable = true;
@@ -50,22 +57,7 @@
         };
 
         system.stateVersion = "25.05"; # Version originally installed
-      })
-      config.flake.nixosModules.default
-      config.flake.nixosModules.dynamic-dns
-      config.flake.nixosModules.nginx
-      config.flake.nixosModules.luanti-server
-      config.flake.nixosModules.jellyfin
-      config.flake.nixosModules.immich
-      config.flake.nixosModules.firefly
-      config.flake.nixosModules.audiobookshelf
-      config.flake.nixosModules.copyparty
-      config.flake.nixosModules.qbittorrent
-      (inputs: {
-        home-manager.users.${inputs.config.my.user.name}.imports = [
-          config.flake.homeModules.default
-        ];
-      })
+      }
     ];
   };
 }

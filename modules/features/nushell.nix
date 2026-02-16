@@ -1,6 +1,9 @@
-{
+inputs: {
   flake = {
-    nixosModules.nushell = { pkgs, ... }: {
+    nixosModules.nushell = { config, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.nushell
+      ];
       environment.sessionVariables = {
         SHELL = "nu";
       };

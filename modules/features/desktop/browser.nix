@@ -1,6 +1,11 @@
-{
+inputs: {
   flake = {
-    nixosModules.browser = { ... }: {};
+    nixosModules.browser = { config, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.browser
+      ];
+    };
+
     homeModules.browser = { osConfig, pkgs, ... }: {
       programs.librewolf = {
         enable = true;
@@ -152,6 +157,14 @@
       stylix.targets.librewolf = {
         profileNames = [ osConfig.my.user.name ];
         colorTheme.enable = true;
+      };
+
+      xdg.mimeApps = {
+        defaultApplications = {
+          "text/html" = "librewolf.desktop";
+          "x-scheme-handler/http" = "librewolf.desktop";
+          "x-scheme-handler/https" = "librewolf.desktop";
+        };
       };
     };
   };

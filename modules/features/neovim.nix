@@ -1,6 +1,9 @@
-{
+inputs: {
   flake = {
-    nixosModules.neovim = { ... }: {
+    nixosModules.neovim = { config, ... }: {
+      home-manager.users.${config.my.user.name}.imports = [
+        inputs.config.flake.homeModules.neovim
+      ];
       environment.sessionVariables = {
         EDITOR = "nvim";
       };
