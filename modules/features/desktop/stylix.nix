@@ -10,7 +10,7 @@ inputs: {
         targets.plymouth.enable = false;
       };
     };
-    homeModules.stylix = { osConfig, pkgs, ... }: {
+    homeModules.stylix = { config, pkgs, ... }: {
       home.packages = with pkgs; [
         adwaita-qt
         adwaita-qt6
@@ -37,7 +37,7 @@ inputs: {
         polarity = "dark";
         opacity = let
           # Fix for Niri's window handling
-          opacity = if osConfig.my.desktop.touch_options then 1.0 else osConfig.my.desktop.opacity;
+          opacity = if config.my.desktop.touch_options then 1.0 else config.my.desktop.opacity;
         in {
           applications = opacity;
           desktop = opacity;

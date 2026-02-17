@@ -12,9 +12,9 @@ inputs: {
       };
     };
 
-    homeModules.user = { osConfig, ... }: {
-      home.username = osConfig.my.user.name;
-      home.homeDirectory = osConfig.my.user.home_dir;
+    homeModules.user = { config, ... }: {
+      home.username = config.my.user.name;
+      home.homeDirectory = config.my.user.home_dir;
     };
   };
 }

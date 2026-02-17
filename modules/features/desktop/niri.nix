@@ -14,7 +14,7 @@ inputs: {
       };
     };
 
-    homeModules.niri = { inputs, osConfig, pkgs, ... }: {
+    homeModules.niri = { inputs, config, pkgs, ... }: {
       imports = [
         inputs.niri.homeModules.config # https://github.com/sodiboo/niri-flake
       ];
@@ -33,6 +33,14 @@ inputs: {
           environment = {
             ELECTRON_OZONE_PLATFORM_HINT = "auto"; # Prefer Wayland for electron apps (doesn't always work)
             DISPLAY = ":0"; # required for X11 apps to connect to xwayland-satellite properly
+
+            # Temporary fix for home-manager-only Nix installations
+            SHELL = "nu";
+            EDITOR = "nvim";
+            XDG_CURRENT_DESKTOP = "niri";
+            XDG_SESSION_DESKTOP = "niri";
+            NH_OS_FLAKE = "${config.my.user.home_dir}/dotfiles";
+            NIXOS_OZONE_WL = "1";
           };
           hotkey-overlay.skip-at-startup = true;
           hotkey-overlay.hide-not-bound = true;
@@ -80,21 +88,21 @@ inputs: {
               position = "left";
               place-within-column = true;
               gaps-between-tabs = 8;
-              corner-radius = osConfig.my.desktop.corner_radius;
+              corner-radius = config.my.desktop.corner_radius;
             };
           };
           cursor = {
             hide-when-typing = true;
             hide-after-inactive-ms = 1000;
           };
-          prefer-no-csd = !osConfig.my.desktop.touch_options;
+          prefer-no-csd = !config.my.desktop.touch_options;
           window-rules = [
             { # General rules
               geometry-corner-radius = {
-                bottom-left = osConfig.my.desktop.corner_radius;
-                bottom-right = osConfig.my.desktop.corner_radius;
-                top-left = osConfig.my.desktop.corner_radius;
-                top-right = osConfig.my.desktop.corner_radius;
+                bottom-left = config.my.desktop.corner_radius;
+                bottom-right = config.my.desktop.corner_radius;
+                top-left = config.my.desktop.corner_radius;
+                top-right = config.my.desktop.corner_radius;
               };
               clip-to-geometry = true;
             }

@@ -6,7 +6,7 @@ inputs: {
       ];
     };
 
-    homeModules.git = { osConfig, pkgs, ... }: {
+    homeModules.git = { config, pkgs, ... }: {
       home.packages = with pkgs; [
         lazygit
       ];
@@ -15,8 +15,8 @@ inputs: {
         git = {
           enable = true;
           settings = {
-            user.name = osConfig.my.user.name;
-            user.email = osConfig.my.user.email;
+            user.name = config.my.user.name;
+            user.email = config.my.user.email;
             color.ui = "auto";
             init.defaultBranch = "master";
           };

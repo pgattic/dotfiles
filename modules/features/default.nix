@@ -16,7 +16,6 @@
         config.flake.homeModules.base
         config.flake.homeModules.git
         config.flake.homeModules.neovim
-        config.flake.homeModules.networking
         config.flake.homeModules.nushell
         config.flake.homeModules.user
       ];

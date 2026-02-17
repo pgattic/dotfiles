@@ -6,11 +6,11 @@ inputs: {
       ];
     };
 
-    homeModules.browser = { osConfig, pkgs, ... }: {
+    homeModules.browser = { config, pkgs, ... }: {
       programs.librewolf = {
         enable = true;
 
-        profiles."${osConfig.my.user.name}" = {
+        profiles."${config.my.user.name}" = {
           extensions = {
             force = true;
             packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -155,7 +155,7 @@ inputs: {
       };
 
       stylix.targets.librewolf = {
-        profileNames = [ osConfig.my.user.name ];
+        profileNames = [ config.my.user.name ];
         colorTheme.enable = true;
       };
 

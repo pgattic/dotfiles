@@ -6,14 +6,14 @@ inputs: {
       ];
     };
 
-    homeModules.noctalia = { lib, pkgs, osConfig, ... }: {
+    homeModules.noctalia = { lib, pkgs, config, ... }: {
       imports = [
         inputs.inputs.noctalia.homeModules.default
       ];
 
       home.packages = with pkgs; [
         cliphist # For the "clipper" plugin
-      ] ++ lib.optionals osConfig.my.desktop.touch_options [
+      ] ++ lib.optionals config.my.desktop.touch_options [
         wvkbd-deskintl
       ];
 
@@ -26,7 +26,7 @@ inputs: {
       };
 
       home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
-        defaultWallpaper = "${osConfig.my.user.home_dir}/dotfiles/assets/wallpapers/wedding_temple.jpg";
+        defaultWallpaper = "${config.my.user.home_dir}/dotfiles/assets/wallpapers/wedding_temple.jpg";
       };
       stylix.targets.noctalia-shell.enable = false; # I do more precise coloring
 
@@ -69,17 +69,17 @@ inputs: {
         settings = {
           general = {
             enableShadows = false;
-            radiusRatio = osConfig.my.desktop.corner_radius / 20.0;
-            avatarImage = "${osConfig.my.user.home_dir}/dotfiles/assets/profile.jpg";
+            radiusRatio = config.my.desktop.corner_radius / 20.0;
+            avatarImage = "${config.my.user.home_dir}/dotfiles/assets/profile.jpg";
           };
           ui = {
-            panelBackgroundOpacity = osConfig.my.desktop.opacity;
+            panelBackgroundOpacity = config.my.desktop.opacity;
             settingsPanelMode = "window";
           };
-          notifications.backgroundOpacity = osConfig.my.desktop.opacity;
+          notifications.backgroundOpacity = config.my.desktop.opacity;
           dock.enabled = false;
           bar = {
-            density = if osConfig.my.desktop.touch_options then "default" else "compact";
+            density = if config.my.desktop.touch_options then "default" else "compact";
             showCapsule = false;
             outerCorners = false;
             widgets = {
@@ -93,7 +93,7 @@ inputs: {
                 }
                 { id = "SystemMonitor"; }
               ]
-              ++ lib.optionals osConfig.my.desktop.touch_options [
+              ++ lib.optionals config.my.desktop.touch_options [
                 { id = "Launcher"; }
                 { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
                 { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec ${pkgs.wvkbd-deskintl}/bin/wvkbd-deskintl -L 412"; }
@@ -137,7 +137,7 @@ inputs: {
             enableClipboardHistory = true; # Required for clipboard manager plugin to work
             terminalCommand = "foot";
             enableSettingsSearch = false;
-            viewMode = if osConfig.my.desktop.touch_options then "grid" else "list";
+            viewMode = if config.my.desktop.touch_options then "grid" else "list";
             overviewLayer = true;
           };
           location = {
@@ -146,7 +146,7 @@ inputs: {
             useFahrenheit = true;
           };
           wallpaper = {
-            directory = "${osConfig.my.user.home_dir}/dotfiles/assets/wallpapers";
+            directory = "${config.my.user.home_dir}/dotfiles/assets/wallpapers";
             transitionType = "stripes";
           };
         };
