@@ -73,6 +73,8 @@ let
           "privacy.resistFingerprinting" = false; # Unfortunately required for muh dark mode to work
           "privacy.clearOnShutdown.history" = false;
           "privacy.clearOnShutdown.cookies" = false;
+          "privacy.clearOnShutdown.cache" = false;
+          "privacy.clearOnShutdown.sessions" = false;
           "network.cookie.lifetimePolicy" = 0;
           "webgl.disabled" = false;
 
