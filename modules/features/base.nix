@@ -1,12 +1,19 @@
 { inputs, ... }: let
-  hmModule = { pkgs, ... }: {
-    nixpkgs.overlays = [
+  nixpkgsConf = {
+    overlays = [
       inputs.nur.overlays.default # Nix User Repository
       (import ../../overlays/bambu-studio.nix)
       (import ../../overlays/luanti-client.nix)
       (import ../../overlays/mineclonia-game.nix)
       (import ../../overlays/wvkbd-deskintl.nix)
     ];
+    config.allowUnfree = true;
+    config.permittedInsecurePackages = [
+      "ventoy-1.1.10"
+    ];
+  };
+  hmModule = { pkgs, ... }: {
+    nixpkgs = nixpkgsConf;
     home.packages = with pkgs; [
       (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
       openssh_hpn # SSH but faster
@@ -21,7 +28,7 @@
       jq
       tinyxxd
 
-      nixd # Nix language server
+      nil # Nix language server
       nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
     ];
 
@@ -78,16 +85,9 @@ in {
         inputs.stylix.nixosModules.stylix
         inputs.home-manager.nixosModules.home-manager
       ];
-      nixpkgs.overlays = [
-        inputs.nur.overlays.default # Nix User Repository
-        (import ../../overlays/bambu-studio.nix)
-        (import ../../overlays/luanti-client.nix)
-        (import ../../overlays/mineclonia-game.nix)
-        (import ../../overlays/wvkbd-deskintl.nix)
-      ];
+      nixpkgs = nixpkgsConf;
 
       home-manager = {
-        useGlobalPkgs = true;
         useUserPackages = true;
         extraSpecialArgs = { inherit inputs; };
         users.${config.my.user.name}.imports = [ hmModule ];
@@ -111,12 +111,6 @@ in {
         experimental-features = [ "nix-command" "flakes" ];
         trusted-users = ["root" config.my.user.name];
       };
-
-      nixpkgs.config.allowUnfree = true;
-
-      nixpkgs.config.permittedInsecurePackages = [
-        "ventoy-1.1.10"
-      ];
 
       programs.nano.enable = false;
 

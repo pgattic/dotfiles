@@ -53,6 +53,7 @@ in {
       home-manager.users.${config.my.user.name}.imports = [ hmModule ];
       stylix = {
         enable = true;
+        homeManagerIntegration.autoImport = false;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/github-dark.yaml";
         targets.plymouth.enable = false;
       };

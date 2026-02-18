@@ -1,7 +1,7 @@
 { inputs, ... }: let
   hmModule = { lib, pkgs, config, osConfig ? null, ... }: let
     hmOnly = (osConfig == null);
-    nixgl = inputs.nixgl.packages.${pkgs.system};
+    nixgl = inputs.nixgl.packages.${pkgs.stdenv.hostPlatform.system};
     noctaliaCmd = if hmOnly then
       [ "${nixgl.nixGLIntel}/bin/nixGLIntel" "noctalia-shell" ] else
       [ "noctalia-shell" ];

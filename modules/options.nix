@@ -71,17 +71,10 @@
     };
   };
   hmModule = { lib, osConfig ? null, ... }: let
-    # If osConfig is null (which happens in some eval stages), 
-    # or if 'my' doesn't exist, we fall back to an empty set.
     osMy = if (osConfig != null && lib.hasAttr "my" osConfig) then osConfig.my else {};
   in {
     options.my = myOptions;
-    config = {
-      # We use mkOptionDefault. This has a lower priority than a normal 
-      # assignment, so if you set 'my.user.name' in your HM config, 
-      # it will override the value coming from NixOS.
-      my = lib.mkOptionDefault osMy;
-    };
+    config.my = lib.mkDefault osMy;
   };
 in {
   flake = {

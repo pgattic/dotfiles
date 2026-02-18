@@ -69,6 +69,7 @@
 
               signal-desktop
               openscad
+              zotero
             ];
 
             xdg.mimeApps.defaultApplications = {
