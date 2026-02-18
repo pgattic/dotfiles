@@ -1,13 +1,16 @@
-{ inputs, ... }: {
-  flake.homeConfigurations.wasmcruncher = inputs.home-manager.lib.homeManagerConfiguration {
+{ config, inputs, ... }: {
+  flake.homeConfigurations."pgattic@wasmcruncher" = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = import inputs.nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
 
     modules = [
-      inputs.self.homeModules.default
-      inputs.self.homeModules.desktop-default
+      config.flake.homeModules.options
+      config.flake.homeModules.default
+      config.flake.homeModules.desktop-default
+      config.flake.homeModules.browser
 
       {
         targets.genericLinux.enable = true;
+        # my.desktop.corner_radius = 40.0; # Example of modifying a config value
       }
     ];
   };

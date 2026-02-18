@@ -1,9 +1,12 @@
-inputs: {
+let
+  hmModule = { config, ... }: {
+    home.username = config.my.user.name;
+    home.homeDirectory = config.my.user.home_dir;
+  };
+in {
   flake = {
     nixosModules.user = { config, pkgs, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [
-        inputs.config.flake.homeModules.user
-      ];
+      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
       users.users.${config.my.user.name} = {
         isNormalUser = true;
         extraGroups = [ "networkmanager" "wheel" ];
@@ -12,10 +15,7 @@ inputs: {
       };
     };
 
-    homeModules.user = { config, ... }: {
-      home.username = config.my.user.name;
-      home.homeDirectory = config.my.user.home_dir;
-    };
+    homeModules.user = hmModule;
   };
 }
 

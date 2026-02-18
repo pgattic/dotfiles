@@ -4,7 +4,6 @@
     modules = [
       ./_hardware.nix
       config.flake.nixosModules.options
-      config.flake.nixosModules.server-options
       config.flake.nixosModules.default
       config.flake.nixosModules.dynamic-dns
       config.flake.nixosModules.nginx

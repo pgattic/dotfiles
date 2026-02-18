@@ -1,12 +1,85 @@
-inputs: {
+{ inputs, ... }: let
+  hmModule = { pkgs, ... }: {
+    nixpkgs.overlays = [
+      inputs.nur.overlays.default # Nix User Repository
+      (import ../../overlays/bambu-studio.nix)
+      (import ../../overlays/luanti-client.nix)
+      (import ../../overlays/mineclonia-game.nix)
+      (import ../../overlays/wvkbd-deskintl.nix)
+    ];
+    home.packages = with pkgs; [
+      (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
+      openssh_hpn # SSH but faster
+      usbutils
+      ripgrep
+      bat
+      gdu
+      less
+      file
+      tree
+      ouch # Archive manager
+      jq
+      tinyxxd
+
+      nixd # Nix language server
+      nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
+    ];
+
+    programs = {
+      home-manager.enable = true;
+      btop = {
+        enable = true;
+        settings = {
+          theme_background = false;
+          vim_keys = true;
+          proc_gradient = false;
+          proc_filter_kernel = true;
+        };
+      };
+      nh.enable = true;
+      zellij = {
+        enable = true;
+        settings = {
+          show_startup_tips = false;
+        };
+      };
+      fastfetch = {
+        enable = true;
+        settings = {
+          "logo" = "NixOS";
+          "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json";
+          "modules" = [
+            "title"
+            "separator"
+            "os" "host" "kernel"
+            "uptime"
+            "packages"
+            "shell"
+            "display"
+            "de" "wm"
+            "terminal" "terminalfont"
+            "cpu" "gpu" "memory" "swap" "disk"
+            "localip"
+            "battery"
+            "poweradapter"
+            "break"
+            "colors"
+          ];
+        };
+      };
+    };
+    home.stateVersion = "25.05";
+  };
+
+in {
   flake = {
     nixosModules.base = { config, pkgs, ... }: {
       imports = [
-        inputs.inputs.stylix.nixosModules.stylix
-        inputs.inputs.home-manager.nixosModules.home-manager
+        inputs.stylix.nixosModules.stylix
+        inputs.home-manager.nixosModules.home-manager
       ];
       nixpkgs.overlays = [
-        inputs.inputs.nur.overlays.default # Nix User Repository
+        inputs.nur.overlays.default # Nix User Repository
         (import ../../overlays/bambu-studio.nix)
         (import ../../overlays/luanti-client.nix)
         (import ../../overlays/mineclonia-game.nix)
@@ -16,10 +89,8 @@ inputs: {
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        extraSpecialArgs = { inputs = inputs.inputs; };
-        users.${config.my.user.name}.imports = [
-          inputs.config.flake.homeModules.base
-        ];
+        extraSpecialArgs = { inherit inputs; };
+        users.${config.my.user.name}.imports = [ hmModule ];
       };
 
       time.timeZone = "America/Boise";
@@ -62,71 +133,7 @@ inputs: {
       systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
     };
 
-    homeModules.base = { pkgs, ... }: {
-      home.packages = with pkgs; [
-        (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
-        openssh_hpn # SSH but faster
-        usbutils
-        ripgrep
-        bat
-        gdu
-        less
-        file
-        tree
-        ouch # Archive manager
-        jq
-        tinyxxd
-
-        nil # Nix language server
-        nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
-      ];
-
-
-      programs = {
-        home-manager.enable = true;
-        btop = {
-          enable = true;
-          settings = {
-            theme_background = false;
-            vim_keys = true;
-            proc_gradient = false;
-            proc_filter_kernel = true;
-          };
-        };
-        nh.enable = true;
-        zellij = {
-          enable = true;
-          settings = {
-            show_startup_tips = false;
-          };
-        };
-        fastfetch = {
-          enable = true;
-          settings = {
-            "logo" = "NixOS";
-            "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json";
-            "modules" = [
-              "title"
-              "separator"
-              "os" "host" "kernel"
-              "uptime"
-              "packages"
-              "shell"
-              "display"
-              "de" "wm"
-              "terminal" "terminalfont"
-              "cpu" "gpu" "memory" "swap" "disk"
-              "localip"
-              "battery"
-              "poweradapter"
-              "break"
-              "colors"
-            ];
-          };
-        };
-      };
-      home.stateVersion = "25.05";
-    };
+    homeModules.base = hmModule;
   };
 }
 

@@ -1,9 +1,13 @@
-inputs: { # Stuff I need installed on my system for work
+{ inputs, ... }: let
+  hmModule = { pkgs, ... }: {
+    home.packages = with pkgs; [
+      slack
+    ];
+  };
+in { # Stuff I need installed on my system for work
   flake = {
     nixosModules.work = { config, lib, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [
-        inputs.config.flake.homeModules.work
-      ];
+      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
       # Some stuff for doing terminals through USB
       boot.kernelModules = [ "uinput" ];
       users.users.${config.my.user.name}.extraGroups = lib.mkAfter [
@@ -12,11 +16,7 @@ inputs: { # Stuff I need installed on my system for work
       hardware.uinput.enable = true;
     };
 
-    homeModules.work = { pkgs, ... }: {
-      home.packages = with pkgs; [
-        slack
-      ];
-    };
+    homeModules.work = hmModule;
   };
 }
 
