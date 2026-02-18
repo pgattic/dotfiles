@@ -151,8 +151,19 @@ local lsp_servers = {
   rust_analyzer = {},
   clangd = {},
   openscad_lsp = {},
-  nil_ls = {}, -- Nix language server
+  nil_ls = { -- Nix language server
+    settings = {
+      ['nil'] = {
+        nix = {
+          flake = {
+            autoArchive = false, -- Remove annoying message
+          },
+        },
+      },
+    },
+  },
   hls = {}, -- Haskell Language Server
+  racket_langserver = {}, -- install with `raco pkg install racket-langserver`
 }
 for server, config in pairs(lsp_servers) do
   vim.lsp.config(server, config)
@@ -162,8 +173,8 @@ vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {}) -- TODO: remove in favo
 vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, {}) -- TODO: remove in favor of default: gra
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {}) -- TODO: remove in favor of defaults: Ctrl+] and Ctrl+T
 vim.diagnostic.config({ -- Show diagnostic messages
-  virtual_lines = true;
-  -- virtual_text = true; -- Uncomment this and comment above line when I get annoyed with the virtual lines
+  -- virtual_lines = true;
+  virtual_text = true; -- Uncomment this and comment above line when I get annoyed with the virtual lines
 })
 
 -- Fuzzy Finder
