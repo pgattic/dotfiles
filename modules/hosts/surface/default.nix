@@ -14,6 +14,8 @@
       ({ config, ... }: {
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
+        # Enable power button, volume rocker
+        boot.initrd.kernelModules = [ "pinctrl_sunrisepoint" ]; # lsmod | grep pinctrl
         hardware.microsoft-surface.kernelVersion = "stable";
 
         networking.hostName = "surface";
