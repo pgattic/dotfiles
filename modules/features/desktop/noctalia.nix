@@ -5,8 +5,7 @@
     noctaliaCmd = if hmOnly then
       [ "${nixgl.nixGLIntel}/bin/nixGLIntel" "noctalia-shell" ] else
       [ "noctalia-shell" ];
-  in
-  {
+  in {
     imports = [
       inputs.noctalia.homeModules.default
     ];
@@ -92,13 +91,11 @@
                 emptyColor = "onSurface";
               }
               { id = "SystemMonitor"; }
-            ]
-            ++ lib.optionals config.my.desktop.touch_options [
+            ] ++ lib.optionals config.my.desktop.touch_options [
               { id = "Launcher"; }
               { id = "CustomButton"; icon = "layout-grid-filled"; leftClickExec = "niri msg action toggle-overview"; }
               { id = "CustomButton"; icon = "keyboard"; leftClickExec = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec ${pkgs.wvkbd-deskintl}/bin/wvkbd-deskintl -L 412"; }
-            ]
-            ++ [
+            ] ++ [
               { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
             ];
             center = [
@@ -138,7 +135,7 @@
           terminalCommand = "foot";
           enableSettingsSearch = false;
           viewMode = if config.my.desktop.touch_options then "grid" else "list";
-          overviewLayer = true;
+          overviewLayer = !config.my.desktop.touch_options; # Gets in the way of OSK
         };
         location = {
           name = "Provo, United States";
@@ -157,7 +154,6 @@ in {
     nixosModules.noctalia = { config, ... }: {
       home-manager.users.${config.my.user.name}.imports = [ hmModule ];
     };
-
     homeModules.noctalia = hmModule;
   };
 }

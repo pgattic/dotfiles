@@ -27,8 +27,8 @@
         ];
 
         programs = {
-          kdeconnect.enable = true;
           localsend.enable = true;
+          nix-ld.enable = true;
 
           appimage.enable = true;
           appimage.binfmt = true;
@@ -93,6 +93,10 @@
                   secondLine = "Go to Settings to activate Linux.";
                 };
               };
+            };
+
+            services = {
+              kdeconnect.enable = true;
             };
           })
         ];

@@ -34,6 +34,7 @@
 
     programs = {
       home-manager.enable = true;
+      nh.enable = true;
       btop = {
         enable = true;
         settings = {
@@ -43,7 +44,6 @@
           proc_filter_kernel = true;
         };
       };
-      nh.enable = true;
       zellij = {
         enable = true;
         settings = {
@@ -77,7 +77,6 @@
     };
     home.stateVersion = "25.05";
   };
-
 in {
   flake = {
     nixosModules.base = { config, pkgs, ... }: {
