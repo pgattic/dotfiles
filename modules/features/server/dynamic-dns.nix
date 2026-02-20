@@ -5,7 +5,7 @@
     ddnsScript = pkgs.writeShellScript "namecheap-ddns" ''
       set -euo pipefail
 
-      HOSTS=("@" "www" "cinema" "files" "finances" "keep" "library" "photos")
+      HOSTS=("@" "www" "cinema" "files" "finances" "keep" "library" "photos" "roms")
       DOMAIN="${cfg.domain}"
 
       : "''${NAMECHEAP_DDNS_PASSWORD:?missing NAMECHEAP_DDNS_PASSWORD}"

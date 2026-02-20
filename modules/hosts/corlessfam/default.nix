@@ -15,6 +15,7 @@
       config.flake.nixosModules.audiobookshelf
       config.flake.nixosModules.copyparty
       config.flake.nixosModules.qbittorrent
+      config.flake.nixosModules.romm
 
       {
         boot.loader.systemd-boot.enable = true;

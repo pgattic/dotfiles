@@ -4,6 +4,8 @@ let port = 3682; in {
       enable = true;
       port = port;
     };
+    users.users.audiobookshelf.extraGroups = [ "media" ];
+
     services.nginx.virtualHosts."library.${config.my.server.domain}" = {
       enableACME = true;
       forceSSL = true;

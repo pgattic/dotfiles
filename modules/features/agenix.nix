@@ -17,21 +17,27 @@ in {
       age.secrets = {
         qbittorrent-pass = {
           file = ../../secrets/qbittorrent-pass.age;
-          owner = "qbittorrent";
-          group = "qbittorrent";
-          mode = "0400";
+          owner = "qbittorrent"; group = "qbittorrent"; mode = "0400";
         };
         namecheap-dns-env = {
           file = ../../secrets/namecheap-dns-env.age;
-          owner = "root";
-          group = "root";
-          mode = "0400";
+          owner = "root"; group = "root"; mode = "0400";
         };
         copyparty-pgattic = {
           file = ../../secrets/copyparty-pgattic.age;
-          owner = "copyparty";
-          group = "copyparty";
-          mode = "0400";
+          owner = "copyparty"; group = "copyparty"; mode = "0400";
+        };
+        romm-auth-secret-key = {
+          file = ../../secrets/romm-auth-secret-key.age;
+          owner = "root"; group = "root"; mode = "0400";
+        };
+        romm-db-password = {
+          file = ../../secrets/romm-db-password.age;
+          owner = "root"; group = "root"; mode = "0400";
+        };
+        romm-mariadb-root-password = {
+          file = ../../secrets/romm-mariadb-root-password.age;
+          owner = "root"; group = "root"; mode = "0400";
         };
       };
     };

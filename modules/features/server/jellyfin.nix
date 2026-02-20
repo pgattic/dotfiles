@@ -5,6 +5,7 @@ let port = 8096; in {
     hardware.graphics.extraPackages = with pkgs; [ intel-media-driver ]; # for newer Intel
 
     services.jellyfin.enable = true;
+    users.users.jellyfin.extraGroups = [ "media" ];
 
     services.nginx.virtualHosts."cinema.${cfg.domain}" = {
       enableACME = true;

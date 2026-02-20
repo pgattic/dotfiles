@@ -22,7 +22,6 @@
       Session\DefaultSavePath=${defaultDir}
       Session\Interface=wg0
       Session\InterfaceName=wg0
-      Session\InterfaceAddress=10.70.37.83
       Session\Port=${toString peerPort}
       Session\TempPathEnabled=true
       Session\TempPath=${defaultDir}
@@ -44,6 +43,10 @@
       tcpdump
     ];
 
+    users.groups.media = {};
+    users.users.qbittorrent.extraGroups = [ "media" ];
+    users.users.${config.my.user.name}.extraGroups = [ "media" ];
+
     vpnNamespaces."wg" = {
       enable = true;
       wireguardConfigFile = "${cfg.paths.secrets}/mullvad_wireguard_linux_us_slc/us-slc-wg-301.conf";
@@ -54,32 +57,47 @@
       ];
     };
 
-    systemd.services.qbittorrent.vpnConfinement = {
-      enable = true;
-      vpnNamespace = "wg";
-    };
-
     services.qbittorrent = {
       enable = true;
       webuiPort = webuiPort;
       serverConfig = lib.mkForce {}; # I override the config
     };
 
-    systemd.services.qbittorrent.preStart = lib.mkAfter ''
-      install -d -m 0750 -o ${qbUser} -g ${qbGroup} ${qbConfDir}
+    systemd.services.qbittorrent = {
+      vpnConfinement = {
+        enable = true;
+        vpnNamespace = "wg";
+      };
 
-      cp ${qbConfTemplate} ${qbConfPath}
-      chown ${qbUser}:${qbGroup} ${qbConfPath}
-      chmod 0640 ${qbConfPath}
+      preStart = lib.mkAfter ''
+        install -d -m 0750 -o ${qbUser} -g ${qbGroup} ${qbConfDir}
 
-      secret="$(cat ${config.age.secrets.qbittorrent-pass.path})"
-      esc="$(printf '%s' "$secret" | ${pkgs.gnused}/bin/sed -e 's/[\/&]/\\&/g')"
-      ${pkgs.gnused}/bin/sed -i "s/@QB_WEBUI_PBKDF2@/$esc/g" ${qbConfPath}
-    '';
+        cp ${qbConfTemplate} ${qbConfPath}
+        chown ${qbUser}:${qbGroup} ${qbConfPath}
+        chmod 0640 ${qbConfPath}
+
+        secret="$(cat ${config.age.secrets.qbittorrent-pass.path})"
+        esc="$(printf '%s' "$secret" | ${pkgs.gnused}/bin/sed -e 's/[\/&]/\\&/g')"
+        ${pkgs.gnused}/bin/sed -i "s/@QB_WEBUI_PBKDF2@/$esc/g" ${qbConfPath}
+      '';
+
+      serviceConfig = {
+        UMask = "0002";
+        # NoNewPrivileges = true;
+        # PrivateTmp = true;
+        # ProtectHome = true;
+        # ProtectSystem = "strict";
+        # ReadWritePaths = [ defaultDir qbStateDir ];
+      };
+    };
 
     # Ensure access to download directory
     systemd.tmpfiles.rules = [
-      "d ${defaultDir} 0755 ${qbUser} ${qbGroup} - -"
+      # media root — group controlled, not qbittorrent owned
+      "z ${cfg.paths.media} 2775 root media - -"
+
+      # default download dir writable by qbittorrent
+      "z ${defaultDir} 2775 ${qbUser} media - -"
     ];
 
     networking.firewall.extraInputRules = ''
