@@ -28,9 +28,7 @@
       description = "Update Namecheap Dynamic DNS";
       serviceConfig = {
         Type = "oneshot";
-        # put this file outside the store, e.g. /etc/secrets/namecheap-ddns.env (mode 0400)
-        # Contents of file: `NAMECHEAP_DDNS_PASSWORD='XXXX'`
-        EnvironmentFile = "${cfg.paths.secrets}/namecheap-ddns.env";
+        EnvironmentFile = config.age.secrets.namecheap-dns-env.path;
         ExecStart = ddnsScript;
         User = "root";
         # basic hardening for a network-only oneshot

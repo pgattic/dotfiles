@@ -14,7 +14,7 @@
         rproxy = 1;
       };
       accounts = {
-        pgattic.passwordFile = "${cfg.paths.secrets}/copyparty/pgattic";
+        pgattic.passwordFile = config.age.secrets.copyparty-pgattic.path;
       };
       volumes = {
         "/pgattic" = {

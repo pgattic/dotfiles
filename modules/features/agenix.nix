@@ -21,6 +21,18 @@ in {
           group = "qbittorrent";
           mode = "0400";
         };
+        namecheap-dns-env = {
+          file = ../../secrets/namecheap-dns-env.age;
+          owner = "root";
+          group = "root";
+          mode = "0400";
+        };
+        copyparty-pgattic = {
+          file = ../../secrets/copyparty-pgattic.age;
+          owner = "copyparty";
+          group = "copyparty";
+          mode = "0400";
+        };
       };
     };
     homeModules.agenix = hmModule;

@@ -10,5 +10,7 @@ let
   all = builtins.attrValues keys;
 in {
   "qbittorrent-pass.age" = { publicKeys = all; armor = true; };
+  "namecheap-dns-env.age" = { publicKeys = all; armor = true; };
+  "copyparty-pgattic.age" = { publicKeys = all; armor = true; };
 }
 
