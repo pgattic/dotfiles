@@ -16,6 +16,7 @@
       config.flake.nixosModules.copyparty
       config.flake.nixosModules.qbittorrent
       config.flake.nixosModules.romm
+      config.flake.nixosModules.cookbook
 
       {
         boot.loader.systemd-boot.enable = true;

@@ -27,6 +27,10 @@ in {
           file = ../../secrets/copyparty-pgattic.age;
           owner = "copyparty"; group = "copyparty"; mode = "0400";
         };
+        copyparty-skylar = {
+          file = ../../secrets/copyparty-skylar.age;
+          owner = "copyparty"; group = "copyparty"; mode = "0400";
+        };
         romm-auth-secret-key = {
           file = ../../secrets/romm-auth-secret-key.age;
           owner = "root"; group = "root"; mode = "0400";
