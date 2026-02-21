@@ -1,7 +1,14 @@
 let
-  hmModule = {
+  hmModule = { pkgs, ... }: {
     programs.zed-editor = {
       enable = true;
+
+      # Some libs that Codex CLI depends on
+      package = pkgs.zed-editor.fhsWithPackages (pkgs: with pkgs; [
+        libcap
+        libz
+      ]);
+
       userSettings = {
         telemetry = {
           diagnostics = false;
