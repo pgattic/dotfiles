@@ -11,6 +11,7 @@
       config.flake.nixosModules.work
       config.flake.nixosModules.zeditor
       config.flake.nixosModules.browser
+      config.flake.nixosModules.office
       config.flake.nixosModules.obsidian
 
       ({ config, lib, ... }: {

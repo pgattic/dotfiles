@@ -154,12 +154,10 @@ let
       colorTheme.enable = true;
     };
 
-    xdg.mimeApps = {
-      defaultApplications = {
-        "text/html" = "librewolf.desktop";
-        "x-scheme-handler/http" = "librewolf.desktop";
-        "x-scheme-handler/https" = "librewolf.desktop";
-      };
+    xdg.mimeApps.defaultApplications = {
+      "text/html" = "librewolf.desktop";
+      "x-scheme-handler/http" = "librewolf.desktop";
+      "x-scheme-handler/https" = "librewolf.desktop";
     };
   };
 in {
