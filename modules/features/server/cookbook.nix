@@ -1,33 +1,28 @@
-let
-  cfg = {
-    sourceDir = "/tank/store/cookbook";
+{
+  flake.nixosModules.cookbook = { config, lib, pkgs, ... }: let
+    cfg = config.my.server;
+    sourceDir = "${cfg.paths.store}/cookbook";
     homeDir = "/var/lib/cookbook-site";
     outputDir = "/var/lib/cookbook-site/public";
 
     user = "cookbook";
     group = "cookbook";
-
     extraGroups = [ "copypartyaccess" ];
 
-    domain = "cookbook.corlessfamily.net";
-
-    acme = true;
     extraZolaBuildArgs = [ "--force" ];
-  };
-in {
-  flake.nixosModules.cookbook = { lib, pkgs, ... }: {
-    users.users.${cfg.user} = {
+  in {
+    users.users.${user} = {
       isSystemUser = true;
-      group = cfg.group;
+      group = group;
       home = "/var/lib/cookbook-site";
       createHome = false; # let tmpfiles be in charge of ownership
-      extraGroups = cfg.extraGroups;
+      extraGroups = extraGroups;
     };
-    users.groups.${cfg.group} = { };
+    users.groups.${group} = { };
 
     systemd.tmpfiles.rules = [
-      "d ${cfg.homeDir} 0755 ${cfg.user} ${cfg.group} - -"
-      "d ${cfg.outputDir} 0755 ${cfg.user} ${cfg.group} - -"
+      "d ${homeDir} 0755 ${user} ${group} - -"
+      "d ${outputDir} 0755 ${user} ${group} - -"
     ];
 
     # One-shot build (also reused by the watcher)
@@ -37,18 +32,18 @@ in {
       after = [ "network.target" ];
       serviceConfig = {
         Type = "oneshot";
-        User = cfg.user;
-        Group = cfg.group;
-        WorkingDirectory = cfg.sourceDir;
+        User = user;
+        Group = group;
+        WorkingDirectory = sourceDir;
         UMask = "0022";
       };
       path = [ pkgs.zola pkgs.coreutils ];
       script = ''
         set -euo pipefail
-        mkdir -p ${lib.escapeShellArg cfg.outputDir}
+        mkdir -p ${lib.escapeShellArg outputDir}
         zola build \
-          --output-dir ${lib.escapeShellArg cfg.outputDir} \
-          ${lib.escapeShellArgs cfg.extraZolaBuildArgs}
+          --output-dir ${lib.escapeShellArg outputDir} \
+          ${lib.escapeShellArgs extraZolaBuildArgs}
       '';
     };
 
@@ -60,9 +55,9 @@ in {
       requires = [ "cookbook-zola-build.service" ];
 
       serviceConfig = {
-        User = cfg.user;
-        Group = cfg.group;
-        WorkingDirectory = cfg.sourceDir;
+        User = user;
+        Group = group;
+        WorkingDirectory = sourceDir;
         Restart = "always";
         RestartSec = 1;
         UMask = "0022";
@@ -76,7 +71,7 @@ in {
         # Debounce: if a bunch of writes happen quickly (editor save), rebuild once.
         rebuild() {
           echo "[cookbook] rebuilding..."
-          zola build --output-dir ${lib.escapeShellArg cfg.outputDir} ${lib.escapeShellArgs cfg.extraZolaBuildArgs}
+          zola build --output-dir ${lib.escapeShellArg outputDir} ${lib.escapeShellArgs extraZolaBuildArgs}
           echo "[cookbook] done"
         }
 
@@ -100,31 +95,28 @@ in {
       '';
     };
 
-    services.nginx = {
-      enable = true;
+    services.nginx.virtualHosts."cookbook.${cfg.domain}" = {
+      forceSSL = true;
+      enableACME = true;
+      root = outputDir;
 
-      virtualHosts.${cfg.domain} = {
-        forceSSL = cfg.acme;
-        enableACME = cfg.acme;
-
-        root = cfg.outputDir;
-
-        # Nice defaults for static sites
-        locations."/" = {
-          extraConfig = ''
-            try_files $uri $uri/ =404;
-          '';
-        };
-
+      # Nice defaults for static sites
+      locations."/" = {
         extraConfig = ''
-          # Cache static assets aggressively; tune to your needs
-          location ~* \.(css|js|png|jpg|jpeg|gif|svg|webp|ico|woff2?)$ {
-            expires 30d;
-            add_header Cache-Control "public, max-age=2592000, immutable";
-            try_files $uri =404;
-          }
+          try_files $uri $uri/ =404;
         '';
       };
+
+      extraConfig = ''
+        error_page 404 /404.html;
+
+        # Cache static assets aggressively
+        location ~* \.(css|js|png|jpg|jpeg|gif|svg|webp|ico|woff2?)$ {
+          expires 30d;
+          add_header Cache-Control "public, max-age=2592000, immutable";
+          try_files $uri =404;
+        }
+      '';
     };
   };
 }

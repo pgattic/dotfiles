@@ -18,7 +18,7 @@
       config.flake.nixosModules.romm
       config.flake.nixosModules.cookbook
 
-      {
+      ({ pkgs, ... }: {
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
 
@@ -33,8 +33,14 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+tQ11EwCLxsnFls30h6ht7mEOAJ+JapnD61tzu/urS pgattic@gmail.com"
         ];
 
+        environment.systemPackages = with pkgs; [
+          smartmontools # Used for hard drive SMART tests (`sudo smartctl -x /dev/sdX`)
+          waypipe
+        ];
+
         services = {
           openssh.enable = true;
+          smartd.enable = true; # added alongside `smartmontools` package
 
           karakeep = {
             enable = true;
@@ -65,7 +71,7 @@
         };
 
         system.stateVersion = "25.05"; # Version originally installed
-      }
+      })
     ];
   };
 }
