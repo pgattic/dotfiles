@@ -24,6 +24,7 @@
       accounts = {
         pgattic.passwordFile = config.age.secrets.copyparty-pgattic.path;
         skylar.passwordFile = config.age.secrets.copyparty-skylar.path;
+        guest.passwordFile = builtins.toFile "copyparty-guest-password" "guest";
       };
       volumes = {
         "/pgattic" = {
@@ -44,6 +45,13 @@
             A = [ "pgattic" "skylar" ];
           };
         };
+        "/roms" = {
+          path = "${cfg.paths.store}/roms";
+          access = {
+            A = [ "pgattic" ];
+            r = [ "guest" ];
+          };
+        };
       };
     };
 
@@ -52,8 +60,9 @@
 
     systemd.tmpfiles.rules = [
       "d ${cfg.paths.store}/pgattic 2775 root copypartyaccess - -"
-      "d ${cfg.paths.store}/skylar  2775 root copypartyaccess - -"
+      "d ${cfg.paths.store}/skylar 2775 root copypartyaccess - -"
       "d ${cfg.paths.store}/cookbook 2775 root copypartyaccess - -"
+      "d ${cfg.paths.store}/roms 2775 root copypartyaccess - -"
       "d /var/lib/copyparty/md-hist 0700 copyparty copyparty - -"
     ];
 

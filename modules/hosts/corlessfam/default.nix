@@ -15,7 +15,7 @@
       config.flake.nixosModules.audiobookshelf
       config.flake.nixosModules.copyparty
       config.flake.nixosModules.qbittorrent
-      config.flake.nixosModules.romm
+      # config.flake.nixosModules.romm
       config.flake.nixosModules.cookbook
 
       ({ pkgs, ... }: {
