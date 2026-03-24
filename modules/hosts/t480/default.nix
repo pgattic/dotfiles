@@ -28,9 +28,7 @@
         ];
 
         programs = {
-          localsend.enable = true;
           nix-ld.enable = true;
-
           appimage.enable = true;
           appimage.binfmt = true;
         };
@@ -51,16 +49,15 @@
         home-manager.users.${config.my.user.name}.imports = [
           ({ pkgs, ... }: {
             home.packages = with pkgs; [
+              inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
               mcpelauncher-ui-qt
               ungoogled-chromium
-              qbittorrent
               bambu-studio
-              # nicotine-plus # Soulseek client
               pinta
               antigravity-fhs
 
               luanti-client
-              prismlauncher
+              # prismlauncher
               # antimicrox
               # calibre
 
@@ -69,7 +66,6 @@
               ventoy
 
               signal-desktop
-              openscad
               zotero
             ];
 
@@ -80,8 +76,9 @@
 
             programs = {
               vesktop.enable = true;
+              claude-code.enable = true;
               element-desktop.enable = true;
-              helix.enable = true;
+              # helix.enable = true;
               niri.settings.outputs."eDP-1".scale = 1.0;
               noctalia-shell = {
                 plugins.states.activate-linux = {

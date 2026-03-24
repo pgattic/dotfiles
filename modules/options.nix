@@ -26,7 +26,7 @@
       touch_options = mkEnableOption "touch-related options like extra buttons, slightly bigger UI, etc.";
       corner_radius = mkOption {
         type = types.float;
-        default = 8.0;
+        default = 10.0;
         description = "Corner radius of Desktop elements";
       };
       opacity = mkOption {

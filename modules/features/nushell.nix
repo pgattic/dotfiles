@@ -29,6 +29,7 @@ let
       '';
       extraConfig = ''
         # Startup commands
+        clear # Free to remove once https://github.com/nix-community/stylix/issues/2234 is merged
         open --raw "${config.my.user.home_dir}/dotfiles/config/nushell/torterra.txt" | print
         $"Uptime: (ansi green_bold)((sys host).uptime)(ansi reset)" | print
         $"Memory used: (ansi green_bold)(sys mem | get used)(ansi reset)/(ansi green_bold)(sys mem | get total)(ansi reset)" | print

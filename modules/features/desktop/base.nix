@@ -56,6 +56,17 @@ let
         };
       };
     };
+    programs.ghostty = {
+      enable = true;
+      settings = {
+        cursor-style = "bar";
+        mouse-scroll-multiplier = 1;
+        window-padding-x = 0;
+        window-padding-y = 0;
+        window-padding-color = "extend";
+        window-inherit-working-directory = false;
+      };
+    };
   };
 in {
   flake = {

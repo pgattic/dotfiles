@@ -1,9 +1,5 @@
 let
-  hmModule = { config, pkgs, ... }: {
-    home.packages = with pkgs; [
-      lazygit
-    ];
-
+  hmModule = { config, ... }: {
     programs = {
       git = {
         enable = true;
@@ -13,6 +9,21 @@ let
           color.ui = "auto";
           init.defaultBranch = "master";
         };
+      };
+      lazygit.enable = true;
+      jujutsu = {
+        enable = true;
+        settings = {
+          user.name = config.my.user.name;
+          user.email = config.my.user.email;
+          ui = {
+            default-command = [ "log" "--reversed" ];
+            paginate = "never";
+          };
+        };
+      };
+      jjui = {
+        enable = true;
       };
     };
   };

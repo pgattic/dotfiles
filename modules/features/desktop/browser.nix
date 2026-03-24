@@ -97,7 +97,7 @@ let
                 "firefoxcolor_mozilla_com-browser-action"
               ];
               nav-bar = [
-                # "sidebar-button"
+                "sidebar-button"
                 "back-button"
                 "forward-button"
                 "stop-reload-button"
