@@ -6,11 +6,9 @@ let
       wl-mirror
       pavucontrol
       brightnessctl
-      imv
-      mpv-unwrapped
       libnotify
-      zathura
-      xarchiver
+      kdePackages.ark
+        unrar # Nonfree package
       kdePackages.dolphin
     ];
 
@@ -38,33 +36,46 @@ let
         };
       };
     };
-    programs.foot = {
-      enable = true;
-      settings = {
-        main = {
-          term = "xterm-256color";
-          resize-delay-ms = 0;
-        };
-        cursor = {
-          style = "beam";
-          blink = true;
-        };
-        csd = {
-          font = "Sans:size=10";
-          color = "333333";
-          button-color = "ffffff";
+    programs = {
+      foot = {
+        enable = true;
+        settings = {
+          main = {
+            term = "xterm-256color";
+            resize-delay-ms = 0;
+          };
+          cursor = {
+            style = "beam";
+            blink = true;
+          };
+          csd = {
+            font = "Sans:size=10";
+            color = "333333";
+            button-color = "ffffff";
+          };
         };
       };
-    };
-    programs.ghostty = {
-      enable = true;
-      settings = {
-        cursor-style = "bar";
-        mouse-scroll-multiplier = 1;
-        window-padding-x = 0;
-        window-padding-y = 0;
-        window-padding-color = "extend";
-        window-inherit-working-directory = false;
+      # ghostty = {
+      #   enable = true;
+      #   settings = {
+      #     cursor-style = "bar";
+      #     mouse-scroll-multiplier = 1;
+      #     window-padding-x = 0;
+      #     window-padding-y = 0;
+      #     window-padding-color = "extend";
+      #     window-inherit-working-directory = false;
+      #   };
+      # };
+      sioyek = { # PDF reader
+        enable = true;
+        config = {
+          should_highlight_unselected_search = "1"; # Highlight all search matches
+        };
+      };
+      imv.enable = true;
+      mpv = {
+        enable = true;
+        package = pkgs.mpv-unwrapped;
       };
     };
   };
@@ -99,7 +110,6 @@ in {
         gvfs.enable = true; # Automatic drive mounting, network shares, recycle bin
       };
     };
-
     homeModules.desktop-base = hmModule;
   };
 }

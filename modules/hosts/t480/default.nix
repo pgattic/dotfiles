@@ -20,65 +20,42 @@
 
         networking.hostName = "t480";
 
-        users.users.${config.my.user.name}.extraGroups = lib.mkAfter [
-          "kvm"
-          "adbusers"
-          "docker"
-          "input"
-        ];
-
         programs = {
           nix-ld.enable = true;
           appimage.enable = true;
           appimage.binfmt = true;
         };
-
-        virtualisation.docker.enable = true;
-
         services = {
-          syncthing = {
-            enable = true;
-            user = config.my.user.name;
-            openDefaultPorts = true;
-            dataDir = config.my.user.home_dir;
-          };
           mullvad-vpn.enable = true;
         };
+
         system.stateVersion = "25.05";
 
         home-manager.users.${config.my.user.name}.imports = [
           ({ pkgs, ... }: {
             home.packages = with pkgs; [
-              inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
-              mcpelauncher-ui-qt
-              ungoogled-chromium
-              bambu-studio
               pinta
               antigravity-fhs
-
               luanti-client
-              # prismlauncher
-              # antimicrox
-              # calibre
-
-              vscode
               zoom-us
               ventoy
-
               signal-desktop
               zotero
+              bambu-studio
+              inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
             ];
-
-            xdg.mimeApps.defaultApplications = {
-              "x-scheme-handler/sgnl" = "signal.desktop";
-              "x-scheme-handler/signalcaptcha" = "signal.desktop";
-            };
 
             programs = {
               vesktop.enable = true;
               claude-code.enable = true;
               element-desktop.enable = true;
+              # calibre.enable = true;
+              # prismlauncher.enable = true;
               # helix.enable = true;
+              chromium = {
+                enable = true;
+                package = pkgs.ungoogled-chromium;
+              };
               niri.settings.outputs."eDP-1".scale = 1.0;
               noctalia-shell = {
                 plugins.states.activate-linux = {

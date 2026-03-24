@@ -1,19 +1,21 @@
 let
   hmModule = { pkgs, ... }: {
     home.packages = with pkgs; [
-      slack
+      antimicrox
     ];
   };
 in {
   flake = {
-    nixosModules.work = { config, lib, ... }: {
+    nixosModules.antimicrox = { lib, config, ... }: {
       home-manager.users.${config.my.user.name}.imports = [ hmModule ];
-      # For doing terminals through USB
+
+      boot.kernelModules = [ "uinput" ];
       users.users.${config.my.user.name}.extraGroups = lib.mkAfter [
-        "dialout"
+        "input"
       ];
+      hardware.uinput.enable = true;
     };
-    homeModules.work = hmModule;
+    homeModules.antimicrox = hmModule;
   };
 }
 
