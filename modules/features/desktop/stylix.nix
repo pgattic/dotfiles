@@ -40,6 +40,7 @@
         terminal = opacity;
       };
       targets.neovim.enable = false;
+      targets.gnome.enable = false; # This is broken for now, but doesn't affect me
     };
 
     # qt = {

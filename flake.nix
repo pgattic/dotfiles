@@ -22,10 +22,18 @@
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nur.follows = "nur";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.gnome-shell.follows = "";
     };
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "";
+      inputs.niri-stable.follows = "";
+      inputs.niri-unstable.follows = "";
+      inputs.xwayland-satellite-stable.follows = "";
+      inputs.xwayland-satellite-unstable.follows = "";
     };
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";

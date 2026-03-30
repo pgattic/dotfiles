@@ -14,9 +14,6 @@
         # Enable power button, volume rocker
         boot.initrd.kernelModules = [ "pinctrl_sunrisepoint" ]; # lsmod | grep pinctrl
 
-        # Remove when this is merged: https://github.com/NixOS/nixos-hardware/pull/1764
-        hardware.microsoft-surface.kernelVersion = "stable";
-
         networking.hostName = "surface";
         system.stateVersion = "25.05";
 
