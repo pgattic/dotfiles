@@ -8,7 +8,8 @@ vim.g.maplocalleader = " "
 vim.opt.mouse = "a" -- Enable mouse controls for all modes
 vim.opt.swapfile = false
 -- Visuals
-vim.opt.nu = true -- line numbers
+vim.opt.number = true
+-- vim.opt.relativenumber = true
 vim.opt.termguicolors = true -- Allow 24-bit RGB colors
 vim.opt.colorcolumn = "100"
 vim.opt.cursorline = true
@@ -16,6 +17,7 @@ vim.opt.fillchars = { eob = " " } -- Don't fill the extra space with "~"
 vim.opt.winborder = 'rounded'
 vim.opt.scrolloff = 4
 vim.opt.signcolumn = "yes" -- Always show gutter even if empty
+vim.opt.cmdheight = 0 -- Single line shared for bar and command palette
 vim.opt.title = true
 -- Indentation
 vim.opt.expandtab = true
@@ -58,11 +60,19 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.filetype.add({
+  extension = {
+    kk = "koka",
+  },
+})
+
 -- PLUGINS --
 
 local plugins = {
-  { src = "https://github.com/nvim-tree/nvim-web-devicons" }, -- used by telescope, mini.files, others
-  { src = "https://github.com/nvim-lua/plenary.nvim" }, -- Dependency of telescope and others
+  -- used by telescope, mini.files, others
+  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+  -- Dependency of telescope, lean, and others
+  { src = "https://github.com/nvim-lua/plenary.nvim" },
 
   { src = "https://github.com/Mofiqul/vscode.nvim", name = "vscode" },
   { src = "https://github.com/nvim-lualine/lualine.nvim" },
@@ -78,6 +88,7 @@ local plugins = {
   { src = "https://github.com/lukas-reineke/indent-blankline.nvim" },
   { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
   { src = "https://github.com/petertriho/nvim-scrollbar" },
+  { src = "https://github.com/Julian/lean.nvim" }, -- Tooling for Lean Prover
 }
 
 -- TODO: Remove the lazy.nvim-related stuff once Neovim 0.12 is released
@@ -109,7 +120,12 @@ require('vscode').setup({
 vim.cmd.colorscheme("vscode")
 
 -- Fancy-looking bar on the bottom of the screen
-require("lualine").setup()
+require("lualine").setup({
+  options = {
+    -- Instead of a separate bar for each pane, keep one consistent one at the bottom of the screen
+    globalstatus = true,
+  },
+})
 
 -- Undo tree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
@@ -141,7 +157,7 @@ require("gitsigns").setup{
       vim.keymap.set(mode, l, r, opts)
     end
     map('n', '<leader>hp', gs.preview_hunk)
-    map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+    map('n', '<leader>hb', function() gs.blame_line({ full = true }) end)
   end
 }
 
@@ -164,6 +180,8 @@ local lsp_servers = {
   },
   hls = {}, -- Haskell Language Server
   racket_langserver = {}, -- install with `raco pkg install racket-langserver`
+  koka = {},
+  fsautocomplete = {}, -- F#
 }
 for server, config in pairs(lsp_servers) do
   vim.lsp.config(server, config)
@@ -214,12 +232,16 @@ require("harpoon_config") -- A mess I won't write here
 
 require("scrollbar").setup({ handle = { color = "#555555" } })
 
+require("lean").setup({
+  infoview = {
+    orientation = "vertical",
+  },
+})
+vim.keymap.set("n", "<leader>\\", ":LeanAbbreviationsReverseLookup")
 
 -- Extra/old stuff
 
 -- vim.opt.mousescroll = "ver:1,hor:6" -- For some reason, Neovim scrolls way fast on Ghostty
--- vim.opt.laststatus = 3 -- makes LuaLine fullwidth
--- vim.opt.cmdheight = 0
 -- vim.cmd(":command W w") -- Resolves a carpal race condition
 -- vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 -- vim.opt.eol = false -- Don't add newlines
