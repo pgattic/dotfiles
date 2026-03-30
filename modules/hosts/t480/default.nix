@@ -4,7 +4,6 @@
     modules = [
       ./_hardware.nix
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
-
       config.flake.nixosModules.options
       config.flake.nixosModules.default
       config.flake.nixosModules.desktop-default
@@ -14,11 +13,9 @@
       config.flake.nixosModules.office
       config.flake.nixosModules.obsidian
 
-      ({ config, lib, ... }: {
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
-
+      ({ config, ... }: {
         networking.hostName = "t480";
+        system.stateVersion = "25.05";
 
         programs = {
           nix-ld.enable = true;
@@ -28,8 +25,6 @@
         services = {
           mullvad-vpn.enable = true;
         };
-
-        system.stateVersion = "25.05";
 
         home-manager.users.${config.my.user.name}.imports = [
           ({ pkgs, ... }: {

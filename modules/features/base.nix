@@ -79,12 +79,16 @@
   };
 in {
   flake = {
-    nixosModules.base = { config, pkgs, ... }: {
+    nixosModules.base = { config, lib, pkgs, ... }: {
       imports = [
         inputs.stylix.nixosModules.stylix
         inputs.home-manager.nixosModules.home-manager
       ];
       nixpkgs = nixpkgsConf;
+
+      boot.loader.systemd-boot.enable = lib.mkDefault true;
+      # Allow NixOS to add itself to bootloader options
+      boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
       home-manager = {
         useUserPackages = true;
@@ -114,7 +118,7 @@ in {
       programs.nano.enable = false;
 
       services = {
-        fwupd.enable = true;
+        fwupd.enable = lib.mkDefault true;
         openssh.package = pkgs.openssh_hpn;
       };
 

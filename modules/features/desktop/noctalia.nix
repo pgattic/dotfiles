@@ -24,12 +24,14 @@
       wvkbd-deskintl
     ];
 
-    programs.niri.settings.spawn-at-startup = [
-      { argv = noctaliaCmd; }
-    ];
-    programs.niri.settings.binds = {
-      "Mod+Space" = { hotkey-overlay.title = "Open Lanucher"; action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ]; };
-      "Mod+Shift+E" = { hotkey-overlay.title = "Quit niri"; action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ]; };
+    programs.niri.settings = {
+      spawn-at-startup = [
+        { argv = noctaliaCmd; }
+      ];
+      binds = {
+        "Mod+Space" = { hotkey-overlay.title = "Open Lanucher"; action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ]; };
+        "Mod+Shift+E" = { hotkey-overlay.title = "Quit niri"; action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ]; };
+      };
     };
 
     home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
@@ -56,6 +58,7 @@
         };
         version = 2;
       };
+      pluginSettings.clipper.fullscreenMode = true; # Puts the panel on the bottom of the screen
       colors = { # Copied from the GitHub Dark theme
         mError = "#f85149";
         mHover = "#21262d";
@@ -139,7 +142,10 @@
         ];
         systemMonitor.externalMonitor = "foot btop";
         audio.volumeOverdrive = true;
-        osd.location = "bottom"; # Popup for volume/brightness changes
+        osd = { # Popup for volume/brightness changes
+          location = "bottom";
+          backgroundOpacity = config.my.desktop.opacity;
+        };
         nightLight.enabled = true;
         appLauncher = {
           enableClipboardHistory = true; # Required for clipboard manager plugin to work

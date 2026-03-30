@@ -4,7 +4,6 @@
     modules = [
       ./_hardware.nix
       inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
-
       config.flake.nixosModules.options
       config.flake.nixosModules.default
       config.flake.nixosModules.desktop-default
@@ -12,8 +11,6 @@
       config.flake.nixosModules.browser
 
       ({ config, ... }: {
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
         # Enable power button, volume rocker
         boot.initrd.kernelModules = [ "pinctrl_sunrisepoint" ]; # lsmod | grep pinctrl
 

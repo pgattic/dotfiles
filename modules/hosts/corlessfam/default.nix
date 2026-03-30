@@ -19,15 +19,13 @@
       config.flake.nixosModules.cookbook
 
       ({ pkgs, ... }: {
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
-
         boot.supportedFilesystems = [ "zfs" ];
         boot.zfs.extraPools = [ "tank" ]; # Automatic mounting
         services.zfs.autoScrub.enable = true;
 
         networking.hostId = "6e005e0f"; # head -c 8 /etc/machine-id
         networking.hostName = "corlessfam";
+        system.stateVersion = "25.05";
 
         users.users.pgattic.openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+tQ11EwCLxsnFls30h6ht7mEOAJ+JapnD61tzu/urS pgattic@gmail.com"
@@ -69,8 +67,6 @@
             };
           };
         };
-
-        system.stateVersion = "25.05"; # Version originally installed
       })
     ];
   };
