@@ -41,6 +41,10 @@
       "rev": "2305deed25bc61b866d5d39189e9105a45cf1cfb",
       "src": "https://github.com/kdheepak/lazygit.nvim"
     },
+    "lean.nvim": {
+      "rev": "58c6d4819ef433ba141cd4e3604a0316c83d99de",
+      "src": "https://github.com/Julian/lean.nvim"
+    },
     "lualine.nvim": {
       "rev": "47f91c416daef12db467145e16bed5bbfe00add8",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
@@ -64,6 +68,10 @@
     "nvim-scrollbar": {
       "rev": "f8e87b96cd6362ef8579be456afee3b38fd7e2a8",
       "src": "https://github.com/petertriho/nvim-scrollbar"
+    },
+    "nvim-treesitter": {
+      "rev": "42fc28ba918343ebfd5565147a42a26580579482",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-web-devicons": {
       "rev": "8dcb311b0c92d460fac00eac706abd43d94d68af",

@@ -67,8 +67,7 @@ vim.filetype.add({
 })
 
 -- PLUGINS --
-
-local plugins = {
+vim.pack.add({
   -- used by telescope, mini.files, others
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
   -- Dependency of telescope, lean, and others
@@ -87,31 +86,9 @@ local plugins = {
   { src = "https://github.com/kdheepak/lazygit.nvim" },
   { src = "https://github.com/lukas-reineke/indent-blankline.nvim" },
   { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
-  { src = "https://github.com/petertriho/nvim-scrollbar" },
+  -- { src = "https://github.com/petertriho/nvim-scrollbar" },
   { src = "https://github.com/Julian/lean.nvim" }, -- Tooling for Lean Prover
-}
-
--- TODO: Remove the lazy.nvim-related stuff once Neovim 0.12 is released
-if pcall(require, "vim.pack") then
-  vim.pack.add(plugins, { confirm = false })
-else -- vim.pack is not available, use lazygit
-  local lazy_list = {}
-
-  for _, p in ipairs(plugins) do
-    local pkg = {}
-    if p.src     then pkg[1] = p.src end
-    if p.name    then pkg.name = p.name end
-    if p.version then pkg.branch = p.version end
-    table.insert(lazy_list, pkg)
-  end
-
-  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-  if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
-  end
-  vim.opt.rtp:prepend(lazypath)
-  require("lazy").setup(lazy_list, {})
-end
+}, { confirm = false })
 
 -- Color Theme
 require('vscode').setup({
@@ -230,7 +207,7 @@ require("ibl").setup({
 
 require("harpoon_config") -- A mess I won't write here
 
-require("scrollbar").setup({ handle = { color = "#555555" } })
+-- require("scrollbar").setup({ handle = { color = "#555555" } })
 
 require("lean").setup({
   infoview = {
