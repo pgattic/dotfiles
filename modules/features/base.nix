@@ -116,7 +116,7 @@ in {
 
       nix.settings = {
         experimental-features = [ "nix-command" "flakes" ];
-        trusted-users = ["root" config.my.user.name];
+        trusted-users = ["root" "@wheel" ];
       };
 
       programs.nano.enable = false;
