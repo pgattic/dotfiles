@@ -3,9 +3,9 @@
     nixosModules.portals = { pkgs, ... }: {
       xdg.portal = {
         enable = true;
-        extraPortals = [
-          pkgs.xdg-desktop-portal-gtk
-          pkgs.xdg-desktop-portal-wlr
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-wlr
+          xdg-desktop-portal-gtk
         ];
         config.common.default = [
           "wlr"
@@ -13,9 +13,6 @@
         ];
         xdgOpenUsePortal = true;
       };
-      # services.xdg-desktop-portal.enable = true;
-      # services.xdg-desktop-portal.backends = [ pkgs.xdg-desktop-portal-gtk ];
-
       environment.sessionVariables = {
         GTK_USE_PORTAL = "1";
       };

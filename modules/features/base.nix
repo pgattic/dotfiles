@@ -3,6 +3,7 @@
     overlays = [
       inputs.nur.overlays.default # Nix User Repository
       (import ../../overlays/bambu-studio.nix)
+      ((import ../../overlays/dark-text.nix) inputs.dark-text-src)
       (import ../../overlays/luanti-client.nix)
       (import ../../overlays/mineclonia-game.nix)
       (import ../../overlays/wvkbd-deskintl.nix)
@@ -15,17 +16,11 @@
   hmModule = { pkgs, ... }: {
     nixpkgs = nixpkgsConf;
     home.packages = with pkgs; [
-      (lib.hiPrio uutils-coreutils-noprefix) # uutils preferred over GNU coreutils
-      openssh_hpn # SSH but faster
       usbutils
-      ripgrep
-      bat
       gdu
-      less
       file
       tree
       ouch # Archive manager
-      jq
       tinyxxd
 
       nil # Nix language server
@@ -35,6 +30,15 @@
     programs = {
       home-manager.enable = true;
       nh.enable = true;
+      bat.enable = true;
+      ripgrep.enable = true;
+      less.enable = true;
+      jq.enable = true;
+      ssh = {
+        enable = true;
+        package = pkgs.openssh_hpn;
+        enableDefaultConfig = false; # Will apparently be deprecated soon
+      };
       btop = {
         enable = true;
         settings = {
@@ -126,6 +130,7 @@ in {
         NH_OS_FLAKE = "${config.my.user.home_dir}/dotfiles";
       };
 
+      # documentation.enable = lib.mkDefault false; # Disable all documentation
       systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # Don't need speech dispatcher
       systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
     };

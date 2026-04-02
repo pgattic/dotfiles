@@ -1,5 +1,5 @@
 { inputs, ... }: let
-  hmModule = { config, pkgs, ... }: {
+  hmModule = { config, lib, pkgs, ... }: {
     imports = [
       inputs.stylix.homeModules.stylix # https://github.com/sodiboo/niri-flake
     ];
@@ -40,7 +40,7 @@
         terminal = opacity;
       };
       targets.neovim.enable = false;
-      targets.gnome.enable = false; # This is broken for now, but doesn't affect me
+      targets.gnome.enable = lib.mkDefault false; # This is broken for now, but doesn't affect me
     };
 
     # qt = {

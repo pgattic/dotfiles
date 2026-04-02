@@ -24,6 +24,8 @@
         networking.hostName = "cyberpi";
         system.stateVersion = "25.05";
         services.fwupd.enable = false;
+        services.upower.enable = false;
+        hardware.bluetooth.enable = false;
 
         my.desktop.touch_options = true;
 
@@ -31,7 +33,6 @@
           ({ pkgs, ... }: {
             home.packages = with pkgs; [
               luanti-client
-              rnote
             ];
             programs = {
               chromium = {

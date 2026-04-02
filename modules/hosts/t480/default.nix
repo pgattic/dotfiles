@@ -35,6 +35,7 @@
               zoom-us
               ventoy
               signal-desktop
+              whatsapp-electron
               zotero
               bambu-studio
               inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
@@ -42,7 +43,7 @@
 
             programs = {
               vesktop.enable = true;
-              claude-code.enable = true;
+              # claude-code.enable = true;
               element-desktop.enable = true;
               # calibre.enable = true;
               # prismlauncher.enable = true;
@@ -51,6 +52,7 @@
                 enable = true;
                 package = pkgs.ungoogled-chromium;
               };
+              ripgrep-all.enable = true;
               niri.settings.outputs."eDP-1".scale = 1.0;
               noctalia-shell = {
                 plugins.states.activate-linux = {
@@ -62,6 +64,20 @@
                   firstLine = "Activate Linux";
                   secondLine = "Go to Settings to activate Linux.";
                 };
+              };
+              jujutsu = {
+                enable = true;
+                settings = {
+                  user.name = config.my.user.name;
+                  user.email = config.my.user.email;
+                  ui = {
+                    default-command = [ "log" "--reversed" ];
+                    paginate = "never";
+                  };
+                };
+              };
+              jjui = {
+                enable = true;
               };
             };
 

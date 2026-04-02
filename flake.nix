@@ -6,6 +6,7 @@
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
@@ -55,6 +56,10 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.blocksds-nix.follows = "";
       inputs.devkitNix.follows = "";
+    };
+    dark-text-src = {
+      url = "github:vimjoyer/dark-text";
+      flake = false;
     };
   };
 

@@ -77,6 +77,7 @@ let
           "privacy.clearOnShutdown.sessions" = false;
           "network.cookie.lifetimePolicy" = 0;
           "webgl.disabled" = false;
+          "webgl.force-enabled" = true;
 
           # Firefox stuff
           "findbar.highlightAll" = true;

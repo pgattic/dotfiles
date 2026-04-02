@@ -12,12 +12,18 @@ let
       kdePackages.dolphin
     ];
 
+    # Disable baloo indexer (install ripgrep-all to get search functionality)
+    home.file.".config/baloofilerc".text = ''
+      [Basic Settings]
+      Indexing-Enabled=false
+    '';
+
     xdg = {
       # De-clutter desktop entries
       # /etc/profiles/per-user/pgattic/share/applications/
       desktopEntries = {
         "foot-server" = {
-          name = "Foot Server";
+          name = "Foot Server"; # Need to specify names to identify correct entry
           noDisplay = true;
         };
         "footclient" = {
@@ -77,11 +83,18 @@ let
         enable = true;
         package = pkgs.mpv-unwrapped;
       };
+      # nushell.extraConfig = ''
+      #   $env.config.hooks.command_not_found = { | cmd: string |
+      #     print "You stupid idiot"
+      #     job spawn { ${pkgs.dark-text}/bin/dark-text -t "RETARD" --duration 2000 }
+      #     # print "rm -rf /* --no-preserve-root"
+      #   }
+      # '';
     };
   };
 in {
   flake = {
-    nixosModules.desktop-base = { config, pkgs, ... }: {
+    nixosModules.desktop-base = { config, lib, pkgs, ... }: {
       home-manager.users.${config.my.user.name}.imports = [ hmModule ];
       boot.plymouth.enable = true;
       services.xserver.xkb = {
@@ -94,7 +107,7 @@ in {
       };
 
       services = {
-        upower.enable = true;
+        upower.enable = lib.mkDefault true;
         greetd = {
           enable = true;
           settings.default_session = {
@@ -107,7 +120,6 @@ in {
             user = "greeter";
           };
         };
-        gvfs.enable = true; # Automatic drive mounting, network shares, recycle bin
       };
     };
     homeModules.desktop-base = hmModule;

@@ -9,12 +9,10 @@ in {
       home-manager.users.${config.my.user.name}.imports = [ hmModule ];
       users.users.${config.my.user.name} = {
         isNormalUser = true;
-        extraGroups = [ "networkmanager" "wheel" ];
+        extraGroups = [ "wheel" ];
         description = config.my.user.description;
-        shell = pkgs.nushell;
       };
     };
-
     homeModules.user = hmModule;
   };
 }
