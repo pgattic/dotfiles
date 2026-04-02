@@ -71,10 +71,13 @@ let
         settings = {
           # Librewolf-specific stuff
           "privacy.resistFingerprinting" = false; # Unfortunately required for muh dark mode to work
-          "privacy.clearOnShutdown.history" = false;
-          "privacy.clearOnShutdown.cookies" = false;
           "privacy.clearOnShutdown.cache" = false;
+          "privacy.clearOnShutdown.cookies" = false;
+          "privacy.clearOnShutdown.downloads" = false;
+          "privacy.clearOnShutdown.history" = false;
           "privacy.clearOnShutdown.sessions" = false;
+          "privacy.clearOnShutdown_v2.cache" = false;
+          "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
           "network.cookie.lifetimePolicy" = 0;
           "webgl.disabled" = false;
           "webgl.force-enabled" = true;

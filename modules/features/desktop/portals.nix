@@ -1,9 +1,9 @@
 {
   flake = {
-    nixosModules.portals = { pkgs, ... }: {
+    nixosModules.portals = { lib, pkgs, ... }: {
       xdg.portal = {
         enable = true;
-        extraPortals = with pkgs; [
+        extraPortals = with pkgs; lib.mkForce [
           xdg-desktop-portal-wlr
           xdg-desktop-portal-gtk
         ];
