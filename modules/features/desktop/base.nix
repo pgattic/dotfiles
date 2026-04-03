@@ -59,6 +59,7 @@ let
             color = "333333";
             button-color = "ffffff";
           };
+          mouse-bindings.primary-paste = "none";
         };
       };
       # ghostty = {

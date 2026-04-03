@@ -68,8 +68,7 @@
               jujutsu = {
                 enable = true;
                 settings = {
-                  user.name = config.my.user.name;
-                  user.email = config.my.user.email;
+                  user = { inherit (config.my.user) name email; };
                   ui = {
                     default-command = [ "log" "--reversed" ];
                     paginate = "never";

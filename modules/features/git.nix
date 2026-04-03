@@ -4,8 +4,7 @@ let
       git = {
         enable = true;
         settings = {
-          user.name = config.my.user.name;
-          user.email = config.my.user.email;
+          user = { inherit (config.my.user) name email; };
           color.ui = "auto";
           init.defaultBranch = "master";
         };
