@@ -70,7 +70,6 @@ let
         };
         settings = {
           # Librewolf-specific stuff
-          "privacy.resistFingerprinting" = false; # Unfortunately required for muh dark mode to work
           "privacy.clearOnShutdown.cache" = false;
           "privacy.clearOnShutdown.cookies" = false;
           "privacy.clearOnShutdown.downloads" = false;
@@ -78,6 +77,8 @@ let
           "privacy.clearOnShutdown.sessions" = false;
           "privacy.clearOnShutdown_v2.cache" = false;
           "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+          # Unfortunately required for muh dark mode to work (and webGL)
+          "privacy.resistFingerprinting" = false;
           "network.cookie.lifetimePolicy" = 0;
           "webgl.disabled" = false;
           "webgl.force-enabled" = true;
@@ -86,6 +87,7 @@ let
           "findbar.highlightAll" = true;
           "browser.gesture.swipe.left" = "cmd_scrollLeft";
           "browser.gesture.swipe.right" = "cmd_scrollRight";
+          "browser.cache.memory.capacity" = 1048576 * 3; # 3 Gigabytes
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UserChrome.css
           "sidebar.verticalTabs" = true;
           "sidebar.main.tools" = "simple-tab-groups@drive4ik";
