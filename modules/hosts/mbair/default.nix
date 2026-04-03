@@ -36,6 +36,7 @@
             niri.settings = {
               outputs."eDP-1".scale = 1.5;
               input.touchpad.dwt = true;
+              layout.shadow.enable = true;
             };
             noctalia-shell = {
               plugins.states.activate-linux = {

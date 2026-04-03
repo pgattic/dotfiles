@@ -17,6 +17,7 @@
         networking.hostName = "t480";
         system.stateVersion = "25.05";
 
+        zramSwap.enable = false; # This machine has a swap partition
         programs = {
           nix-ld.enable = true;
           appimage.enable = true;

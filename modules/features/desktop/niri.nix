@@ -107,7 +107,7 @@
             draw-border-with-background = false;
           }
         ];
-        overview.zoom = 0.25;
+        overview.zoom = 0.5;
         binds = {
           "Mod+Shift+Slash".action.show-hotkey-overlay = {};
 

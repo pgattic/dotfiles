@@ -93,6 +93,7 @@ in {
       boot.loader.systemd-boot.enable = lib.mkDefault true;
       # Allow NixOS to add itself to bootloader options
       boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
+      zramSwap.enable = lib.mkDefault true;
 
       home-manager = {
         useUserPackages = true;
