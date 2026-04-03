@@ -10,7 +10,7 @@
 in {
   flake = {
     nixosModules.agenix = { config, pkgs, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
       imports = [
         inputs.agenix.nixosModules.default
       ];

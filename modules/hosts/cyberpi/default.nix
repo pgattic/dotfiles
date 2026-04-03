@@ -29,20 +29,18 @@
 
         my.desktop.touch_options = true;
 
-        home-manager.users.${config.my.user.name}.imports = [
-          ({ pkgs, ... }: {
-            home.packages = with pkgs; [
-              luanti-client
-            ];
-            programs = {
-              chromium = {
-                enable = true;
-                package = pkgs.ungoogled-chromium;
-              };
-              niri.settings.input.mod-key = "Alt";
+        home-manager.users.${config.my.user.name} = {
+          home.packages = with pkgs; [
+            luanti-client
+          ];
+          programs = {
+            chromium = {
+              enable = true;
+              package = pkgs.ungoogled-chromium;
             };
-          })
-        ];
+            niri.settings.input.mod-key = "Alt";
+          };
+        };
       })
     ];
   };

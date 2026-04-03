@@ -40,13 +40,12 @@ let
 in {
   flake = {
     nixosModules.nushell = { config, pkgs, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
       users.users.${config.my.user.name}.shell = pkgs.nushell;
       environment.sessionVariables = {
         SHELL = "nu";
       };
     };
-
     homeModules.nushell = hmModule;
   };
 }

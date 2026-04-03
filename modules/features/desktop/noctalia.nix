@@ -169,7 +169,7 @@
 in {
   flake = {
     nixosModules.noctalia = { config, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
     };
     homeModules.noctalia = hmModule;
   };

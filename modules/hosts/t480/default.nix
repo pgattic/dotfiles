@@ -13,7 +13,7 @@
       config.flake.nixosModules.office
       config.flake.nixosModules.obsidian
 
-      ({ config, ... }: {
+      ({ config, pkgs, ... }: {
         networking.hostName = "t480";
         system.stateVersion = "25.05";
 
@@ -26,65 +26,63 @@
           mullvad-vpn.enable = true;
         };
 
-        home-manager.users.${config.my.user.name}.imports = [
-          ({ pkgs, ... }: {
-            home.packages = with pkgs; [
-              pinta
-              antigravity-fhs
-              luanti-client
-              zoom-us
-              ventoy
-              signal-desktop
-              whatsapp-electron
-              zotero
-              bambu-studio
-              inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
-            ];
+        home-manager.users.${config.my.user.name} = {
+          home.packages = with pkgs; [
+            pinta
+            antigravity-fhs
+            luanti-client
+            zoom-us
+            ventoy
+            signal-desktop
+            whatsapp-electron
+            zotero
+            bambu-studio
+            inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
+          ];
 
-            programs = {
-              vesktop.enable = true;
-              # claude-code.enable = true;
-              element-desktop.enable = true;
-              # calibre.enable = true;
-              # prismlauncher.enable = true;
-              # helix.enable = true;
-              chromium = {
-                enable = true;
-                package = pkgs.ungoogled-chromium;
+          programs = {
+            vesktop.enable = true;
+            # claude-code.enable = true;
+            element-desktop.enable = true;
+            # calibre.enable = true;
+            # prismlauncher.enable = true;
+            # helix.enable = true;
+            chromium = {
+              enable = true;
+              package = pkgs.ungoogled-chromium;
+            };
+            ripgrep-all.enable = true;
+            niri.settings.outputs."eDP-1".scale = 1.0;
+            noctalia-shell = {
+              plugins.states.activate-linux = {
+                sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+                enabled = true;
               };
-              ripgrep-all.enable = true;
-              niri.settings.outputs."eDP-1".scale = 1.0;
-              noctalia-shell = {
-                plugins.states.activate-linux = {
-                  sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-                  enabled = true;
-                };
-                pluginSettings.activate-linux = {
-                  customizeText = true;
-                  firstLine = "Activate Linux";
-                  secondLine = "Go to Settings to activate Linux.";
-                };
-              };
-              jujutsu = {
-                enable = true;
-                settings = {
-                  user = { inherit (config.my.user) name email; };
-                  ui = {
-                    default-command = [ "log" "--reversed" ];
-                    paginate = "never";
-                  };
-                };
-              };
-              jjui = {
-                enable = true;
+              pluginSettings.activate-linux = {
+                customizeText = true;
+                firstLine = "Activate Linux";
+                secondLine = "Go to Settings to activate Linux.";
               };
             };
-
-            services = {
-              kdeconnect.enable = true;
+            jujutsu = {
+              enable = true;
+              settings = {
+                user = { inherit (config.my.user) name email; };
+                ui = {
+                  default-command = [ "log" "--reversed" ];
+                  paginate = "never";
+                };
+              };
             };
-          })
-        ];
+            jjui = {
+              enable = true;
+            };
+          };
+
+          services = {
+            kdeconnect.enable = true;
+          };
+        };
       })
     ];
   };

@@ -97,7 +97,7 @@ in {
       home-manager = {
         useUserPackages = true;
         extraSpecialArgs = { inherit inputs; };
-        users.${config.my.user.name}.imports = [ hmModule ];
+        users.${config.my.user.name} = hmModule;
       };
 
       time.timeZone = "America/Boise";
@@ -134,7 +134,6 @@ in {
       systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # Don't need speech dispatcher
       systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
     };
-
     homeModules.base = hmModule;
   };
 }

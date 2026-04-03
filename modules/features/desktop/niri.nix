@@ -288,7 +288,7 @@
 in {
   flake = {
     nixosModules.niri = { config, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
       programs.niri = {
         enable = true;
         useNautilus = false; # Silly default options
@@ -298,7 +298,6 @@ in {
         XDG_SESSION_DESKTOP = "niri";
       };
     };
-
     homeModules.niri = hmModule;
   };
 }

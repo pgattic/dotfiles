@@ -24,7 +24,7 @@ let
 in {
   flake = {
     nixosModules.office = { config, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
     };
     homeModules.office = hmModule;
   };

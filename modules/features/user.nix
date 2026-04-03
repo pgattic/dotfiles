@@ -6,7 +6,7 @@ let
 in {
   flake = {
     nixosModules.user = { config, pkgs, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
       users.users.${config.my.user.name} = {
         isNormalUser = true;
         extraGroups = [ "wheel" ];

@@ -81,7 +81,7 @@ in {
     nixosModules.options = { config, ... }: {
       options.my = myOptions;
       config = {
-        home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+        home-manager.users.${config.my.user.name} = hmModule;
       };
     };
     homeModules.options = hmModule;

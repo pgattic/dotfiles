@@ -12,12 +12,11 @@ let
 in {
   flake = {
     nixosModules.neovim = { config, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
       environment.sessionVariables = {
         EDITOR = "nvim";
       };
     };
-
     homeModules.neovim = hmModule;
   };
 }

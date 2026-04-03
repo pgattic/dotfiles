@@ -7,7 +7,7 @@ let
 in {
   flake = {
     nixosModules.antimicrox = { lib, config, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
 
       boot.kernelModules = [ "uinput" ];
       users.users.${config.my.user.name}.extraGroups = lib.mkAfter [

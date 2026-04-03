@@ -96,7 +96,7 @@ let
 in {
   flake = {
     nixosModules.desktop-base = { config, lib, pkgs, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
       boot.plymouth.enable = true;
       services.xserver.xkb = {
         layout = "us";

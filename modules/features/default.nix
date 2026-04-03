@@ -10,7 +10,6 @@
         config.flake.nixosModules.user
       ];
     };
-
     homeModules.default = { ... }: {
       imports = [
         config.flake.homeModules.base

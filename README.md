@@ -26,7 +26,7 @@ environment.systemPackages = with pkgs; [ git neovim nh ];
       config.flake.nixosModules.default
       config.flake.nixosModules.desktop-default
       config.flake.nixosModules.browser
-      {
+      ({ pkgs, ... }: {
         networking.hostName = "new-computer";
         system.stateVersion = "25.05";
 
@@ -36,14 +36,12 @@ environment.systemPackages = with pkgs; [ git neovim nh ];
         my.desktop.touch_options = true;
 
         # Example of adding some home-manager config
-        home-manager.users.${config.my.user.name}.imports = [
-          ({ pkgs, ... }: {
-            home.packages = with pkgs; [
-              luanti-client
-            ];
-          }
-        ];
-      }
+        home-manager.users.${config.my.user.name} = {
+          home.packages = with pkgs; [
+            luanti-client
+          ];
+        };
+      })
     ];
   };
 }

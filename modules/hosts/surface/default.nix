@@ -10,7 +10,7 @@
       config.flake.nixosModules.zeditor
       config.flake.nixosModules.browser
 
-      ({ config, ... }: {
+      ({ config, pkgs, ... }: {
         # Enable power button, volume rocker
         boot.initrd.kernelModules = [ "pinctrl_sunrisepoint" ]; # lsmod | grep pinctrl
 
@@ -19,13 +19,9 @@
 
         my.desktop.touch_options = true;
 
-        home-manager.users.${config.my.user.name}.imports = [
-          ({ pkgs, ... }: {
-            home.packages = with pkgs; [
-              luanti-client
-              rnote
-            ];
-          })
+        home-manager.users.${config.my.user.name}.home.packages = with pkgs; [
+          luanti-client
+          rnote
         ];
       })
     ];

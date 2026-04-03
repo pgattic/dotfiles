@@ -51,7 +51,7 @@
 in {
   flake = {
     nixosModules.stylix = { config, pkgs, ... }: {
-      home-manager.users.${config.my.user.name}.imports = [ hmModule ];
+      home-manager.users.${config.my.user.name} = hmModule;
       stylix = {
         enable = true;
         homeManagerIntegration.autoImport = false;
