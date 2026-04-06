@@ -17,7 +17,7 @@ vim.opt.fillchars = { eob = " " } -- Don't fill the extra space with "~"
 vim.opt.winborder = 'rounded'
 vim.opt.scrolloff = 4
 vim.opt.signcolumn = "yes" -- Always show gutter even if empty
-vim.opt.cmdheight = 0 -- Single line shared for bar and command palette
+-- vim.opt.cmdheight = 0 -- Single line shared for bar and command palette
 vim.opt.title = true
 -- Indentation
 vim.opt.expandtab = true

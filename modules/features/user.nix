@@ -1,7 +1,7 @@
 let
   hmModule = { config, ... }: {
     home.username = config.my.user.name;
-    home.homeDirectory = config.my.user.home_dir;
+    home.homeDirectory = "/home/${config.my.user.name}";
   };
 in {
   flake = {

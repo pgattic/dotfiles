@@ -16,11 +16,6 @@
         default = "pgattic@gmail.com";
         description = "Primary user's email";
       };
-      home_dir = mkOption {
-        type = types.str;
-        default = "/home/pgattic";
-        description = "Primary user's home directory";
-      };
     };
     desktop = {
       touch_options = mkEnableOption "touch-related options like extra buttons, slightly bigger UI, etc.";

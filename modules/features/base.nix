@@ -128,7 +128,7 @@ in {
       };
 
       environment.sessionVariables = {
-        NH_OS_FLAKE = "${config.my.user.home_dir}/dotfiles";
+        NH_OS_FLAKE = "/home/${config.my.user.name}/dotfiles";
       };
 
       # documentation.enable = lib.mkDefault false; # Disable all documentation

@@ -13,6 +13,7 @@
       showExecTooltip = false;
       showTextTooltip = false;
     };
+    assets = ../../../assets;
   in {
     imports = [
       inputs.noctalia.homeModules.default
@@ -35,7 +36,7 @@
     };
 
     home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
-      defaultWallpaper = "${config.my.user.home_dir}/dotfiles/assets/wallpapers/wedding_temple.jpg";
+      defaultWallpaper = "${assets}/wallpapers/wedding_temple.jpg";
     };
     stylix.targets.noctalia-shell.enable = false; # I do more precise coloring
 
@@ -81,7 +82,7 @@
         general = {
           enableShadows = false;
           radiusRatio = config.my.desktop.corner_radius / 20.0;
-          avatarImage = "${config.my.user.home_dir}/dotfiles/assets/profile.jpg";
+          avatarImage = "${assets}/profile.jpg";
         };
         ui = {
           panelBackgroundOpacity = config.my.desktop.opacity;
@@ -160,7 +161,7 @@
           useFahrenheit = true;
         };
         wallpaper = {
-          directory = "${config.my.user.home_dir}/dotfiles/assets/wallpapers";
+          directory = "${assets}/wallpapers";
           transitionType = "stripes";
         };
       };

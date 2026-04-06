@@ -24,7 +24,7 @@
           EDITOR = "nvim";
           XDG_CURRENT_DESKTOP = "niri";
           XDG_SESSION_DESKTOP = "niri";
-          NH_HOME_FLAKE = "${config.my.user.home_dir}/dotfiles";
+          NH_OS_FLAKE = "/home/${config.my.user.name}/dotfiles";
           NIXOS_OZONE_WL = "1";
         };
         hotkey-overlay.skip-at-startup = true;

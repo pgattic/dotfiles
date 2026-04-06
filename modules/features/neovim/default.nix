@@ -1,4 +1,5 @@
 let
+  nvimConfig = ./config;
   hmModule = {
     programs = {
       neovim = {
@@ -7,6 +8,11 @@ let
         vimAlias = true;
         vimdiffAlias = true;
       };
+    };
+    home.file.".config/nvim/init.lua".source = "${nvimConfig}/init.lua";
+    home.file.".config/nvim/lua" = {
+      source = "${nvimConfig}/lua";
+      recursive = true;
     };
   };
 in {

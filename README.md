@@ -32,7 +32,6 @@ environment.systemPackages = with pkgs; [ git neovim nh ];
 
         # Examples of modifying config values (consult `/modules/options.nix` for more info)
         my.user.name = "pgattic";
-        my.user.home_dir = "/home/pgattic";
         my.desktop.touch_options = true;
 
         # Example of adding some home-manager config
@@ -47,5 +46,4 @@ environment.systemPackages = with pkgs; [ git neovim nh ];
 }
 ```
 6. Rebuild the system with `nh os switch /home/pgattic/dotfiles#new-computer` (subsequent rebuilds can be done with simply `nh os switch`)
-7. Symlink the Neovim config with `mkdir -p /home/pgattic/.config/ && ln -s /home/user/dotfiles/config/nvim` (Neovim is the only thing not configured through Nix at this point)
 
