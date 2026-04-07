@@ -273,7 +273,7 @@
           # allow-inhibiting=false on Mod+Escape in your KDL
           # "Mod+Escape".action.toggle-keyboard-shortcuts-inhibit.enable = true;
 
-          "Ctrl+Alt+Delete".action.quit = {}; # Emergency keybind for when shell is broken
+          "Mod+Ctrl+Alt+E".action.quit = {}; # Emergency keybind for when shell is broken
           "Mod+Shift+P".action.power-off-monitors = {};
 
           # Disable the keys I only ever hit on accident

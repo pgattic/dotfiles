@@ -3,6 +3,7 @@
     overlays = [
       inputs.nur.overlays.default # Nix User Repository
       (import ../../overlays/bambu-studio.nix)
+      (import ../../overlays/claw-code.nix)
       ((import ../../overlays/dark-text.nix) inputs.dark-text-src)
       (import ../../overlays/luanti-client.nix)
       (import ../../overlays/mineclonia-game.nix)

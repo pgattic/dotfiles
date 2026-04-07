@@ -1,7 +1,7 @@
 
 # .dotfiles
 
-This repository includes config files and scripts for their installation.
+pgattic's NixOS dotfiles
 
 ## Usage
 

@@ -30,6 +30,7 @@
           home.packages = with pkgs; [
             luanti-client
             inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
+            signal-desktop
           ];
           programs = {
             vesktop.enable = true;
@@ -48,6 +49,10 @@
                 firstLine = "Activate Linux";
                 secondLine = "Go to Settings to activate Linux.";
               };
+            };
+            chromium = {
+              enable = true;
+              package = pkgs.ungoogled-chromium;
             };
           };
         };

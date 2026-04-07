@@ -92,7 +92,7 @@ let
           "sidebar.verticalTabs" = true;
           "sidebar.main.tools" = "simple-tab-groups@drive4ik";
           "browser.toolbars.bookmarks.visibility" = "never"; # "always", "never", "newtab"
-          "browser.tabs.inTitleBar" = 0; # Hide client-side decorations
+          "browser.tabs.inTitlebar" = 0; # Hide client-side decorations
           "browser.startup.page" = 3; # Reopen last session on start
           "browser.uiCustomization.state" = builtins.toJSON {
             placements = {
