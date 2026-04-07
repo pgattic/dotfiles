@@ -17,7 +17,6 @@
         screenshot-path = "~/screenshots/%Y-%m-%d %H-%M-%S.png";
         environment = {
           ELECTRON_OZONE_PLATFORM_HINT = "auto"; # Prefer Wayland for electron apps (doesn't always work)
-          DISPLAY = ":0"; # required for X11 apps to connect to xwayland-satellite properly
 
           # Temporary fix for home-manager-only Nix installations
           SHELL = "nu";

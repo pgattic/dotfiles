@@ -77,6 +77,7 @@ let
         enable = true;
         config = {
           should_highlight_unselected_search = "1"; # Highlight all search matches
+          super_fast_search = "0"; # Don't build search cache
         };
       };
       imv.enable = true;

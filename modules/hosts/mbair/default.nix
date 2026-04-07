@@ -15,6 +15,12 @@
         # Use `--impure` while building
         hardware.asahi.peripheralFirmwareDirectory = /etc/nixos/firmware;
 
+        zramSwap.enable = false; # Needs more
+        swapDevices = [{
+          device = "/var/lib/swapfile";
+          size = 16*1024; # 16 GiB
+        }];
+
         # Uncomment this to support WPA3 (at the cost of some other connections working)
         # networking.networkmanager.wifi.backend = "iwd";
         # networking.wireless.iwd = {
@@ -54,6 +60,7 @@
               enable = true;
               package = pkgs.ungoogled-chromium;
             };
+            codex.enable = true;
           };
         };
       })
