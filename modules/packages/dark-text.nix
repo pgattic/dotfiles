@@ -1,22 +1,20 @@
 # Customized version of dark-text from https://github.com/vimjoyer/dark-text
 # Strips out audio dependencies, uses noctalia-qs instead of normal quickshell
-dark-text-src: final: prev: { # Requires the old dard-text source
-  dark-text =
-    let
-      pkgs = final;
+{ inputs, ... }: {
+  perSystem = { pkgs, ... }: let
+    dark-text-src = inputs.dark-text-src;
+    FONTCONFIG_FILE =
+      pkgs.makeFontsConf { fontDirectories = [ pkgs.eb-garamond ]; };
 
-      FONTCONFIG_FILE =
-        pkgs.makeFontsConf { fontDirectories = [ pkgs.eb-garamond ]; };
+    TEXT_SHADER = pkgs.runCommand "shader.qsb" {} ''
+      ${pkgs.lib.getExe pkgs.kdePackages.qtshadertools} \
+        --qt6 -o $out ${dark-text-src + "/shaders/rays.frag"}
+    '';
 
-      TEXT_SHADER = pkgs.runCommand "shader.qsb" {} ''
-        ${pkgs.lib.getExe pkgs.kdePackages.qtshadertools} \
-          --qt6 -o $out ${dark-text-src + "/shaders/rays.frag"}
-      '';
+    OVERLAYS = map (f: pkgs.lib.strings.removeSuffix ".qml" f)
+      (builtins.attrNames (builtins.readDir (dark-text-src + "/shells")));
 
-      OVERLAYS = map (f: pkgs.lib.strings.removeSuffix ".qml" f)
-        (builtins.attrNames (builtins.readDir (dark-text-src + "/shells")));
-    in
-    pkgs.writeShellApplication {
+    dark-text = pkgs.writeShellApplication {
       name = "dark-text";
       runtimeInputs = [ pkgs.noctalia-qs ];
       bashOptions = [ "errexit" "pipefail" ];
@@ -126,5 +124,9 @@ dark-text-src: final: prev: { # Requires the old dard-text source
         fi
       '';
     };
+  in {
+    overlayAttrs = { inherit dark-text; };
+    packages = { inherit dark-text; };
+  };
 }
 

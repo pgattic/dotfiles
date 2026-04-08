@@ -22,6 +22,11 @@ let
         # };
       };
       extraConfig = ''
+        $env.config.hooks.command_not_found = { |cmd: string|
+          print "You stupid idiot"
+          job spawn { ${pkgs.dark-text}/bin/dark-text -t "RETARD" --duration 2000 }
+        }
+
         # Startup commands
         open --raw "${../../assets}/torterra.txt" | print
         $"Uptime: (ansi green_bold)((sys host).uptime)(ansi reset)" | print
