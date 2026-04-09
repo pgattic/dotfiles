@@ -20,6 +20,7 @@
       inherit pkgs;
       imports = [ wlib.wrapperModules.noctalia-shell ];
 
+      extraPackages = [ pkgs.cliphist ];
       plugins = {
         sources = [
           {
@@ -69,7 +70,7 @@
         notifications.backgroundOpacity = opacity;
         dock.enabled = false;
         bar = {
-          # density = if config.my.desktop.touch_options then "default" else "compact";
+          density = "compact";
           showCapsule = false;
           outerCorners = false;
           widgets = {
@@ -116,7 +117,7 @@
           enableClipboardHistory = true; # Required for clipboard manager plugin to work
           terminalCommand = "foot";
           enableSettingsSearch = false;
-          # overviewLayer = !config.my.desktop.touch_options; # Gets in the way of OSK
+          overviewLayer = true;
         };
         location = {
           name = "Provo, United States";
@@ -131,7 +132,6 @@
     });
 
     noctalia-activate-linux = noctalia-base.config.apply ({ lib, ... }: {
-      extraPackages = [ pkgs.cliphist ];
       settings = {
         plugins.states.activate-linux = {
           sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
@@ -146,9 +146,9 @@
     });
 
     noctalia-touch = noctalia-base.config.apply ({ lib, ... }: {
-      extraPackages = [ pkgs.cliphist ];
       settings = {
         appLauncher.viewMode = "grid";
+        bar.density = lib.mkForce "default";
         bar.widgets.left = lib.mkForce [
           { id = "Workspace"; }
           { id = "SystemMonitor"; }
@@ -160,6 +160,7 @@
           })
           { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
         ];
+        appLauncher.overviewLayer = lib.mkForce false; # Gets in the way of the OSK
       };
     });
 
