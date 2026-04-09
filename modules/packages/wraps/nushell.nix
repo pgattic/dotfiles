@@ -33,13 +33,22 @@
       env.EDITOR = lib.getExe self'.packages.neovim;
       extraPackages = [
         self'.packages.neovim
+        self'.packages.btop
+        self'.packages.fastfetch
+        self'.packages.nh
 
+        pkgs.bat
+        pkgs.openssh_hpn
+        pkgs.ripgrep
+        pkgs.less
+        pkgs.jq
         pkgs.usbutils
         pkgs.gdu
         pkgs.file
         pkgs.tree
         pkgs.ouch # Archive manager
         pkgs.tinyxxd
+        pkgs.nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
       ];
     });
 

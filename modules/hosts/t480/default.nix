@@ -21,6 +21,10 @@
           nix-ld.enable = true;
           appimage.enable = true;
           appimage.binfmt = true;
+          git = {
+            enable = true;
+            package = self'.packages.git;
+          };
           niri = {
             enable = true;
             useNautilus = false;
@@ -46,6 +50,7 @@
           whatsapp-electron
           zotero
           self'.packages.bambu-studio
+          self'.packages.jujutsu
           inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
         ];
 
@@ -62,16 +67,6 @@
               package = pkgs.ungoogled-chromium;
             };
             ripgrep-all.enable = true;
-            jujutsu = {
-              enable = true;
-              settings = {
-                user = { inherit (config.my.user) name email; };
-                ui = {
-                  default-command = [ "log" "--reversed" ];
-                  paginate = "never";
-                };
-              };
-            };
             jjui = {
               enable = true;
             };

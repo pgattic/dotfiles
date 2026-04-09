@@ -1,11 +1,5 @@
 let
   hmModule = { pkgs, ... }: {
-    home.packages = with pkgs; [
-      kdePackages.ark
-        unrar # Nonfree package
-      kdePackages.dolphin
-    ];
-
     # Disable baloo indexer (install ripgrep-all to get search functionality)
     home.file.".config/baloofilerc".text = ''
       [Basic Settings]
@@ -41,18 +35,6 @@ let
           super_fast_search = "0"; # Don't build search cache
         };
       };
-      imv.enable = true;
-      mpv = {
-        enable = true;
-        package = pkgs.mpv-unwrapped;
-      };
-      # nushell.extraConfig = ''
-      #   $env.config.hooks.command_not_found = { | cmd: string |
-      #     print "You stupid idiot"
-      #     job spawn { ${pkgs.dark-text}/bin/dark-text -t "RETARD" --duration 2000 }
-      #     # print "rm -rf /* --no-preserve-root"
-      #   }
-      # '';
     };
   };
 in {

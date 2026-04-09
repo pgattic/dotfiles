@@ -1,19 +1,12 @@
-let
-  hmModule = { pkgs, ... }: {
-    home.packages = with pkgs; [
-      slack
+{
+  flake.nixosModules.work = { config, lib, pkgs, ... }: {
+    environment.systemPackages = [
+      pkgs.slack
     ];
-  };
-in {
-  flake = {
-    nixosModules.work = { config, lib, ... }: {
-      home-manager.users.${config.my.user.name} = hmModule;
-      # For doing terminals through USB
-      users.users.${config.my.user.name}.extraGroups = lib.mkAfter [
-        "dialout"
-      ];
-    };
-    homeModules.work = hmModule;
+    # For doing terminals through USB
+    users.users.${config.my.user.name}.extraGroups = lib.mkAfter [
+      "dialout"
+    ];
   };
 }
 

@@ -6,6 +6,10 @@
       inherit pkgs;
       imports = [ wlib.wrapperModules.neovim ];
 
+      extraPackages = [
+        pkgs.nil # Nix language server
+      ];
+
       settings = {
         config_directory = ./.;
         aliases = [ "vi" "vim" "vimdiff" ];

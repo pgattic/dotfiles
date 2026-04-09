@@ -11,69 +11,8 @@
   };
   hmModule = { pkgs, ... }: {
     nixpkgs = nixpkgsConf;
-    home.packages = with pkgs; [
-      usbutils
-      gdu
-      file
-      tree
-      ouch # Archive manager
-      tinyxxd
-
-      nil # Nix language server
-      nix-output-monitor # provides `nom` as a cooler replacement for `nix` commands
-    ];
-
     programs = {
       home-manager.enable = true;
-      nh.enable = true;
-      bat.enable = true;
-      ripgrep.enable = true;
-      less.enable = true;
-      jq.enable = true;
-      ssh = {
-        enable = true;
-        package = pkgs.openssh_hpn;
-        enableDefaultConfig = false; # Will apparently be deprecated soon
-      };
-      btop = {
-        enable = true;
-        settings = {
-          theme_background = false;
-          vim_keys = true;
-          proc_gradient = false;
-          proc_filter_kernel = true;
-        };
-      };
-      zellij = {
-        enable = true;
-        settings = {
-          show_startup_tips = false;
-        };
-      };
-      fastfetch = {
-        enable = true;
-        settings = {
-          "logo" = "NixOS";
-          "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json";
-          "modules" = [
-            "title"
-            "separator"
-            "os" "host" "kernel"
-            "uptime"
-            "packages"
-            "shell"
-            "display"
-            "de" "wm"
-            "terminal" "terminalfont"
-            "cpu" "gpu" "memory" "swap" "disk"
-            "localip"
-            "battery"
-            "poweradapter"
-            "break"
-            "colors"
-          ];
-        };
-      };
     };
     home.stateVersion = "25.05";
   };
@@ -121,10 +60,6 @@ in {
       services = {
         fwupd.enable = lib.mkDefault true;
         openssh.package = pkgs.openssh_hpn;
-      };
-
-      environment.sessionVariables = {
-        NH_OS_FLAKE = "/home/${config.my.user.name}/dotfiles";
       };
 
       # documentation.enable = lib.mkDefault false; # Disable all documentation

@@ -1,9 +1,12 @@
-{ inputs, ... }: {
+{ inputs, lib, ... }: {
   perSystem = { pkgs, self', ... }: let
     wlib = inputs.nix-wrapper-modules.lib;
     corner_radius = 10.0;
     opacity = 0.85;
     assets = ../../../assets;
+    foot = lib.getExe self'.packages.foot;
+    btop = lib.getExe self'.packages.btop;
+
     simpleWidget = { tooltip, icon, cmd }: {
       id = "CustomButton";
       generalTooltipText = tooltip;
@@ -13,13 +16,9 @@
       showTextTooltip = false;
     };
 
-
     noctalia-base = wlib.evalModule ({
       inherit pkgs;
       imports = [ wlib.wrapperModules.noctalia-shell ];
-
-      env = {
-      };
 
       plugins = {
         sources = [
@@ -106,7 +105,7 @@
           { action = "rebootToUefi"; enabled = false; }
           { action = "userspaceReboot"; enabled = false; }
         ];
-        systemMonitor.externalMonitor = "foot btop";
+        systemMonitor.externalMonitor = "${foot} ${btop}";
         audio.volumeOverdrive = true;
         osd = { # Popup for volume/brightness changes
           location = "bottom";

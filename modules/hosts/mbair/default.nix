@@ -35,19 +35,27 @@
         environment.systemPackages = [
           self'.packages.foot-rude
           self'.packages.luanti-client
+          self'.packages.desktop
           inputs.wasmcarts.packages.${pkgs.stdenv.hostPlatform.system}.engine-linux
           pkgs.signal-desktop
         ];
 
-        programs.niri = {
-          enable = true;
-          useNautilus = false;
-          package = (self'.packages.niri-activate-linux.apply {
-            settings = {
-              outputs."eDP-1".scale = 1.5;
-              # input.touchpad.dwt = lib.mkAfter (_: {}); # TODO: Make this merge properly
-            };
-          }).wrapper;
+        programs = {
+          git = {
+            enable = true;
+            package = self'.packages.git;
+          };
+          lazygit.enable = true;
+          niri = {
+            enable = true;
+            useNautilus = false;
+            package = (self'.packages.niri-activate-linux.apply {
+              settings = {
+                outputs."eDP-1".scale = 1.5;
+                # input.touchpad.dwt = lib.mkAfter (_: {}); # TODO: Make this merge properly
+              };
+            }).wrapper;
+          };
         };
 
         home-manager.users.${config.my.user.name}.programs = {
