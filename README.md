@@ -17,15 +17,14 @@ environment.systemPackages = with pkgs; [ git neovim nh ];
 4. Add a directory in [`/modules/hosts/`](/modules/hosts/) for the new device, and copy `/etc/nixos/hardware-configuration.nix` to the new dir under the name `_hardware.nix`.
 5. Add a `default.nix` in the new directory with the example minimal configuration:
 ```nix
-{ config, inputs, ... }: {
-  flake.nixosConfigurations.new-computer = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
+{ inputs, withSystem, ... }: {
+  flake.nixosConfigurations.new-computer = withSystem "x86_64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
-      config.flake.nixosModules.options
-      config.flake.nixosModules.default
-      config.flake.nixosModules.desktop-default
-      config.flake.nixosModules.browser
+      inputs.self.nixosModules.options
+      inputs.self.nixosModules.default
+      inputs.self.nixosModules.desktop-default
+      inputs.self.nixosModules.browser
       ({ pkgs, ... }: {
         networking.hostName = "new-computer";
         system.stateVersion = "25.05";
@@ -34,15 +33,19 @@ environment.systemPackages = with pkgs; [ git neovim nh ];
         my.user.name = "pgattic";
         my.desktop.touch_options = true;
 
+        environment.systemPackages = [
+          self'.packages.foot
+          pkgs.rnote
+        ];
+
         # Example of adding some home-manager config
-        home-manager.users.${config.my.user.name} = {
-          home.packages = with pkgs; [
-            luanti-client
-          ];
+        home-manager.users.${config.my.user.name}.programs.chromium = {
+          enable = true;
+          package = pkgs.ungoogled-chromium;
         };
       })
     ];
-  };
+  });
 }
 ```
 6. Rebuild the system with `nh os switch /home/pgattic/dotfiles#new-computer` (subsequent rebuilds can be done with simply `nh os switch`)

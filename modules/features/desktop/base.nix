@@ -18,50 +18,17 @@ let
       Indexing-Enabled=false
     '';
 
-    xdg = {
-      # De-clutter desktop entries
-      # /etc/profiles/per-user/pgattic/share/applications/
-      desktopEntries = {
-        "foot-server" = {
-          name = "Foot Server"; # Need to specify names to identify correct entry
-          noDisplay = true;
-        };
-        "footclient" = {
-          name = "Foot Client";
-          noDisplay = true;
-        };
-      };
-      mimeApps = {
-        enable = true;
-        defaultApplications = {
-          "image/png" = "imv-dir.desktop";
-          "image/jpeg" = "imv-dir.desktop";
-          "video/x-matroska" = "mpv.desktop";
-          "video/vnd.avi" = "mpv.desktop";
-          "video/mp4" = "mpv.desktop";
-        };
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "image/png" = "imv-dir.desktop";
+        "image/jpeg" = "imv-dir.desktop";
+        "video/x-matroska" = "mpv.desktop";
+        "video/vnd.avi" = "mpv.desktop";
+        "video/mp4" = "mpv.desktop";
       };
     };
     programs = {
-      foot = {
-        enable = true;
-        settings = {
-          main = {
-            term = "xterm-256color";
-            resize-delay-ms = 0;
-          };
-          cursor = {
-            style = "beam";
-            blink = true;
-          };
-          csd = {
-            font = "Sans:size=10";
-            color = "333333";
-            button-color = "ffffff";
-          };
-          mouse-bindings.primary-paste = "none";
-        };
-      };
       # ghostty = {
       #   enable = true;
       #   settings = {

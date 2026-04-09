@@ -1,17 +1,16 @@
-{ config, inputs, ... }: {
-  flake.nixosConfigurations.t480 = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
+{ inputs, withSystem, ... }: {
+  flake.nixosConfigurations.surface = withSystem "x86_64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
-      config.flake.nixosModules.options
-      config.flake.nixosModules.default
-      config.flake.nixosModules.desktop-default
-      config.flake.nixosModules.work
-      config.flake.nixosModules.zeditor
-      config.flake.nixosModules.browser
-      config.flake.nixosModules.office
-      config.flake.nixosModules.obsidian
+      inputs.self.nixosModules.options
+      inputs.self.nixosModules.default
+      inputs.self.nixosModules.desktop-default
+      inputs.self.nixosModules.work
+      inputs.self.nixosModules.zeditor
+      inputs.self.nixosModules.browser
+      inputs.self.nixosModules.office
+      inputs.self.nixosModules.obsidian
 
       ({ config, pkgs, ... }: {
         networking.hostName = "t480";
@@ -27,20 +26,21 @@
           mullvad-vpn.enable = true;
         };
 
-        home-manager.users.${config.my.user.name} = {
-          home.packages = with pkgs; [
-            pinta
-            antigravity-fhs
-            luanti-client
-            zoom-us
-            ventoy
-            signal-desktop
-            whatsapp-electron
-            zotero
-            bambu-studio
-            inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
-          ];
+        environment.systemPackages = with pkgs; [
+          self'.packages.foot-rude
+          pinta
+          antigravity-fhs
+          self'.packages.luanti-client
+          zoom-us
+          ventoy
+          signal-desktop
+          whatsapp-electron
+          zotero
+          self'.packages.bambu-studio
+          inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
+        ];
 
+        home-manager.users.${config.my.user.name} = {
           programs = {
             vesktop.enable = true;
             # claude-code.enable = true;
@@ -86,6 +86,6 @@
         };
       })
     ];
-  };
+  });
 }
 

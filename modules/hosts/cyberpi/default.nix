@@ -1,12 +1,11 @@
-{ config, inputs, ... }: {
-  flake.nixosConfigurations.cyberpi = inputs.nixpkgs.lib.nixosSystem {
-    system = "aarch64-linux";
+{ inputs, withSystem, ... }: {
+  flake.nixosConfigurations.cyberpi = withSystem "aarch64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
       inputs.nixos-hardware.nixosModules.raspberry-pi-4
-      config.flake.nixosModules.options
-      config.flake.nixosModules.default
-      config.flake.nixosModules.desktop-default
+      inputs.self.nixosModules.options
+      inputs.self.nixosModules.default
+      inputs.self.nixosModules.desktop-default
 
       ({ config, pkgs, ... }: {
         boot.loader.systemd-boot.enable = false;
@@ -29,20 +28,20 @@
 
         my.desktop.touch_options = true;
 
-        home-manager.users.${config.my.user.name} = {
-          home.packages = with pkgs; [
-            luanti-client
-          ];
-          programs = {
-            chromium = {
-              enable = true;
-              package = pkgs.ungoogled-chromium;
-            };
-            niri.settings.input.mod-key = "Alt";
+        environment.systemPackages = [
+          self'.packages.foot-rude
+          self'.packages.luanti-client
+        ];
+
+        home-manager.users.${config.my.user.name}.programs = {
+          chromium = {
+            enable = true;
+            package = pkgs.ungoogled-chromium;
           };
+          niri.settings.input.mod-key = "Alt";
         };
       })
     ];
-  };
+  });
 }
 

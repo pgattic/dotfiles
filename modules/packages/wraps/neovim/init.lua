@@ -66,30 +66,6 @@ vim.filetype.add({
   },
 })
 
--- PLUGINS --
-vim.pack.add({
-  -- used by telescope, mini.files, others
-  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
-  -- Dependency of telescope, lean, and others
-  { src = "https://github.com/nvim-lua/plenary.nvim" },
-
-  { src = "https://github.com/Mofiqul/vscode.nvim", name = "vscode" },
-  { src = "https://github.com/nvim-lualine/lualine.nvim" },
-  { src = "https://github.com/mbbill/undotree" },
-  { src = "https://github.com/lewis6991/gitsigns.nvim" },
-  { src = "https://github.com/neovim/nvim-lspconfig" }, -- Default lsp config options
-  { src = "https://github.com/nvim-telescope/telescope.nvim" },
-  { src = "https://github.com/stevearc/dressing.nvim" },
-  { src = "https://github.com/saghen/blink.cmp" },
-  { src = "https://github.com/folke/todo-comments.nvim" },
-  { src = "https://github.com/nvim-mini/mini.files" },
-  { src = "https://github.com/kdheepak/lazygit.nvim" },
-  { src = "https://github.com/lukas-reineke/indent-blankline.nvim" },
-  { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
-  -- { src = "https://github.com/petertriho/nvim-scrollbar" },
-  { src = "https://github.com/Julian/lean.nvim" }, -- Tooling for Lean Prover
-}, { confirm = false })
-
 -- Color Theme
 require('vscode').setup({
     transparent = true, -- Transparent background

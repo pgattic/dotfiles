@@ -12,6 +12,7 @@
         targets.genericLinux.enable = true;
         # my.desktop.corner_radius = 40.0; # Example of modifying a config value
         home.packages = with pkgs; [
+          self'.packages.foot-rude
           zotero
         ];
       })
