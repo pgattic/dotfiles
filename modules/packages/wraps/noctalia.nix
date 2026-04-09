@@ -1,10 +1,9 @@
-{ inputs, ... }: let
-  hmModule = { lib, pkgs, config, osConfig ? null, ... }: let
-    hmOnly = (osConfig == null);
-    nixgl = inputs.nixgl.packages.${pkgs.stdenv.hostPlatform.system};
-    noctaliaCmd = if hmOnly then
-      [ "${nixgl.nixGLIntel}/bin/nixGLIntel" "noctalia-shell" ] else
-      [ "noctalia-shell" ];
+{ inputs, ... }: {
+  perSystem = { pkgs, self', ... }: let
+    wlib = inputs.nix-wrapper-modules.lib;
+    corner_radius = 10.0;
+    opacity = 0.85;
+    assets = ../../../assets;
     simpleWidget = { tooltip, icon, cmd }: {
       id = "CustomButton";
       generalTooltipText = tooltip;
@@ -13,36 +12,15 @@
       showExecTooltip = false;
       showTextTooltip = false;
     };
-    assets = ../../../assets;
-  in {
-    imports = [
-      inputs.noctalia.homeModules.default
-    ];
 
-    home.packages = with pkgs; [
-      cliphist # For the "clipper" plugin
-    ] ++ lib.optionals config.my.desktop.touch_options [
-      wvkbd-deskintl
-    ];
 
-    programs.niri.settings = {
-      spawn-at-startup = [
-        { argv = noctaliaCmd; }
-      ];
-      binds = {
-        "Mod+Space" = { hotkey-overlay.title = "Open Lanucher"; action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ]; };
-        "Mod+Shift+E" = { hotkey-overlay.title = "Quit niri"; action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ]; };
+    noctalia-base = wlib.evalModule ({
+      inherit pkgs;
+      imports = [ wlib.wrapperModules.noctalia-shell ];
+
+      env = {
       };
-    };
 
-    home.file.".cache/noctalia/wallpapers.json".text = builtins.toJSON {
-      defaultWallpaper = "${assets}/wallpapers/wedding_temple.jpg";
-    };
-    stylix.targets.noctalia-shell.enable = false; # I do more precise coloring
-
-    programs.noctalia-shell = {
-      enable = true;
-      package = pkgs.noctalia-shell;
       plugins = {
         sources = [
           {
@@ -60,6 +38,7 @@
         version = 2;
       };
       pluginSettings.clipper.fullscreenMode = true; # Puts the panel on the bottom of the screen
+
       colors = { # Copied from the GitHub Dark theme
         mError = "#f85149";
         mHover = "#21262d";
@@ -81,37 +60,23 @@
       settings = {
         general = {
           enableShadows = false;
-          radiusRatio = config.my.desktop.corner_radius / 20.0;
+          radiusRatio = corner_radius / 20.0;
           avatarImage = "${assets}/profile.jpg";
         };
         ui = {
-          panelBackgroundOpacity = config.my.desktop.opacity;
+          panelBackgroundOpacity = opacity;
           settingsPanelMode = "window";
         };
-        notifications.backgroundOpacity = config.my.desktop.opacity;
+        notifications.backgroundOpacity = opacity;
         dock.enabled = false;
         bar = {
-          density = if config.my.desktop.touch_options then "default" else "compact";
+          # density = if config.my.desktop.touch_options then "default" else "compact";
           showCapsule = false;
           outerCorners = false;
           widgets = {
             left = [
-              {
-                id = "Workspace";
-                # labelMode = "none";
-                # focusedColor = "primary";
-                # occupiedColor = "onSurface";
-                # emptyColor = "onSurface";
-              }
+              { id = "Workspace"; }
               { id = "SystemMonitor"; }
-            ] ++ lib.optionals config.my.desktop.touch_options [
-              (simpleWidget { tooltip = "Open Launcher"; icon = "grid-dots"; cmd = "noctalia-shell ipc call launcher toggle"; })
-              (simpleWidget { tooltip = "Toggle Overview"; icon = "layout-distribute-horizontal"; cmd = "niri msg action toggle-overview"; })
-              (simpleWidget {
-                tooltip = "Open/Close On-Screen Keyboard"; icon = "keyboard";
-                cmd = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec ${pkgs.wvkbd-deskintl}/bin/wvkbd-deskintl -L 412";
-              })
-            ] ++ [
               { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
             ];
             center = [
@@ -145,15 +110,14 @@
         audio.volumeOverdrive = true;
         osd = { # Popup for volume/brightness changes
           location = "bottom";
-          backgroundOpacity = config.my.desktop.opacity;
+          backgroundOpacity = opacity;
         };
         nightLight.enabled = true;
         appLauncher = {
           enableClipboardHistory = true; # Required for clipboard manager plugin to work
           terminalCommand = "foot";
           enableSettingsSearch = false;
-          viewMode = if config.my.desktop.touch_options then "grid" else "list";
-          overviewLayer = !config.my.desktop.touch_options; # Gets in the way of OSK
+          # overviewLayer = !config.my.desktop.touch_options; # Gets in the way of OSK
         };
         location = {
           name = "Provo, United States";
@@ -165,14 +129,47 @@
           transitionType = "stripes";
         };
       };
+    });
+
+    noctalia-activate-linux = noctalia-base.config.apply ({ lib, ... }: {
+      extraPackages = [ pkgs.cliphist ];
+      settings = {
+        plugins.states.activate-linux = {
+          sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+          enabled = true;
+        };
+        pluginSettings.activate-linux = {
+          customizeText = true;
+          firstLine = "Activate Linux";
+          secondLine = "Go to Settings to activate Linux.";
+        };
+      };
+    });
+
+    noctalia-touch = noctalia-base.config.apply ({ lib, ... }: {
+      extraPackages = [ pkgs.cliphist ];
+      settings = {
+        appLauncher.viewMode = "grid";
+        bar.widgets.left = lib.mkForce [
+          { id = "Workspace"; }
+          { id = "SystemMonitor"; }
+          (simpleWidget { tooltip = "Open Launcher"; icon = "grid-dots"; cmd = "noctalia-shell ipc call launcher toggle"; })
+          (simpleWidget { tooltip = "Toggle Overview"; icon = "layout-distribute-horizontal"; cmd = "niri msg action toggle-overview"; })
+          (simpleWidget {
+            tooltip = "Open/Close On-Screen Keyboard"; icon = "keyboard";
+            cmd = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec ${self'.packages.wvkbd-deskintl}/bin/wvkbd-deskintl -L 412";
+          })
+          { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
+        ];
+      };
+    });
+
+  in {
+    packages = {
+      noctalia = noctalia-base.config.wrapper;
+      noctalia-activate-linux = noctalia-activate-linux.wrapper;
+      noctalia-touch = noctalia-touch.wrapper;
     };
-  };
-in {
-  flake = {
-    nixosModules.noctalia = { config, ... }: {
-      home-manager.users.${config.my.user.name} = hmModule;
-    };
-    homeModules.noctalia = hmModule;
   };
 }
 

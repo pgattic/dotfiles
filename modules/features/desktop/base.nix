@@ -1,12 +1,6 @@
 let
   hmModule = { pkgs, ... }: {
     home.packages = with pkgs; [
-      wl-clipboard
-      wf-recorder
-      wl-mirror
-      pavucontrol
-      brightnessctl
-      libnotify
       kdePackages.ark
         unrar # Nonfree package
       kdePackages.dolphin

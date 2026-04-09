@@ -21,6 +21,15 @@
           nix-ld.enable = true;
           appimage.enable = true;
           appimage.binfmt = true;
+          niri = {
+            enable = true;
+            useNautilus = false;
+            package = (self'.packages.niri-activate-linux.apply {
+              settings = {
+                outputs."eDP-1".scale = 1.0;
+              };
+            }).wrapper;
+          };
         };
         services = {
           mullvad-vpn.enable = true;
@@ -53,18 +62,6 @@
               package = pkgs.ungoogled-chromium;
             };
             ripgrep-all.enable = true;
-            niri.settings.outputs."eDP-1".scale = 1.0;
-            noctalia-shell = {
-              plugins.states.activate-linux = {
-                sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-                enabled = true;
-              };
-              pluginSettings.activate-linux = {
-                customizeText = true;
-                firstLine = "Activate Linux";
-                secondLine = "Go to Settings to activate Linux.";
-              };
-            };
             jujutsu = {
               enable = true;
               settings = {

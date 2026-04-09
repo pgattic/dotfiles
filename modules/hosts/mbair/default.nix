@@ -8,7 +8,7 @@
       inputs.self.nixosModules.desktop-default
       inputs.self.nixosModules.browser
 
-      ({ config, pkgs, ... }: {
+      ({ config, lib, pkgs, ... }: {
         networking.hostName = "mbair";
         system.stateVersion = "25.11";
         # Use `--impure` while building
@@ -39,24 +39,19 @@
           pkgs.signal-desktop
         ];
 
+        programs.niri = {
+          enable = true;
+          useNautilus = false;
+          package = (self'.packages.niri-activate-linux.apply {
+            settings = {
+              outputs."eDP-1".scale = 1.5;
+              # input.touchpad.dwt = lib.mkAfter (_: {}); # TODO: Make this merge properly
+            };
+          }).wrapper;
+        };
+
         home-manager.users.${config.my.user.name}.programs = {
           vesktop.enable = true;
-          niri.settings = {
-            outputs."eDP-1".scale = 1.5;
-            input.touchpad.dwt = true;
-            layout.shadow.enable = true;
-          };
-          noctalia-shell = {
-            plugins.states.activate-linux = {
-              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-              enabled = true;
-            };
-            pluginSettings.activate-linux = {
-              customizeText = true;
-              firstLine = "Activate Linux";
-              secondLine = "Go to Settings to activate Linux.";
-            };
-          };
           chromium = {
             enable = true;
             package = pkgs.ungoogled-chromium;

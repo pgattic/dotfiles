@@ -18,6 +18,12 @@
 
         my.desktop.touch_options = true;
 
+        programs.niri = {
+          enable = true;
+          useNautilus = false;
+          package = self'.packages.niri-touch;
+        };
+
         environment.systemPackages = [
           self'.packages.luanti-client
           self'.packages.foot-rude

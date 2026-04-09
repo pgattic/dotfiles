@@ -33,6 +33,12 @@
           self'.packages.luanti-client
         ];
 
+        programs.niri = {
+          enable = true;
+          useNautilus = false;
+          package = self'.packages.niri-touch;
+        };
+
         home-manager.users.${config.my.user.name}.programs = {
           chromium = {
             enable = true;
