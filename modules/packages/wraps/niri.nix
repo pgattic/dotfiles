@@ -44,6 +44,7 @@
           };
           touchpad = {
             tap = _: {};
+            dwt = _: {};
             natural-scroll = _: {};
             drag-lock = _: {};
             click-method = "clickfinger";
@@ -319,6 +320,18 @@
       };
     });
 
+    niri-mobile = niri-env.apply ({ lib, ... }: let
+      noctalia-cmd = lib.getExe self'.packages.noctalia-mobile;
+    in {
+      settings = {
+        spawn-at-startup = [ [ noctalia-cmd ] ];
+        binds = {
+          "Mod+Space" = _: { props.hotkey-overlay-title = "Open Lanucher"; content.spawn = [ noctalia-cmd "ipc" "call" "launcher" "toggle" ]; };
+          "Mod+Shift+E" = _: { props.hotkey-overlay-title = "Quit niri"; content.spawn = [ noctalia-cmd "ipc" "call" "sessionMenu" "toggle" ]; };
+        };
+      };
+    });
+
     niri-activate-linux = niri-env.apply ({ lib, ... }: let
       noctalia-cmd = lib.getExe self'.packages.noctalia-activate-linux;
     in {
@@ -336,6 +349,7 @@
     packages = {
       niri = niri.wrapper;
       niri-touch = niri-touch.wrapper;
+      niri-mobile = niri-mobile.wrapper;
       niri-activate-linux = niri-activate-linux.wrapper;
     };
   };

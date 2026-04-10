@@ -164,11 +164,31 @@
       };
     });
 
+    noctalia-mobile = noctalia-base.config.apply ({ lib, ... }: {
+      settings = {
+        appLauncher.viewMode = "grid";
+        bar.density = lib.mkForce "default";
+        bar.widgets.left = lib.mkForce [
+          { id = "Workspace"; }
+          { id = "SystemMonitor"; }
+          (simpleWidget { tooltip = "Open Launcher"; icon = "grid-dots"; cmd = "noctalia-shell ipc call launcher toggle"; })
+          (simpleWidget { tooltip = "Toggle Overview"; icon = "layout-distribute-horizontal"; cmd = "niri msg action toggle-overview"; })
+          (simpleWidget {
+            tooltip = "Open/Close On-Screen Keyboard"; icon = "keyboard";
+            cmd = "pgrep wvkbd-mobintl >/dev/null && pkill wvkbd-deskintl || exec ${pkgs.wvkbd}/bin/wvkbd-mobintl -L 412";
+          })
+          { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
+        ];
+        appLauncher.overviewLayer = lib.mkForce false; # Gets in the way of the OSK
+      };
+    });
+
   in {
     packages = {
       noctalia = noctalia-base.config.wrapper;
       noctalia-activate-linux = noctalia-activate-linux.wrapper;
       noctalia-touch = noctalia-touch.wrapper;
+      noctalia-mobile = noctalia-mobile.wrapper;
     };
   };
 }

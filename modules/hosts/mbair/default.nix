@@ -52,7 +52,7 @@
             package = (self'.packages.niri-activate-linux.apply {
               settings = {
                 outputs."eDP-1".scale = 1.5;
-                # input.touchpad.dwt = lib.mkAfter (_: {}); # TODO: Make this merge properly
+                # input.touchpad.dwt = _: {}; # TODO: Make this merge properly
               };
             }).wrapper;
           };
