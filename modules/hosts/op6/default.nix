@@ -7,6 +7,11 @@
         networking.hostName = "op6";
         system.stateVersion = "26.05";
 
+        services.logind.settings.Login = {
+          HandlePowerKey = "ignore";
+          HandlePowerKeyLongPress = "poweroff";
+        };
+
         nixpkgs.config.allowUnfree = true;
         hardware.bluetooth.enable = false;
 
@@ -20,6 +25,19 @@
         networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
         # COPIED FROM MY NETWORK MODULE
 
+        # COPIED FROM MY BASE MODULE
+        time.timeZone = "America/Boise";
+        nix.settings = {
+          experimental-features = [ "nix-command" "flakes" ];
+          trusted-users = ["root" "@wheel" ];
+        };
+        programs.nano.enable = false;
+        services.openssh.package = pkgs.openssh_hpn;
+        documentation.enable = lib.mkDefault false; # Disable all documentation
+        systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # Don't need speech dispatcher
+        systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
+        # COPIED FROM MY BASE MODULE
+
         # PipeWire is enabled by default, but the audio is very quiet with it
         services.pipewire.enable = lib.mkForce false;
         # Make sure to select "Speakers Output" as the output device in the settings
@@ -27,7 +45,7 @@
 
         users.users.pgattic = {
           isNormalUser = true;
-          extraGroups = [ "wheel" "networkmanager" ];
+          extraGroups = [ "wheel" "networkmanager" "input" ];
           description = "Preston Corless";
           shell = self'.packages.nushell-env;
         };
@@ -37,7 +55,9 @@
         environment.systemPackages = [
           self'.packages.foot-rude
           self'.packages.luanti-client
-          # self'.packages.desktop
+          self'.packages.desktop
+          pkgs.signal-desktop
+          pkgs.ungoogled-chromium
         ];
 
         programs = {
@@ -48,8 +68,13 @@
           niri = {
             enable = true;
             useNautilus = false;
-            package = self'.packages.niri-mobile;
+            package = (self'.packages.niri-mobile.apply {
+              settings = {
+                outputs."DSI-1".scale = 2.0;
+              };
+            }).wrapper;
           };
+          lazygit.enable = true;
         };
       })
     ];

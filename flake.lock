@@ -285,6 +285,22 @@
         "type": "github"
       }
     },
+    "mobile-nixos": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772289954,
+        "narHash": "sha256-iDdtwk/dFb6AsXMtcOpZixxXl6C1HNUPe6cglxxHO7M=",
+        "owner": "mobile-nixos",
+        "repo": "mobile-nixos",
+        "rev": "1a9e0af79dc7b5e29ed772f1a8a76fcbd9d45fdf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mobile-nixos",
+        "repo": "mobile-nixos",
+        "type": "github"
+      }
+    },
     "nix-wrapper-modules": {
       "inputs": {
         "nixpkgs": [
@@ -424,6 +440,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
+        "mobile-nixos": "mobile-nixos",
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixgl": "nixgl",
         "nixos-apple-silicon": "nixos-apple-silicon",

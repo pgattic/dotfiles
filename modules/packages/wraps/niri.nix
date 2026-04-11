@@ -324,11 +324,19 @@
       noctalia-cmd = lib.getExe self'.packages.noctalia-mobile;
     in {
       settings = {
-        spawn-at-startup = [ [ noctalia-cmd ] ];
+        spawn-at-startup = [
+          [ noctalia-cmd ]
+          [ "${self'.packages.lisgd-mobile}/bin/lisgd-mobile" ]
+        ];
         binds = {
           "Mod+Space" = _: { props.hotkey-overlay-title = "Open Lanucher"; content.spawn = [ noctalia-cmd "ipc" "call" "launcher" "toggle" ]; };
           "Mod+Shift+E" = _: { props.hotkey-overlay-title = "Quit niri"; content.spawn = [ noctalia-cmd "ipc" "call" "sessionMenu" "toggle" ]; };
         };
+        window-rules = lib.mkForce [{
+          geometry-corner-radius = [ corner_radius corner_radius corner_radius corner_radius ];
+          clip-to-geometry = true;
+          open-maximized-to-edges = true;
+        }];
       };
     });
 

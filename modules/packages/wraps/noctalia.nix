@@ -119,6 +119,30 @@
           enableSettingsSearch = false;
           overviewLayer = true;
         };
+        controlCenter = {
+          shortcuts = {
+            left = [
+              { id = "Network"; }
+              { id = "Bluetooth"; }
+              { id = "WallpaperSelector"; }
+              { id = "NoctaliaPerformance"; }
+            ];
+            right = [
+              { id = "Notifications"; }
+              { id = "PowerProfile"; }
+              { id = "KeepAwake"; }
+              { id = "NightLight"; }
+            ];
+          };
+          cards = [
+            { enabled = true; id = "profile-card"; }
+            { enabled = true; id = "shortcuts-card"; }
+            { enabled = true; id = "audio-card"; }
+            { enabled = true; id = "brightness-card"; }
+            { enabled = true; id = "weather-card"; }
+            { enabled = true; id = "media-sysmon-card"; }
+          ];
+        };
         location = {
           name = "Provo, United States";
           use12hourFormat = true;
@@ -167,19 +191,31 @@
     noctalia-mobile = noctalia-base.config.apply ({ lib, ... }: {
       settings = {
         appLauncher.viewMode = "grid";
-        bar.density = lib.mkForce "default";
-        bar.widgets.left = lib.mkForce [
-          { id = "Workspace"; }
-          { id = "SystemMonitor"; }
-          (simpleWidget { tooltip = "Open Launcher"; icon = "grid-dots"; cmd = "noctalia-shell ipc call launcher toggle"; })
-          (simpleWidget { tooltip = "Toggle Overview"; icon = "layout-distribute-horizontal"; cmd = "niri msg action toggle-overview"; })
-          (simpleWidget {
-            tooltip = "Open/Close On-Screen Keyboard"; icon = "keyboard";
-            cmd = "pgrep wvkbd-mobintl >/dev/null && pkill wvkbd-deskintl || exec ${pkgs.wvkbd}/bin/wvkbd-mobintl -L 412";
-          })
-          { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
-        ];
         appLauncher.overviewLayer = lib.mkForce false; # Gets in the way of the OSK
+        bar = {
+          density = lib.mkForce "comfortable";
+          widgetSpacing = 0;
+          widgets = {
+            left = lib.mkForce [
+              { id = "Workspace"; }
+              (simpleWidget { tooltip = "Open Launcher"; icon = "grid-dots"; cmd = "${lib.getExe pkgs.noctalia-shell} ipc call launcher toggle"; })
+              (simpleWidget { tooltip = "Toggle Overview"; icon = "layout-distribute-horizontal"; cmd = "niri msg action toggle-overview"; })
+            ];
+            center = lib.mkForce []; # Oneplus 6 has a notch here
+            right = lib.mkForce [
+              (simpleWidget {
+                tooltip = "Open/Close On-Screen Keyboard"; icon = "keyboard";
+                cmd = "pgrep wvkbd-mobintl >/dev/null && pkill wvkbd-mobintl || exec ${pkgs.wvkbd}/bin/wvkbd-mobintl -H 400 -R 16";
+              })
+              # { id = "Tray"; drawerEnabled = false; }
+              # { id = "plugin:clipper"; }
+              { id = "Battery"; }
+              { id = "Clock"; formatHorizontal = "h:mm AP"; tooltipFormat = "h:mm:ss AP"; }
+              { id = "ControlCenter"; useDistroLogo = true; }
+            ];
+          };
+        };
+        sessionMenu.largeButtonsLayout = "grid";
       };
     });
 

@@ -5,9 +5,9 @@
     foot-base = wlib.evalModule ({
       inherit pkgs;
       imports = [ wlib.wrapperModules.foot ];
-      extraPackages = [
-        pkgs.nerd-fonts.jetbrains-mono
-      ];
+      env.FONTCONFIG_FILE = pkgs.makeFontsConf {
+        fontDirectories = [ "${pkgs.nerd-fonts.jetbrains-mono}/share/fonts/truetype" ];
+      };
       filesToExclude = [ # Remove foot's client/server stuff
         "bin/footclient"
         "lib/systemd/user/*"
