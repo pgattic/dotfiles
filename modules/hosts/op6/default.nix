@@ -8,15 +8,18 @@
         system.stateVersion = "26.05";
 
         services.logind.settings.Login = {
-          HandlePowerKey = "ignore";
+          HandlePowerKey = "ignore"; # The kernel handles this already
           HandlePowerKeyLongPress = "poweroff";
         };
 
         nixpkgs.config.allowUnfree = true;
-        hardware.bluetooth.enable = false;
+        hardware.bluetooth = {
+          enable = true;
+          powerOnBoot = false;
+          settings.General.Experimental = true;
+        };
 
         services.openssh.enable = true;
-        services.openssh.settings.PermitRootLogin = "yes"; # For initial setup
         services.openssh.settings.PasswordAuthentication = true; # For initial setup
 
         # COPIED FROM MY NETWORKING MODULE
@@ -38,10 +41,7 @@
         systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
         # COPIED FROM MY BASE MODULE
 
-        # PipeWire is enabled by default, but the audio is very quiet with it
-        services.pipewire.enable = lib.mkForce false;
-        # Make sure to select "Speakers Output" as the output device in the settings
-        services.pulseaudio.enable = true;
+        services.upower.enable = true;
 
         users.users.pgattic = {
           isNormalUser = true;

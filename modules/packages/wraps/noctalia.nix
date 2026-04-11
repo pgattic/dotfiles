@@ -180,7 +180,11 @@
           (simpleWidget { tooltip = "Toggle Overview"; icon = "layout-distribute-horizontal"; cmd = "niri msg action toggle-overview"; })
           (simpleWidget {
             tooltip = "Open/Close On-Screen Keyboard"; icon = "keyboard";
-            cmd = "pgrep wvkbd-deskintl >/dev/null && pkill wvkbd-deskintl || exec ${self'.packages.wvkbd-deskintl}/bin/wvkbd-deskintl -L 412";
+            cmd = ''
+              ${pkgs.procps}/bin/pgrep wvkbd-deskintl >/dev/null \
+                && ${pkgs.procps}/bin/pkill wvkbd-deskintl \
+                || exec ${self'.packages.wvkbd-deskintl}/bin/wvkbd-deskintl -L 412
+            '';
           })
           { id = "MediaMini"; maxWidth = 200; showVisualizer = true; showArtistFirst = false; useFixedWidth = true; }
         ];
@@ -190,27 +194,42 @@
 
     noctalia-mobile = noctalia-base.config.apply ({ lib, ... }: {
       settings = {
-        appLauncher.viewMode = "grid";
-        appLauncher.overviewLayer = lib.mkForce false; # Gets in the way of the OSK
+        appLauncher = {
+          viewMode = "grid";
+          overviewLayer = lib.mkForce false; # Gets in the way of the OSK
+          position = "top_center";
+        };
+        ui = {
+          settingsPanelMode = lib.mkForce "attached";
+          tooltipsEnabled = false;
+        };
         bar = {
           density = lib.mkForce "comfortable";
-          widgetSpacing = 0;
+          widgetSpacing = 3;
+          useSeparateOpacity = true;
+          backgroundOpacity = 1.0;
+          contentPadding = 16;
+          outerCorners = lib.mkForce true;
           widgets = {
             left = lib.mkForce [
-              { id = "Workspace"; }
               (simpleWidget { tooltip = "Open Launcher"; icon = "grid-dots"; cmd = "${lib.getExe pkgs.noctalia-shell} ipc call launcher toggle"; })
-              (simpleWidget { tooltip = "Toggle Overview"; icon = "layout-distribute-horizontal"; cmd = "niri msg action toggle-overview"; })
+              { id = "Workspace"; }
             ];
             center = lib.mkForce []; # Oneplus 6 has a notch here
             right = lib.mkForce [
               (simpleWidget {
                 tooltip = "Open/Close On-Screen Keyboard"; icon = "keyboard";
-                cmd = "pgrep wvkbd-mobintl >/dev/null && pkill wvkbd-mobintl || exec ${pkgs.wvkbd}/bin/wvkbd-mobintl -H 400 -R 16";
+                cmd = ''
+                  ${pkgs.procps}/bin/pgrep wvkbd-mobintl >/dev/null \
+                    && ${pkgs.procps}/bin/pkill wvkbd-mobintl \
+                    || exec ${pkgs.wvkbd}/bin/wvkbd-mobintl -H 400 -R 16 -o \
+                      | ${pkgs.clickclack}/bin/clickclack -V -E /dev/input/by-path/*haptics*
+                '';
               })
               # { id = "Tray"; drawerEnabled = false; }
               # { id = "plugin:clipper"; }
               { id = "Battery"; }
-              { id = "Clock"; formatHorizontal = "h:mm AP"; tooltipFormat = "h:mm:ss AP"; }
+              { id = "Clock"; formatHorizontal = "h:mm"; tooltipFormat = "h:mm:ss AP"; }
               { id = "ControlCenter"; useDistroLogo = true; }
             ];
           };
