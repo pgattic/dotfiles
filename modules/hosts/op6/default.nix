@@ -19,15 +19,11 @@
           settings.General.Experimental = true;
         };
 
-        services.openssh.enable = true;
-        services.openssh.settings.PasswordAuthentication = true; # For initial setup
-
         # COPIED FROM MY NETWORKING MODULE
         networking.networkmanager.enable = lib.mkDefault true;
         networking.networkmanager.dns = "none";
         networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
         # COPIED FROM MY NETWORK MODULE
-
         # COPIED FROM MY BASE MODULE
         time.timeZone = "America/Boise";
         nix.settings = {
@@ -41,8 +37,6 @@
         systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
         # COPIED FROM MY BASE MODULE
 
-        services.upower.enable = true;
-
         users.users.pgattic = {
           isNormalUser = true;
           extraGroups = [ "wheel" "networkmanager" "input" ];
@@ -50,14 +44,11 @@
           shell = self'.packages.nushell-env;
         };
 
-        services.displayManager.gdm.enable = true;
-
         environment.systemPackages = [
           self'.packages.foot-rude
           self'.packages.luanti-client
           self'.packages.desktop
           pkgs.signal-desktop
-          pkgs.ungoogled-chromium
         ];
 
         programs = {
@@ -75,6 +66,19 @@
             }).wrapper;
           };
           lazygit.enable = true;
+          firefox = {
+            enable = true;
+            package = pkgs.librewolf;
+          };
+        };
+
+        services = {
+          openssh = {
+            enable = true;
+            settings.PasswordAuthentication = true;
+          };
+          displayManager.gdm.enable = true;
+          upower.enable = true;
         };
       })
     ];

@@ -214,6 +214,7 @@
             left = lib.mkForce [
               (simpleWidget { tooltip = "Open Launcher"; icon = "grid-dots"; cmd = "${lib.getExe pkgs.noctalia-shell} ipc call launcher toggle"; })
               { id = "Workspace"; }
+              { id = "Tray"; }
             ];
             center = lib.mkForce []; # Oneplus 6 has a notch here
             right = lib.mkForce [
@@ -222,7 +223,7 @@
                 cmd = ''
                   ${pkgs.procps}/bin/pgrep wvkbd-mobintl >/dev/null \
                     && ${pkgs.procps}/bin/pkill wvkbd-mobintl \
-                    || exec ${pkgs.wvkbd}/bin/wvkbd-mobintl -H 400 -R 16 -o \
+                    || exec ${pkgs.wvkbd}/bin/wvkbd-mobintl -H 400 -L 250 -R 16 -o \
                       | ${pkgs.clickclack}/bin/clickclack -V -E /dev/input/by-path/*haptics*
                 '';
               })
