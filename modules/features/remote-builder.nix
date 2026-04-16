@@ -9,19 +9,20 @@
         {
           hostName = builderEndpoint;
           protocol = "ssh-ng";
-          sshUser = "pgattic";
+          sshUser = "nixbuilder";
           systems = [
             "x86_64-linux"
             "aarch64-linux"
           ];
           maxJobs = 4;
           speedFactor = 2;
+          supportedFeatures = [ "big-parallel" ];
         }
       ];
 
       settings = {
         builders-use-substitutes = true;
-        max-jobs = lib.mkDefault 0;
+        max-jobs = lib.mkDefault 1;
       };
     };
   };

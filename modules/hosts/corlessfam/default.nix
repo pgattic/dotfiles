@@ -1,4 +1,9 @@
-{ inputs, withSystem, ... }: {
+{ inputs, withSystem, ... }: let
+  builderAuthorizedKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+tQ11EwCLxsnFls30h6ht7mEOAJ+JapnD61tzu/urS pgattic@gmail.com" # t480
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Qx8iBekJ07LRxUsDNm0bcSkilw7xX51LYrzz6F4xx pgattic@gmail.com" # mbair
+  ];
+in {
   flake.nixosConfigurations.corlessfam = withSystem "x86_64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
@@ -27,19 +32,34 @@
         networking.hostName = "corlessfam";
         system.stateVersion = "25.05";
 
-        nix.settings.max-jobs = lib.mkDefault 4;
+        nix.settings = {
+          max-jobs = lib.mkDefault 4;
+          trusted-users = lib.mkAfter [ "nixbuilder" ];
+        };
 
-        users.users.pgattic.shell = (self'.packages.nushell-env.apply {
-          extraPackages = [
-            self'.packages.neovim
-            self'.packages.git
-            pkgs.lazygit
-          ];
-        }).wrapper;
-        users.users.pgattic.openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+tQ11EwCLxsnFls30h6ht7mEOAJ+JapnD61tzu/urS pgattic@gmail.com" # t480
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Qx8iBekJ07LRxUsDNm0bcSkilw7xX51LYrzz6F4xx pgattic@gmail.com" # mbair
-        ];
+        users = {
+          groups.nixbuilder = {};
+          users = {
+            nixbuilder = {
+              isSystemUser = true;
+              group = "nixbuilder";
+              home = "/var/lib/nixbuilder";
+              createHome = true;
+              shell = pkgs.bashInteractive;
+              openssh.authorizedKeys.keys = builderAuthorizedKeys;
+            };
+            pgattic = {
+              shell = (self'.packages.nushell-env.apply {
+                extraPackages = [
+                  self'.packages.neovim
+                  self'.packages.git
+                  pkgs.lazygit
+                ];
+              }).wrapper;
+              openssh.authorizedKeys.keys = builderAuthorizedKeys;
+            };
+          };
+        };
 
         environment.systemPackages = [
           pkgs.smartmontools # Used for hard drive SMART tests (`sudo smartctl -x /dev/sdX`)
@@ -80,4 +100,3 @@
     ];
   });
 }
-
