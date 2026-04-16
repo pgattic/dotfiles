@@ -71,14 +71,6 @@
           openssh.enable = true;
           smartd.enable = true; # added alongside `smartmontools` package
 
-          karakeep = {
-            enable = true;
-            extraEnvironment = {
-              PORT = "4296";
-              DISABLE_SIGNUPS = "true";
-            };
-          };
-
           nginx = {
             virtualHosts = {
               "corlessfamily.net" = {
@@ -86,14 +78,6 @@
                 forceSSL = true;
                 serverAliases = [ "www.corlessfamily.net" ];
                 root = "/tank/media/home/public";
-              };
-              "keep.corlessfamily.net" = {
-                enableACME = true;
-                forceSSL = true;
-                locations."/" = {
-                  proxyPass = "http://127.0.0.1:4296";
-                  proxyWebsockets = true;
-                };
               };
             };
           };
