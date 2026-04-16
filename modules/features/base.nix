@@ -55,16 +55,10 @@ in {
         trusted-users = ["root" "@wheel" ];
       };
 
-      programs.nano.enable = false;
-
       services = {
         fwupd.enable = lib.mkDefault true;
         openssh.package = pkgs.openssh_hpn;
       };
-
-      # documentation.enable = lib.mkDefault false; # Disable all documentation
-      systemd.services.speech-dispatcher.wantedBy = pkgs.lib.mkForce []; # Don't need speech dispatcher
-      systemd.services.NetworkManager-wait-online.enable = false; # Don't require internet connection on boot
     };
     homeModules.base = hmModule;
   };

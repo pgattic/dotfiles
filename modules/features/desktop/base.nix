@@ -16,26 +16,6 @@ let
         "video/mp4" = "mpv.desktop";
       };
     };
-    programs = {
-      # ghostty = {
-      #   enable = true;
-      #   settings = {
-      #     cursor-style = "bar";
-      #     mouse-scroll-multiplier = 1;
-      #     window-padding-x = 0;
-      #     window-padding-y = 0;
-      #     window-padding-color = "extend";
-      #     window-inherit-working-directory = false;
-      #   };
-      # };
-      sioyek = { # PDF reader
-        enable = true;
-        config = {
-          should_highlight_unselected_search = "1"; # Highlight all search matches
-          super_fast_search = "0"; # Don't build search cache
-        };
-      };
-    };
   };
 in {
   flake = {
@@ -54,7 +34,7 @@ in {
       services = {
         upower.enable = lib.mkDefault true;
         greetd = {
-          enable = true;
+          enable = lib.mkDefault true;
           settings.default_session = {
             command = ''
               ${pkgs.tuigreet}/bin/tuigreet --remember --asterisks --time \

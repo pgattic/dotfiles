@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, lib, ... }: {
   perSystem = { pkgs, self', ... }: let
     wlib = inputs.nix-wrapper-modules.lib;
     corner_radius = 10.0;
@@ -27,13 +27,11 @@
         libnotify
       ];
 
-      settings = let
-        wpctl = "${pkgs.wireplumber}/bin/wpctl";
-        brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-      in { # https://birdeehub.github.io/nix-wrapper-modules/wrapperModules/niri.html#settings
+      settings = { # https://birdeehub.github.io/nix-wrapper-modules/wrapperModules/niri.html#settings
         # spawn-at-startup = [
         #   { argv = [ "ghostty" "--gtk-single-instance=true" "--quit-after-last-window-closed=false" "--initial-window=false" ]; }
         # ];
+        xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
         screenshot-path = "~/screenshots/%Y-%m-%d %H-%M-%S.png";
         hotkey-overlay.skip-at-startup = true;
         hotkey-overlay.hide-not-bound = true;
@@ -90,7 +88,6 @@
           hide-when-typing = true;
           hide-after-inactive-ms = 1000;
         };
-        # prefer-no-csd = !config.touch_options;
         window-rules = [
           { # General rules
             geometry-corner-radius = [ corner_radius corner_radius corner_radius corner_radius ];
@@ -113,16 +110,11 @@
         ];
         overview.zoom = 0.5;
         binds = {
+          "Mod+Return" = _: { props.hotkey-overlay-title = "Spawn terminal"; content.spawn = [ "foot" ]; };
+          "Mod+N" = _: { props.hotkey-overlay-title = "Quick note"; content.spawn = [ "foot" "nvim" "note.md" ]; };
+          "Mod+E" = _: { props.hotkey-overlay-title = "File Manager"; content.spawn = [ "dolphin" ]; };
+
           "Mod+Shift+Slash".show-hotkey-overlay = {};
-
-          # The allow-when-locked=true property makes them work even when the session is locked.
-          "XF86AudioRaiseVolume" = _: { props.allow-when-locked = true; content.spawn = [ wpctl "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" ]; };
-          "XF86AudioLowerVolume" = _: { props.allow-when-locked = true; content.spawn = [ wpctl "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-" ]; };
-          "XF86AudioMute" = _: { props.allow-when-locked = true; content.spawn = [ wpctl "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ]; };
-          "XF86AudioMicMute" = _: { props.allow-when-locked = true; content.spawn = [ wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ]; };
-
-          "XF86MonBrightnessUp".spawn = [ brightnessctl "set" "10%+" ];
-          "XF86MonBrightnessDown".spawn = [ brightnessctl "set" "10%-" ];
 
           # Open/close the Overview: a zoomed-out view of workspaces and windows.
           # You can also move the mouse into the top-left hot corner,
@@ -281,75 +273,46 @@
       };
     });
 
-    niri-env = niri-base.config.apply ({ lib, ... }: {
-      settings = {
-        xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
-        binds = {
-          "Mod+Return" = _: { props.hotkey-overlay-title = "Spawn terminal"; content.spawn = [ (lib.getExe self'.packages.foot) ]; };
-          # "Mod+Return".spawn = [ "ghostty" "--gtk-single-instance=true" ];
-          "Mod+N" = _: { props.hotkey-overlay-title = "Quick note"; content.spawn = [ (lib.getExe self'.packages.foot) (lib.getExe self'.packages.neovim) "note.md" ]; };
-          # "Mod+N".spawn = [ "ghostty" "--gtk-single-instance=true" "-e" "nvim" "note.md" ];
-          "Mod+E" = _: { props.hotkey-overlay-title = "File Manager"; content.spawn = [ "dolphin" ]; };
-          # "Super+Alt+L".spawn = [ "swaylock" ];
-        };
-      };
-    });
-
-    niri = niri-env.apply ({ lib, ... }: let
-      noctalia-cmd = lib.getExe self'.packages.noctalia;
-    in {
-      settings = {
-        prefer-no-csd = {};
-        spawn-at-startup = [ [ noctalia-cmd ] ];
-        binds = {
-          "Mod+Space" = _: { props.hotkey-overlay-title = "Open Lanucher"; content.spawn = [ noctalia-cmd "ipc" "call" "launcher" "toggle" ]; };
-          "Mod+Shift+E" = _: { props.hotkey-overlay-title = "Quit niri"; content.spawn = [ noctalia-cmd "ipc" "call" "sessionMenu" "toggle" ]; };
-        };
-      };
-    });
-
-    niri-touch = niri-env.apply ({ lib, ... }: let
-      noctalia-cmd = lib.getExe self'.packages.noctalia-touch;
+    mkNiri = noctalia-pkg: niri-base.config.apply ({ lib, ... }: let
+      noctalia-cmd = lib.getExe noctalia-pkg;
     in {
       settings = {
         spawn-at-startup = [ [ noctalia-cmd ] ];
         binds = {
           "Mod+Space" = _: { props.hotkey-overlay-title = "Open Lanucher"; content.spawn = [ noctalia-cmd "ipc" "call" "launcher" "toggle" ]; };
           "Mod+Shift+E" = _: { props.hotkey-overlay-title = "Quit niri"; content.spawn = [ noctalia-cmd "ipc" "call" "sessionMenu" "toggle" ]; };
+
+          # The allow-when-locked=true property makes them work even when the session is locked.
+          "XF86AudioRaiseVolume"  = _: { props.allow-when-locked = true; content.spawn = [ noctalia-cmd "ipc" "call" "volume" "increase" ]; };
+          "XF86AudioLowerVolume"  = _: { props.allow-when-locked = true; content.spawn = [ noctalia-cmd "ipc" "call" "volume" "decrease" ]; };
+          "XF86AudioMute"         = _: { props.allow-when-locked = true; content.spawn = [ noctalia-cmd "ipc" "call" "volume" "muteOutput" ]; };
+          "XF86AudioMicMute"      = _: { props.allow-when-locked = true; content.spawn = [ noctalia-cmd "ipc" "call" "volume" "muteInput" ]; };
+          "XF86MonBrightnessUp"   = _: { props.allow-when-locked = true; content.spawn = [ noctalia-cmd "ipc" "call" "brightness" "increase" ]; };
+          "XF86MonBrightnessDown" = _: { props.allow-when-locked = true; content.spawn = [ noctalia-cmd "ipc" "call" "brightness" "decrease" ]; };
         };
       };
     });
 
-    niri-mobile = niri-env.apply ({ lib, ... }: let
-      noctalia-cmd = lib.getExe self'.packages.noctalia-mobile;
-    in {
+    niri = (mkNiri self'.packages.noctalia).apply ({ lib, ... }: {
+      settings.prefer-no-csd = {};
+    });
+
+    niri-activate-linux = (mkNiri self'.packages.noctalia-activate-linux).apply ({ lib, ... }: {
+      settings.prefer-no-csd = {};
+    });
+
+    niri-touch = mkNiri self'.packages.noctalia-touch;
+
+    niri-mobile = (mkNiri self'.packages.noctalia-mobile).apply ({ lib, ... }: {
       settings = {
         spawn-at-startup = [
-          [ noctalia-cmd ]
           [ "${self'.packages.lisgd-mobile}/bin/lisgd-mobile" ]
         ];
-        binds = {
-          "Mod+Space" = _: { props.hotkey-overlay-title = "Open Lanucher"; content.spawn = [ noctalia-cmd "ipc" "call" "launcher" "toggle" ]; };
-          "Mod+Shift+E" = _: { props.hotkey-overlay-title = "Quit niri"; content.spawn = [ noctalia-cmd "ipc" "call" "sessionMenu" "toggle" ]; };
-        };
         window-rules = lib.mkForce [{
           geometry-corner-radius = [ corner_radius corner_radius corner_radius corner_radius ];
           clip-to-geometry = true;
-          open-maximized-to-edges = true;
+          open-maximized-to-edges = true; # Just wanted to override this
         }];
-      };
-    });
-
-    niri-activate-linux = niri-env.apply ({ lib, ... }: let
-      noctalia-cmd = lib.getExe self'.packages.noctalia-activate-linux;
-    in {
-      settings = {
-        prefer-no-csd = {};
-        spawn-at-startup = [ [ noctalia-cmd ] ];
-        binds = {
-          "Mod+Space" = _: { props.hotkey-overlay-title = "Open Lanucher"; content.spawn = [ noctalia-cmd "ipc" "call" "launcher" "toggle" ]; };
-          "Mod+Shift+E" = _: { props.hotkey-overlay-title = "Quit niri"; content.spawn = [ noctalia-cmd "ipc" "call" "sessionMenu" "toggle" ]; };
-        };
       };
     });
 

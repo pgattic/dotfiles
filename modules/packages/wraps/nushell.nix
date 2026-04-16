@@ -32,7 +32,6 @@
       '';
       env.EDITOR = lib.getExe self'.packages.neovim;
       extraPackages = [
-        self'.packages.neovim
         self'.packages.btop
         self'.packages.fastfetch
         self'.packages.nh

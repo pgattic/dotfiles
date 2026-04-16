@@ -52,6 +52,10 @@
           self'.packages.bambu-studio
           self'.packages.jujutsu
           inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
+          self'.packages.desktop
+          self'.packages.sioyek
+          self'.packages.neovim # The package provides aliases
+          self'.packages.btop
         ];
 
         home-manager.users.${config.my.user.name} = {

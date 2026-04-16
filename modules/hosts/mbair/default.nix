@@ -36,6 +36,9 @@
           self'.packages.foot-rude
           self'.packages.luanti-client
           self'.packages.desktop
+          self'.packages.sioyek
+          self'.packages.neovim # The package provides aliases
+          self'.packages.btop
           inputs.wasmcarts.packages.${pkgs.stdenv.hostPlatform.system}.engine-linux
           pkgs.signal-desktop
         ];

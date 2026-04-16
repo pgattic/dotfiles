@@ -1,11 +1,11 @@
-{ inputs, lib, ... }: {
+{ inputs, ... }: {
   perSystem = { pkgs, self', ... }: let
     wlib = inputs.nix-wrapper-modules.lib;
     corner_radius = 10.0;
     opacity = 0.85;
     assets = ../../../assets;
-    foot = lib.getExe self'.packages.foot;
-    btop = lib.getExe self'.packages.btop;
+    term_cmd = "foot";
+    top_cmd = "foot btop";
 
     simpleWidget = { tooltip, icon, cmd }: {
       id = "CustomButton";
@@ -20,7 +20,6 @@
       inherit pkgs;
       imports = [ wlib.wrapperModules.noctalia-shell ];
 
-      extraPackages = [ pkgs.cliphist ];
       plugins = {
         sources = [
           {
@@ -29,15 +28,8 @@
             enabled = true;
           }
         ];
-        states = {
-          clipper = {
-            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-            enabled = true;
-          };
-        };
         version = 2;
       };
-      pluginSettings.clipper.fullscreenMode = true; # Puts the panel on the bottom of the screen
 
       colors = { # Copied from the GitHub Dark theme
         mError = "#f85149";
@@ -106,7 +98,7 @@
           { action = "rebootToUefi"; enabled = false; }
           { action = "userspaceReboot"; enabled = false; }
         ];
-        systemMonitor.externalMonitor = "${foot} ${btop}";
+        systemMonitor.externalMonitor = top_cmd;
         audio.volumeOverdrive = true;
         osd = { # Popup for volume/brightness changes
           location = "bottom";
@@ -114,8 +106,8 @@
         };
         nightLight.enabled = true;
         appLauncher = {
-          enableClipboardHistory = true; # Required for clipboard manager plugin to work
-          terminalCommand = "foot";
+          enableClipboardHistory = true;
+          terminalCommand = term_cmd;
           enableSettingsSearch = false;
           overviewLayer = true;
         };
@@ -155,7 +147,7 @@
       };
     });
 
-    noctalia-activate-linux = noctalia-base.config.apply ({ lib, ... }: {
+    noctalia-activate-linux = noctalia-base.config.apply ({ ... }: {
       settings = {
         plugins.states.activate-linux = {
           sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
@@ -227,8 +219,6 @@
                       | ${pkgs.clickclack}/bin/clickclack -V -E /dev/input/by-path/*haptics*
                 '';
               })
-              # { id = "Tray"; drawerEnabled = false; }
-              # { id = "plugin:clipper"; }
               { id = "Battery"; }
               { id = "Clock"; formatHorizontal = "h:mm"; tooltipFormat = "h:mm:ss AP"; }
               { id = "ControlCenter"; useDistroLogo = true; }
@@ -236,6 +226,7 @@
           };
         };
         sessionMenu.largeButtonsLayout = "grid";
+        osd.location = lib.mkForce "right";
       };
     });
 
