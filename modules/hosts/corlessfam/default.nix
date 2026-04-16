@@ -1,9 +1,4 @@
-{ inputs, withSystem, ... }: let
-  builderAuthorizedKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+tQ11EwCLxsnFls30h6ht7mEOAJ+JapnD61tzu/urS pgattic@gmail.com" # t480
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Qx8iBekJ07LRxUsDNm0bcSkilw7xX51LYrzz6F4xx pgattic@gmail.com" # mbair
-  ];
-in {
+{ inputs, withSystem, ... }: {
   flake.nixosConfigurations.corlessfam = withSystem "x86_64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
@@ -46,7 +41,9 @@ in {
               home = "/var/lib/nixbuilder";
               createHome = true;
               shell = pkgs.bashInteractive;
-              openssh.authorizedKeys.keys = builderAuthorizedKeys;
+              openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfNeGvgeuyLKrAzgAsfKUhpHwB9AwwdO49WgKlkqTw+ nixbuilder-mbair"
+              ];
             };
             pgattic = {
               shell = (self'.packages.nushell-env.apply {
@@ -56,7 +53,10 @@ in {
                   pkgs.lazygit
                 ];
               }).wrapper;
-              openssh.authorizedKeys.keys = builderAuthorizedKeys;
+              openssh.authorizedKeys.keys =[
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+tQ11EwCLxsnFls30h6ht7mEOAJ+JapnD61tzu/urS pgattic@gmail.com" # t480
+                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Qx8iBekJ07LRxUsDNm0bcSkilw7xX51LYrzz6F4xx pgattic@gmail.com" # mbair
+              ];
             };
           };
         };

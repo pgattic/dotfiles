@@ -7,6 +7,7 @@
       inputs.self.nixosModules.default
       inputs.self.nixosModules.desktop-default
       inputs.self.nixosModules.browser
+      inputs.self.nixosModules.remote-builder
 
       ({ config, lib, pkgs, ... }: {
         networking.hostName = "mbair";

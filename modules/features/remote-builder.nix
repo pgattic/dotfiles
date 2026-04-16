@@ -1,15 +1,13 @@
 {
-  flake.nixosModules.remote-builder = { config, lib, ... }: let
-    builderHostName = "corlessfam";
-    builderEndpoint = "corlessfamily.net";
-  in lib.mkIf (config.networking.hostName != builderHostName) {
+  flake.nixosModules.remote-builder = { config, lib, ... }: lib.mkIf (config.networking.hostName != "corlessfam") {
     nix = {
       distributedBuilds = true;
       buildMachines = [
         {
-          hostName = builderEndpoint;
+          hostName = "corlessfamily.net";
           protocol = "ssh-ng";
           sshUser = "nixbuilder";
+          sshKey = "/root/.ssh/nixbuilder_ed25519";
           systems = [
             "x86_64-linux"
             "aarch64-linux"
