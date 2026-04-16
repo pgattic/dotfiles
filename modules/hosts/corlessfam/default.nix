@@ -43,6 +43,8 @@
               shell = pkgs.bashInteractive;
               openssh.authorizedKeys.keys = [
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfNeGvgeuyLKrAzgAsfKUhpHwB9AwwdO49WgKlkqTw+ nixbuilder-mbair"
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM0S/bzInee4MQiTANd23jCRTbu/Lz50KgU15+iJtbxP nixbuilder-op6"
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWIqPifAxRsDOdVuApg1S2mE7y3sf8xOnO6bodTjKIT nixbuilder-surface"
               ];
             };
             pgattic = {
