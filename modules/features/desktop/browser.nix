@@ -155,11 +155,6 @@ let
       };
     };
 
-    stylix.targets.librewolf = {
-      profileNames = [ config.my.user.name ];
-      colorTheme.enable = true;
-    };
-
     xdg.mimeApps.defaultApplications = {
       "text/html" = "librewolf.desktop";
       "x-scheme-handler/http" = "librewolf.desktop";

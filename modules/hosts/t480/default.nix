@@ -6,6 +6,7 @@
       inputs.self.nixosModules.options
       inputs.self.nixosModules.default
       inputs.self.nixosModules.desktop-default
+      inputs.self.nixosModules.stylix
       inputs.self.nixosModules.work
       inputs.self.nixosModules.zeditor
       inputs.self.nixosModules.browser
