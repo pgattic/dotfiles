@@ -37,6 +37,7 @@
             enable = true;
             useNautilus = false;
             package = (self'.packages.niri-mobile.apply {
+              spawn-at-startup = [ [ (lib.getExe self'.packages.lisgd-op6) ] ];
               settings = {
                 outputs."DSI-1".scale = 2.0;
               };

@@ -293,21 +293,18 @@
       };
     });
 
-    niri = (mkNiri self'.packages.noctalia).apply ({ lib, ... }: {
+    niri = (mkNiri self'.packages.noctalia).apply {
       settings.prefer-no-csd = {};
-    });
+    };
 
-    niri-activate-linux = (mkNiri self'.packages.noctalia-activate-linux).apply ({ lib, ... }: {
+    niri-activate-linux = (mkNiri self'.packages.noctalia-activate-linux).apply {
       settings.prefer-no-csd = {};
-    });
+    };
 
     niri-touch = mkNiri self'.packages.noctalia-touch;
 
     niri-mobile = (mkNiri self'.packages.noctalia-mobile).apply ({ lib, ... }: {
       settings = {
-        spawn-at-startup = [
-          [ "${self'.packages.lisgd-mobile}/bin/lisgd-mobile" ]
-        ];
         window-rules = lib.mkForce [{
           geometry-corner-radius = [ corner_radius corner_radius corner_radius corner_radius ];
           clip-to-geometry = true;

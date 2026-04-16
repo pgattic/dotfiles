@@ -9,7 +9,7 @@ in {
       home-manager.users.${config.my.user.name} = hmModule;
       users.users.${config.my.user.name} = {
         isNormalUser = true;
-        extraGroups = [ "wheel" ];
+        extraGroups = [ "wheel" "input" ];
         description = config.my.user.description;
       };
     };
