@@ -26,7 +26,13 @@
         networking.hostName = "corlessfam";
         system.stateVersion = "25.05";
 
-        users.users.pgattic.shell = self'.packages.nushell-env;
+        users.users.pgattic.shell = (self'.packages.nushell-env.apply {
+          extraPackages = [
+            self'.packages.neovim
+            self'.packages.git
+            pkgs.lazygit
+          ];
+        }).wrapper;
         users.users.pgattic.openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+tQ11EwCLxsnFls30h6ht7mEOAJ+JapnD61tzu/urS pgattic@gmail.com" # t480
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Qx8iBekJ07LRxUsDNm0bcSkilw7xX51LYrzz6F4xx pgattic@gmail.com" # mbair
@@ -34,7 +40,6 @@
 
         environment.systemPackages = [
           pkgs.smartmontools # Used for hard drive SMART tests (`sudo smartctl -x /dev/sdX`)
-          pkgs.waypipe
         ];
 
         services = {
