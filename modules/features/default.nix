@@ -5,6 +5,7 @@
         config.flake.nixosModules.debloat
         config.flake.nixosModules.base
         config.flake.nixosModules.networking
+        config.flake.nixosModules.remote-builder
         config.flake.nixosModules.user
       ];
     };

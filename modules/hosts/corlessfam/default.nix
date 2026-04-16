@@ -17,7 +17,8 @@
       # inputs.self.nixosModules.romm
       inputs.self.nixosModules.cookbook
 
-      ({ pkgs, ... }: {
+      ({ lib, pkgs, ... }: {
+        boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
         boot.supportedFilesystems = [ "zfs" ];
         boot.zfs.extraPools = [ "tank" ]; # Automatic mounting
         services.zfs.autoScrub.enable = true;
@@ -25,6 +26,8 @@
         networking.hostId = "6e005e0f"; # head -c 8 /etc/machine-id
         networking.hostName = "corlessfam";
         system.stateVersion = "25.05";
+
+        nix.settings.max-jobs = lib.mkDefault 4;
 
         users.users.pgattic.shell = (self'.packages.nushell-env.apply {
           extraPackages = [
