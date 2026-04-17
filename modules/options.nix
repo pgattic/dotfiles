@@ -11,24 +11,6 @@
         default = "Preston Corless";
         description = "Primary user's full name";
       };
-      email = mkOption {
-        type = types.str;
-        default = "pgattic@gmail.com";
-        description = "Primary user's email";
-      };
-    };
-    desktop = {
-      touch_options = mkEnableOption "touch-related options like extra buttons, slightly bigger UI, etc.";
-      corner_radius = mkOption {
-        type = types.float;
-        default = 10.0;
-        description = "Corner radius of Desktop elements";
-      };
-      opacity = mkOption {
-        type = types.float;
-        default = 0.85;
-        description = "Opacity of certain UI elements (terminals, statusbar)";
-      };
     };
     server = {
       domain = mkOption {

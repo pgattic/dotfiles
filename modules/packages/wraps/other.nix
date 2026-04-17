@@ -38,16 +38,23 @@
           ];
         };
       };
-      git = wlib.evalPackage {
+      git = wlib.wrapPackage ({ config, ... }: {
         inherit pkgs;
-        imports = [ wlib.wrapperModules.git ];
-        settings = {
-          user.name = "pgattic";
-          user.email = "pgattic@gmail.com";
-          color.ui = "auto";
-          init.defaultBranch = "master";
+        package = pkgs.gitMinimal;
+        constructFiles.gitConfig = {
+          relPath = "gitconfig";
+          content = ''
+            [color]
+              ui = "auto"
+            [init]
+              defaultBranch = "master"
+            [user]
+              email = "pgattic@gmail.com"
+              name = "pgattic"
+          '';
         };
-      };
+        env.GIT_CONFIG_GLOBAL = config.constructFiles.gitConfig.path;
+      });
       jujutsu = wlib.evalPackage {
         inherit pkgs;
         imports = [ wlib.wrapperModules.jujutsu ];

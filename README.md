@@ -31,7 +31,6 @@ environment.systemPackages = with pkgs; [ git neovim nh ];
 
         # Examples of modifying config values (consult `/modules/options.nix` for more info)
         my.user.name = "pgattic";
-        my.desktop.touch_options = true;
 
         environment.systemPackages = [
           self'.packages.foot

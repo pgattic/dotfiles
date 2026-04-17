@@ -39,28 +39,24 @@
           self'.packages.luanti-client
           self'.packages.desktop
           self'.packages.sioyek
-          self'.packages.neovim # The package provides aliases
+          self'.packages.neovim
           self'.packages.btop
+          self'.packages.git
           inputs.wasmcarts.packages.${pkgs.stdenv.hostPlatform.system}.engine-linux
           pkgs.signal-desktop
+          pkgs.lazygit
+          pkgs.codex
         ];
 
-        programs = {
-          git = {
-            enable = true;
-            package = self'.packages.git;
-          };
-          lazygit.enable = true;
-          niri = {
-            enable = true;
-            useNautilus = false;
-            package = (self'.packages.niri-activate-linux.apply {
-              settings = {
-                outputs."eDP-1".scale = 1.5;
-                # input.touchpad.dwt = _: {}; # TODO: Make this merge properly
-              };
-            }).wrapper;
-          };
+        programs.niri = {
+          enable = true;
+          useNautilus = false;
+          package = (self'.packages.niri-activate-linux.apply {
+            settings = {
+              outputs."eDP-1".scale = 1.5;
+              # input.touchpad.dwt = _: {}; # TODO: Make this merge properly
+            };
+          }).wrapper;
         };
 
         home-manager.users.${config.my.user.name}.programs = {
@@ -69,7 +65,6 @@
             enable = true;
             package = pkgs.ungoogled-chromium;
           };
-          codex.enable = true;
         };
       })
     ];

@@ -31,8 +31,7 @@
       };
       polarity = "dark";
       opacity = let
-        # Fix for Niri's window handling
-        opacity = if config.my.desktop.touch_options then 1.0 else config.my.desktop.opacity;
+        opacity = 0.85;
       in {
         applications = opacity;
         desktop = opacity;

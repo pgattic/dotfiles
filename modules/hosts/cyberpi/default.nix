@@ -26,8 +26,6 @@
         services.upower.enable = false;
         hardware.bluetooth.enable = false;
 
-        my.desktop.touch_options = true;
-
         environment.systemPackages = [
           self'.packages.foot-rude
           self'.packages.luanti-client

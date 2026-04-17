@@ -20,7 +20,7 @@
     # sudo journalctl -u acme-corlessfamily.net.service
     security.acme = {
       acceptTerms = true;
-      defaults.email = config.my.user.email;
+      defaults.email = "pgattic@gmail.com";
       # validMinDays = 999; # Uncomment for one rebuild to force immediate renewal
     };
 
