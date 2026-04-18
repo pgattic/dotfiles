@@ -1,5 +1,5 @@
 { inputs, withSystem, ... }: {
-  flake.nixosConfigurations.mbair = withSystem "aarch64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.mbair = withSystem "aarch64-linux" ({ self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
       inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
@@ -10,7 +10,7 @@
       inputs.self.nixosModules.browser
       inputs.self.nixosModules.remote-builder
 
-      ({ config, lib, pkgs, ... }: {
+      ({ pkgs, ... }: {
         networking.hostName = "mbair";
         system.stateVersion = "25.11";
         # Use `--impure` while building
@@ -46,25 +46,17 @@
           pkgs.signal-desktop
           pkgs.lazygit
           pkgs.codex
+          pkgs.vesktop
+          pkgs.ungoogled-chromium
+          pkgs.nix-tree
         ];
 
         programs.niri = {
           enable = true;
           useNautilus = false;
           package = (self'.packages.niri-activate-linux.apply {
-            settings = {
-              outputs."eDP-1".scale = 1.5;
-              # input.touchpad.dwt = _: {}; # TODO: Make this merge properly
-            };
+            settings.outputs."eDP-1".scale = 1.5;
           }).wrapper;
-        };
-
-        home-manager.users.${config.my.user.name}.programs = {
-          vesktop.enable = true;
-          chromium = {
-            enable = true;
-            package = pkgs.ungoogled-chromium;
-          };
         };
       })
     ];

@@ -1,5 +1,5 @@
 { inputs, withSystem, ... }: {
-  flake.nixosConfigurations.cyberpi = withSystem "aarch64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.cyberpi = withSystem "aarch64-linux" ({ self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
       inputs.nixos-hardware.nixosModules.raspberry-pi-4
@@ -7,7 +7,7 @@
       inputs.self.nixosModules.default
       inputs.self.nixosModules.desktop-default
 
-      ({ config, pkgs, ... }: {
+      ({ pkgs, ... }: {
         boot.loader.systemd-boot.enable = false;
         boot.loader.efi.canTouchEfiVariables = false; # Might not matter if I set this
 
@@ -29,20 +29,19 @@
         environment.systemPackages = [
           self'.packages.foot-rude
           self'.packages.luanti-client
+          self'.packages.desktop
+          self'.packages.neovim
+          self'.packages.btop
+          self'.packages.git
+          pkgs.ungoogled-chromium
         ];
 
         programs.niri = {
           enable = true;
           useNautilus = false;
-          package = self'.packages.niri-touch;
-        };
-
-        home-manager.users.${config.my.user.name}.programs = {
-          chromium = {
-            enable = true;
-            package = pkgs.ungoogled-chromium;
-          };
-          niri.settings.input.mod-key = "Alt";
+          package = self'.packages.niri-touch.apply ({ lib, ... }: {
+            settings.input.mod-key = "Alt";
+          }).wrapper;
         };
       })
     ];

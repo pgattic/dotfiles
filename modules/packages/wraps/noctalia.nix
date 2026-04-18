@@ -1,8 +1,6 @@
-{ inputs, ... }: {
+{ inputs, self, ... }: {
   perSystem = { pkgs, self', ... }: let
     wlib = inputs.nix-wrapper-modules.lib;
-    corner_radius = 10.0;
-    opacity = 0.85;
     assets = ../../../assets;
     term_cmd = "foot";
     top_cmd = "foot btop";
@@ -52,14 +50,14 @@
       settings = {
         general = {
           enableShadows = false;
-          radiusRatio = corner_radius / 20.0;
+          radiusRatio = self.desktop.corner-radius / 20.0;
           avatarImage = "${assets}/profile.jpg";
         };
         ui = {
-          panelBackgroundOpacity = opacity;
+          panelBackgroundOpacity = self.desktop.opacity;
           settingsPanelMode = "window";
         };
-        notifications.backgroundOpacity = opacity;
+        notifications.backgroundOpacity = self.desktop.opacity;
         dock.enabled = false;
         bar = {
           density = "compact";
@@ -102,7 +100,7 @@
         audio.volumeOverdrive = true;
         osd = { # Popup for volume/brightness changes
           location = "bottom";
-          backgroundOpacity = opacity;
+          backgroundOpacity = self.desktop.opacity;
         };
         nightLight.enabled = true;
         appLauncher = {

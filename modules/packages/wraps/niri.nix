@@ -1,7 +1,6 @@
-{ inputs, lib, ... }: {
+{ inputs, lib, self, ... }: {
   perSystem = { pkgs, self', ... }: let
     wlib = inputs.nix-wrapper-modules.lib;
-    corner_radius = 10.0;
 
     niri-base = wlib.evalModule ({
       inherit pkgs;
@@ -81,7 +80,7 @@
             position = "left";
             place-within-column = true;
             gaps-between-tabs = 8;
-            corner-radius = corner_radius;
+            corner-radius = self.desktop.corner-radius;
           };
         };
         cursor = {
@@ -90,7 +89,7 @@
         };
         window-rules = [
           { # General rules
-            geometry-corner-radius = [ corner_radius corner_radius corner_radius corner_radius ];
+            geometry-corner-radius = with self.desktop; [ corner-radius corner-radius corner-radius corner-radius ];
             clip-to-geometry = true;
           }
           { # KDE Connect Presentation Pointer fix
@@ -306,7 +305,7 @@
     niri-mobile = (mkNiri self'.packages.noctalia-mobile).apply ({ lib, ... }: {
       settings = {
         window-rules = lib.mkForce [{
-          geometry-corner-radius = [ corner_radius corner_radius corner_radius corner_radius ];
+          geometry-corner-radius = with self.desktop; [ corner-radius corner-radius corner-radius corner-radius ];
           clip-to-geometry = true;
           open-maximized-to-edges = true; # Just wanted to override this
         }];

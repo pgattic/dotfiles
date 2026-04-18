@@ -1,5 +1,5 @@
 { inputs, withSystem, ... }: {
-  flake.nixosConfigurations.corlessfam = withSystem "x86_64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.corlessfam = withSystem "x86_64-linux" ({ self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
       inputs.self.nixosModules.options

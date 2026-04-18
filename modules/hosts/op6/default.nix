@@ -1,12 +1,12 @@
 { inputs, withSystem, ... }: {
-  flake.nixosConfigurations.op6 = withSystem "aarch64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.op6 = withSystem "aarch64-linux" ({ self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       (import "${inputs.mobile-nixos}/lib/configuration.nix" { device = "oneplus-enchilada"; })
       inputs.self.nixosModules.options
       inputs.self.nixosModules.default
       inputs.self.nixosModules.desktop-default
 
-      ({ config, lib, pkgs, ... }: {
+      ({ pkgs, ... }: {
         networking.hostName = "op6";
         system.stateVersion = "26.05";
         boot.loader.systemd-boot.enable = false; # Overriding from base
@@ -23,31 +23,23 @@
           self'.packages.neovim
           self'.packages.sioyek
           self'.packages.btop
+          self'.packages.git
           pkgs.signal-desktop
+          pkgs.lazygit
+          pkgs.librewolf
         ];
 
         users.users.pgattic.shell = self'.packages.nushell-env;
 
-        programs = {
-          git = {
-            enable = true;
-            package = self'.packages.git;
-          };
-          niri = {
-            enable = true;
-            useNautilus = false;
-            package = (self'.packages.niri-mobile.apply {
-              settings = {
-                spawn-at-startup = [ [ (lib.getExe self'.packages.lisgd-op6) ] ];
-                outputs."DSI-1".scale = 2.0;
-              };
-            }).wrapper;
-          };
-          lazygit.enable = true;
-          firefox = {
-            enable = true;
-            package = pkgs.librewolf;
-          };
+        programs.niri = {
+          enable = true;
+          useNautilus = false;
+          package = self'.packages.niri-mobile.apply ({ lib, ... }: {
+            settings = {
+              spawn-at-startup = [ [ (lib.getExe self'.packages.lisgd-op6) ] ];
+              outputs."DSI-1".scale = 2.0;
+            };
+          }).wrapper;
         };
 
         services = {

@@ -1,4 +1,4 @@
-{ inputs, ... }: let
+{ inputs, self, ... }: let
   hmModule = { config, lib, pkgs, ... }: {
     imports = [
       inputs.stylix.homeModules.stylix # https://github.com/sodiboo/niri-flake
@@ -30,9 +30,7 @@
         light = "Papirus-Light";
       };
       polarity = "dark";
-      opacity = let
-        opacity = 0.85;
-      in {
+      opacity = with self.desktop; {
         applications = opacity;
         desktop = opacity;
         popups = opacity;

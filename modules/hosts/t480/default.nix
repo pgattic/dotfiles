@@ -1,5 +1,5 @@
 { inputs, withSystem, ... }: {
-  flake.nixosConfigurations.surface = withSystem "x86_64-linux" ({ pkgs, self', ... }: inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.t480 = withSystem "x86_64-linux" ({ self', ... }: inputs.nixpkgs.lib.nixosSystem {
     modules = [
       ./_hardware.nix
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
@@ -13,32 +13,11 @@
       inputs.self.nixosModules.office
       inputs.self.nixosModules.obsidian
 
-      ({ config, pkgs, ... }: {
+      ({ pkgs, ... }: {
         networking.hostName = "t480";
         system.stateVersion = "25.05";
 
         zramSwap.enable = false; # This machine has a swap partition
-        programs = {
-          nix-ld.enable = true;
-          appimage.enable = true;
-          appimage.binfmt = true;
-          git = {
-            enable = true;
-            package = self'.packages.git;
-          };
-          niri = {
-            enable = true;
-            useNautilus = false;
-            package = (self'.packages.niri-activate-linux.apply {
-              settings = {
-                outputs."eDP-1".scale = 1.0;
-              };
-            }).wrapper;
-          };
-        };
-        services = {
-          mullvad-vpn.enable = true;
-        };
 
         environment.systemPackages = with pkgs; [
           self'.packages.foot-rude
@@ -50,6 +29,11 @@
           signal-desktop
           whatsapp-electron
           zotero
+          vesktop
+          element-desktop
+          ungoogled-chromium
+          ripgrep-all
+          kdeconnect
           self'.packages.bambu-studio
           self'.packages.jujutsu
           inputs.wasmcarts.packages.${stdenv.hostPlatform.system}.engine-linux
@@ -57,29 +41,24 @@
           self'.packages.sioyek
           self'.packages.neovim # The package provides aliases
           self'.packages.btop
+          self'.packages.git
         ];
 
-        home-manager.users.${config.my.user.name} = {
-          programs = {
-            vesktop.enable = true;
-            # claude-code.enable = true;
-            element-desktop.enable = true;
-            # calibre.enable = true;
-            # prismlauncher.enable = true;
-            # helix.enable = true;
-            chromium = {
-              enable = true;
-              package = pkgs.ungoogled-chromium;
-            };
-            ripgrep-all.enable = true;
-            jjui = {
-              enable = true;
-            };
+        programs = {
+          nix-ld.enable = true;
+          appimage.enable = true;
+          appimage.binfmt = true;
+          niri = {
+            enable = true;
+            useNautilus = false;
+            package = (self'.packages.niri-activate-linux.apply {
+              settings.outputs."eDP-1".scale = 1.0;
+            }).wrapper;
           };
+        };
 
-          services = {
-            kdeconnect.enable = true;
-          };
+        services = {
+          mullvad-vpn.enable = true;
         };
       })
     ];
